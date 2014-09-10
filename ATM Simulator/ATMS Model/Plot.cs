@@ -4,12 +4,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ATM_Model
+namespace ATMS_Model
 {
     class Plot
     {
+
         public DateTime timestamp;
-        public double xpos;
+        public double x;
+        public double y;
+        public double z;
+
+
+        public double speed;
+
+        //needs to be review
+        public Boolean takeOver;
 
     }
 }
