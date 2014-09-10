@@ -8,5 +8,8 @@ namespace ATM_Simulator.Model
 {
     class Plot
     {
+        public DateTime timestamp;
+        public double xpos;
+
     }
 }
