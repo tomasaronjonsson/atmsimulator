@@ -3,14 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ATMS_Model;
 
 namespace ATMS_Server_Application
 {
-    class Program
+    class MainSimulation
     {
-        static void Main(string[] args)
-        {
+        public LayerMachine layerMachine;
 
-        }
     }
 }
