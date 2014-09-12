@@ -35,5 +35,10 @@ namespace ATMS_Client
         {
             resultBox.Text = c1.ReturnPoke();
         }
+
+        private void FirstScenario_Click(object sender, RoutedEventArgs e)
+        {
+            Plot p = new Plot(timestampBox);
+        }
     }
 }

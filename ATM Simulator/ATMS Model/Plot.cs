@@ -17,7 +17,7 @@ namespace ATMS_Model
         public bool takeOver; //needs to be reviewed
 
         //a test constructor to initialize a plot with the minimum required arguments
-        public Plot(DateTime timestamp, bool takeOver)
+        public Plot(DateTime timestamp)
         {
             this.timestamp = timestamp;
             this.takeOver = false;

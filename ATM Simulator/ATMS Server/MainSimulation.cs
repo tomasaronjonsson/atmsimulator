@@ -13,11 +13,8 @@ namespace ATMS_Server
     {
         public Scenario s;
 
-        //test constructor to create a new scenario
-        public MainSimulation(Scenario s)
-        {
-            this.s = s;
-        }
+        //empty test constructor to create a new scenario
+        public MainSimulation() { }
 
         public string GetData(int value)
         {
@@ -37,8 +34,14 @@ namespace ATMS_Server
             return composite;
         }
 
+        //Test method to create the first scenario
+        public void createFirstScenario(Scenario s)
+        {
+            this.s = s;
+        }
+
         //respond to poke method
-        public string ReturnPoke()
+        public string returnPoke()
         {
             return "Ouch";
         }
