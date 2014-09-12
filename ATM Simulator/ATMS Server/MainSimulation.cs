@@ -13,6 +13,12 @@ namespace ATMS_Server
     {
         public Scenario s;
 
+        //test constructor to create a new scenario
+        public MainSimulation(Scenario s)
+        {
+            this.s = s;
+        }
+
         public string GetData(int value)
         {
             return string.Format("You entered: {0}", value);
@@ -31,6 +37,7 @@ namespace ATMS_Server
             return composite;
         }
 
+        //respond to poke method
         public string ReturnPoke()
         {
             return "Ouch";
