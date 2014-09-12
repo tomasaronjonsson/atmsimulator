@@ -22,7 +22,7 @@ namespace ATMS_Client
     /// </summary>
     public partial class MainWindow : Window
     {
-        ServerInterfaceClient c1;
+        public ServerInterfaceClient c1;
 
         public MainWindow()
         {

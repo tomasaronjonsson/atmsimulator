@@ -34,16 +34,18 @@ namespace ATMS_Server
             return composite;
         }
 
-        //Test method to create the first scenario
-        public void createFirstScenario(Scenario s)
-        {
-            this.s = s;
-        }
+        
 
         //respond to poke method
         public string returnPoke()
         {
             return "Ouch";
+        }
+
+
+        public void createFirstScenario(Scenario s)
+        {
+            this.s = s;
         }
     }
 }
