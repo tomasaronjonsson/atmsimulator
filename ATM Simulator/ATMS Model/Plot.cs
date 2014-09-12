@@ -8,17 +8,14 @@ namespace ATMS_Model
 {
     class Plot
     {
-
         public DateTime timestamp;
         public double x;
         public double y;
         public double z;
 
-
         public double speed;
 
         //needs to be review
         public Boolean takeOver;
-
     }
 }
