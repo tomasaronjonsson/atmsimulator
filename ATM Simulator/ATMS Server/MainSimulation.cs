@@ -29,7 +29,7 @@ namespace ATMS_Server
         }
 
         //respond to poke method
-        public string returnPoke()
+        public string ReturnPoke()
         {
             return "Ouch";
         }
