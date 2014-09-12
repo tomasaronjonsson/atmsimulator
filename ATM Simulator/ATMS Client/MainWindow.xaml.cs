@@ -29,6 +29,7 @@ namespace ATMS_Client
             this.c1 = new ServerInterfaceClient();
         }
 
+        //Click event method that pokes the server by calling a method which returns a simple string
         private void PokeServer_Click(object sender, RoutedEventArgs e)
         {
             resultBox.Text = c1.ReturnPoke();
