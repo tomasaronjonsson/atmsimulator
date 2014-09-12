@@ -13,7 +13,6 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ATMS_Client.ServiceReference1;
-using ATMS_Model;
 
 namespace ATMS_Client
 {
@@ -34,13 +33,6 @@ namespace ATMS_Client
         private void PokeServer_Click(object sender, RoutedEventArgs e)
         {
             resultBox.Text = c1.ReturnPoke();
-        }
-
-        private void FirstScenario_Click(object sender, RoutedEventArgs e)
-        {
-            Plot p = new Plot(timestampBox.Text);
-            Track t = new Track(p);
-            Scenario s = new Scenario(t);
         }
     }
 }
