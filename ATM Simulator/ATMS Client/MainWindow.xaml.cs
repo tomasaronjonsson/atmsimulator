@@ -29,7 +29,7 @@ namespace ATMS_Client
             this.c1 = new ServerInterfaceClient();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void PokeServer_Click(object sender, RoutedEventArgs e)
         {
             resultBox.Text = c1.ReturnPoke();
         }
