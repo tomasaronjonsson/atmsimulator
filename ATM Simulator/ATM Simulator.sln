@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.30723.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ATMS Model", "ATMS Model\ATMS Model.csproj", "{75CB1B51-872B-46E4-8AC4-C11922A8B582}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ATMS Server", "ATMS Server\ATMS Server.csproj", "{5C34C8BB-7DF3-461F-8D1B-034F75932822}"
 EndProject
 Global
@@ -13,10 +11,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{75CB1B51-872B-46E4-8AC4-C11922A8B582}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{75CB1B51-872B-46E4-8AC4-C11922A8B582}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{75CB1B51-872B-46E4-8AC4-C11922A8B582}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{75CB1B51-872B-46E4-8AC4-C11922A8B582}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5C34C8BB-7DF3-461F-8D1B-034F75932822}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5C34C8BB-7DF3-461F-8D1B-034F75932822}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5C34C8BB-7DF3-461F-8D1B-034F75932822}.Release|Any CPU.ActiveCfg = Release|Any CPU
