@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ATMS Server", "ATMS Server\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ATMS Model", "ATMS Model\ATMS Model.csproj", "{A44C7C47-A72E-4418-8CAD-CDF9BC3D9CD9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ATMS Client", "ATMS Client\ATMS Client.csproj", "{D5F02848-BEFA-492D-A22E-529FB2D83E63}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{A44C7C47-A72E-4418-8CAD-CDF9BC3D9CD9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A44C7C47-A72E-4418-8CAD-CDF9BC3D9CD9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A44C7C47-A72E-4418-8CAD-CDF9BC3D9CD9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D5F02848-BEFA-492D-A22E-529FB2D83E63}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D5F02848-BEFA-492D-A22E-529FB2D83E63}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D5F02848-BEFA-492D-A22E-529FB2D83E63}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D5F02848-BEFA-492D-A22E-529FB2D83E63}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
