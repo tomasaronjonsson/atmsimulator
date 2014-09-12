@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ATMS_Model
 {
-    class Track
+    public class Track
     {
         public int trackID;
         public List<Plot> plots;

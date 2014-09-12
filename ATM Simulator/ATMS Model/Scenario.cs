@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ATMS_Model
 {
-    class Scenario
+    public class Scenario
     {
         public int scenarioID;
         public List<Track> tracks;

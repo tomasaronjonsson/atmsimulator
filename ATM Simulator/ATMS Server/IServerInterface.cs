@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.Text;
+using ATMS_Model;
 
 namespace ATMS_Server
 {
@@ -19,6 +20,9 @@ namespace ATMS_Server
 
         [OperationContract]
         string returnPoke();
+
+        [OperationContract]
+        void createFirstScenario(Scenario s);
 
         // TODO: Add your service operations here
     }

@@ -38,7 +38,10 @@ namespace ATMS_Client
 
         private void FirstScenario_Click(object sender, RoutedEventArgs e)
         {
-            Plot p = new Plot(timestampBox);
+            Plot p = new Plot(timestampBox.Text);
+            Track t = new Track(p);
+            Scenario s = new Scenario(t);
+            c1.
         }
     }
 }
