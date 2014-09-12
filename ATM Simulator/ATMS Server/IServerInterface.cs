@@ -21,9 +21,6 @@ namespace ATMS_Server
         [OperationContract]
         string returnPoke();
 
-        [OperationContract]
-        void createFirstScenario(Scenario s);
-
         // TODO: Add your service operations here
     }
 

@@ -28,7 +28,6 @@ namespace ATMS_Client
         {
             InitializeComponent();
             this.c1 = new ServerInterfaceClient();
-
         }
 
         //Click event method that pokes the server by calling a method which returns a simple string
