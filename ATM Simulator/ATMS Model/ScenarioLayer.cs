@@ -11,6 +11,5 @@ namespace ATMS_Model
         public int layerLevel;
         public Scenario scenario;
         public int timeOffSetSeconds;
-
     }
 }

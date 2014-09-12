@@ -11,9 +11,6 @@ namespace ATMS_Model
         public int trackID;
         public List<Plot> plots;
 
-
-
-
         //skeleton
         Plot getNow()
         {

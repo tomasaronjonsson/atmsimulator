@@ -10,10 +10,8 @@ namespace ATMS_Model
     {
         public List<ScenarioLayer> scenarioLayers;
 
-
         Scenario getMergedAtTime(Scenario scenario, int time)
         {
-
             return new Scenario();
         }
     }
