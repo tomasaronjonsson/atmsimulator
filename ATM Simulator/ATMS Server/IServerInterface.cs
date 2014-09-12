@@ -17,6 +17,9 @@ namespace ATMS_Server
         [OperationContract]
         CompositeType GetDataUsingDataContract(CompositeType composite);
 
+        [OperationContract]
+        string ReturnPoke();
+
         // TODO: Add your service operations here
     }
 

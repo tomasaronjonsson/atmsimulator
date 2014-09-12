@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ATMS_Client.ServiceReference1;
 
 namespace ATMS_Client
 {
@@ -20,9 +21,17 @@ namespace ATMS_Client
     /// </summary>
     public partial class MainWindow : Window
     {
+        ServerInterfaceClient c1;
+
         public MainWindow()
         {
             InitializeComponent();
+            this.c1 = new ServerInterfaceClient();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            resultBox.Text = c1.ReturnPoke();
         }
     }
 }

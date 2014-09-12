@@ -27,5 +27,11 @@ namespace ATMS_Server
             }
             return composite;
         }
+
+
+        public string ReturnPoke()
+        {
+            return "Ouch";
+        }
     }
 }

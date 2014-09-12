@@ -8,6 +8,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ATMS Model", "ATMS Model\ATMS Model.csproj", "{A44C7C47-A72E-4418-8CAD-CDF9BC3D9CD9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ATMS Client", "ATMS Client\ATMS Client.csproj", "{D5F02848-BEFA-492D-A22E-529FB2D83E63}"
+	ProjectSection(ProjectDependencies) = postProject
+		{5C34C8BB-7DF3-461F-8D1B-034F75932822} = {5C34C8BB-7DF3-461F-8D1B-034F75932822}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
