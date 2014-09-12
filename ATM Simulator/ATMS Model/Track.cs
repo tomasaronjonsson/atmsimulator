@@ -19,10 +19,10 @@ namespace ATMS_Model
             plots.Add(p1);
         }
 
-        //skeleton
+        /*skeleton
         Plot getNow()
         {
             //return new Plot();
-        }
+        }*/
     }
 }

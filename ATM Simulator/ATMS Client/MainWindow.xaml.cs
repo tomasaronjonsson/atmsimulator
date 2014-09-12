@@ -42,7 +42,6 @@ namespace ATMS_Client
             Plot p = new Plot(timestampBox.Text);
             Track t = new Track(p);
             Scenario s = new Scenario(t);
-            c1.
         }
     }
 }

@@ -19,7 +19,7 @@ namespace ATMS_Model
         //a test constructor to initialize a plot with the minimum required arguments
         public Plot(string timestamp)
         {
-            this.timestamp = timestamp.;
+            this.timestamp = timestamp;
             this.takeOver = false;
         }
     }
