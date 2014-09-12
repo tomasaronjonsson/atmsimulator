@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ATMS_Client.ServiceReference1;
+using ATMS_Model;
 
 namespace ATMS_Client
 {

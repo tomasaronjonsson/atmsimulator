@@ -9,13 +9,18 @@ namespace ATMS_Model
     class Plot
     {
         public DateTime timestamp;
-        public double x;
-        public double y;
-        public double z;
-
+        public double x; //position 
+        public double y; //position 
+        public double z; //altitude
         public double speed;
 
-        //needs to be review
-        public Boolean takeOver;
+        public bool takeOver; //needs to be reviewed
+
+        //a test constructor to initialize a plot with the minimum required arguments
+        public Plot(DateTime timestamp, bool takeOver)
+        {
+            this.timestamp = timestamp;
+            this.takeOver = false;
+        }
     }
 }

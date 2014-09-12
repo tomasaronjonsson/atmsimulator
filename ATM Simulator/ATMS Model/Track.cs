@@ -11,10 +11,18 @@ namespace ATMS_Model
         public int trackID;
         public List<Plot> plots;
 
+        //Test constructor to initialize a prototype track
+        public Track(Plot p1)
+        {
+            trackID = 001;
+            plots = new List<Plot>();
+            plots.Add(p1);
+        }
+
         //skeleton
         Plot getNow()
         {
-            return new Plot();
+            //return new Plot();
         }
     }
 }
