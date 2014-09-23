@@ -63,7 +63,6 @@ namespace Client
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-         // ThreadPool.QueueUserWorkItem(delegate {};);
             int ID = c1.RegisterClient(9999);
 
             updateBox.Text = ID.ToString();

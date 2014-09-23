@@ -5,6 +5,8 @@ using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.ServiceModel.Description;
 using System.Text;
+using System.Threading;
+
 
 namespace ATMS_Server
 {
@@ -28,9 +30,15 @@ namespace ATMS_Server
         //respond to poke method
         public string ReturnPoke()
         {
+            ThreadPool.QueueUserWorkItem(a => hiAfter5sec());
             return "Ouch";
         }
+        public void hiAfter5sec()
+        {
+            Thread.Sleep(5000);
+            hiClient();
 
+        }
         //to test the callback
         public void hiClient()
         {
@@ -49,7 +57,7 @@ namespace ATMS_Server
                     IClientCallbackInterface callback = OperationContext.Current.GetCallbackChannel<IClientCallbackInterface>();
                     clients.Add(id, callback);
 
-                    //callback.updateClient("hi!");
+
                     
                 }
                 catch (Exception ex)
