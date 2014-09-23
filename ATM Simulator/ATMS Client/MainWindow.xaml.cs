@@ -13,6 +13,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ATMS_Client.ServiceReference1;
+using ATMS_Server;
+using System.ServiceModel;
 
 namespace ATMS_Client
 {
@@ -26,7 +28,13 @@ namespace ATMS_Client
         public MainWindow()
         {
             InitializeComponent();
-            this.c1 = new ServerInterfaceClient();
+
+
+           // Construct InstanceContext to handle messages on callback interface
+            InstanceContext instanceContext = new InstanceContext(new CallbackHandler(updateClient));
+
+            //create a client
+            this.c1 = new ServerInterfaceClient(instanceContext);
         }
 
         //Click event method that pokes the server by calling a method which returns a simple string
@@ -34,5 +42,12 @@ namespace ATMS_Client
         {
             resultBox.Text = c1.ReturnPoke();
         }
+        //implement a metho  for the callback handler to manipulate the iunterface
+        public void updateClient(string data)
+        {
+            resultBox.Text = data;
+        }
+
+       
     }
 }

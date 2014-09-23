@@ -3,35 +3,47 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
+using System.ServiceModel.Description;
 using System.Text;
 
 namespace ATMS_Server
 {
     // NOTE: You can use the "Rename" command on the "Refactor" menu to change the class name "Service1" in both code and config file together.
+
+    [ServiceBehavior(InstanceContextMode = InstanceContextMode.PerSession)]
     public class MainSimulation : IServerInterface
     {
-        public string GetData(int value)
+
+
+        public MainSimulation()
         {
-            return string.Format("You entered: {0}", value);
+
+
         }
 
-        public CompositeType GetDataUsingDataContract(CompositeType composite)
-        {
-            if (composite == null)
-            {
-                throw new ArgumentNullException("composite");
-            }
-            if (composite.BoolValue)
-            {
-                composite.StringValue += "Suffix";
-            }
-            return composite;
-        }
+
 
         //respond to poke method
         public string ReturnPoke()
         {
+            hiClient();
             return "Ouch";
+        }
+
+        //to test the callback
+        public void hiClient()
+        {
+            Proxy.updateClient("Hi!");
+        }
+
+
+        public IClientCallbackInterface Proxy
+        {
+            get
+            {
+
+                return OperationContext.Current.GetCallbackChannel<IClientCallbackInterface>();
+            }
         }
     }
 }

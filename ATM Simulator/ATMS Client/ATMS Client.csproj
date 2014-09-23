@@ -55,6 +55,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="CallbackHandler.cs" />
     <Compile Include="Service References\ServiceReference1\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -111,7 +112,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
@@ -135,6 +138,10 @@
     <ProjectReference Include="..\ATMS Model\ATMS Model.csproj">
       <Project>{a44c7c47-a72e-4418-8cad-cdf9bc3d9cd9}</Project>
       <Name>ATMS Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ATMS Server\ATMS Server.csproj">
+      <Project>{5c34c8bb-7df3-461f-8d1b-034f75932822}</Project>
+      <Name>ATMS Server</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
