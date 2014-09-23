@@ -14,7 +14,7 @@ namespace ATMS_Server
     public class MainSimulation : IServerInterface
     {
         private static Dictionary<int, IClientCallbackInterface> clients = new Dictionary<int,IClientCallbackInterface>();
-        private static object locker = new object();
+       
 
 
         public MainSimulation()
@@ -28,46 +28,38 @@ namespace ATMS_Server
         //respond to poke method
         public string ReturnPoke()
         {
-            hiClient();
             return "Ouch";
         }
 
         //to test the callback
         public void hiClient()
         {
-            Proxy.updateClient("Hi!");
+            foreach (KeyValuePair<int,IClientCallbackInterface> entry in clients)
+                entry.Value.updateClient("hi!");
+
         }
 
-
-        public IClientCallbackInterface Proxy
+        public int RegisterClient(int id)
         {
-            get
-            {
-
-                return OperationContext.Current.GetCallbackChannel<IClientCallbackInterface>();
-            }
-        }
-
-
-        public void RegisterClient(int id)
-        {
+            
             if (id > 999)
             {
                 try
                 {
                     IClientCallbackInterface callback = OperationContext.Current.GetCallbackChannel<IClientCallbackInterface>();
-                    lock (locker)
-                    {
-                        //remove the old client
-                        if (clients.Keys.Contains(id))
-                            clients.Remove(id);
-                        clients.Add(id, callback);
-                    }
+                    clients.Add(id, callback);
+
+                    //callback.updateClient("hi!");
+                    
                 }
                 catch (Exception ex)
                 {
                 }
+
+                return id;
             }
+            return -1;
+
         }
     }
 }

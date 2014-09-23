@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="2b3cf3af-3aae-449e-844b-e9a886ecf2cf" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="344af37b-f3a8-4fcb-9923-68b97a5fb4dc" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
   <ClientOptions>
     <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
     <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
@@ -22,10 +22,10 @@
     <MetadataSource Address="http://localhost:8888/ATMS_Server/ATMS/mex" Protocol="mex" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="ATMS_Server.wsdl" MetadataType="Wsdl" ID="6f3e64b6-d32f-4cd4-856b-a71c39356093" SourceId="1" SourceUrl="http://localhost:8888/ATMS_Server/ATMS/mex" />
-    <MetadataFile FileName="service.wsdl" MetadataType="Wsdl" ID="a8cd820d-eac6-4522-bcfc-49c42dba4fe3" SourceId="1" SourceUrl="http://localhost:8888/ATMS_Server/ATMS/mex" />
-    <MetadataFile FileName="ATMS_Server.xsd" MetadataType="Schema" ID="9f822644-e267-421f-b111-5036e5c8e9ca" SourceId="1" SourceUrl="http://localhost:8888/ATMS_Server/ATMS/mex" />
-    <MetadataFile FileName="service.xsd" MetadataType="Schema" ID="8c32e536-7261-4023-9ac2-c04ae593de09" SourceId="1" SourceUrl="http://localhost:8888/ATMS_Server/ATMS/mex" />
+    <MetadataFile FileName="ATMS_Server.wsdl" MetadataType="Wsdl" ID="418b12fe-d1a8-442b-8eed-749069decc4e" SourceId="1" SourceUrl="http://localhost:8888/ATMS_Server/ATMS/mex" />
+    <MetadataFile FileName="service.wsdl" MetadataType="Wsdl" ID="51cf470c-290f-495b-b343-6c12912da7aa" SourceId="1" SourceUrl="http://localhost:8888/ATMS_Server/ATMS/mex" />
+    <MetadataFile FileName="ATMS_Server.xsd" MetadataType="Schema" ID="9b6ae0bb-0f44-4423-801e-9b209374d891" SourceId="1" SourceUrl="http://localhost:8888/ATMS_Server/ATMS/mex" />
+    <MetadataFile FileName="service.xsd" MetadataType="Schema" ID="e3be87f7-956f-42e6-aa52-f98ca5ade393" SourceId="1" SourceUrl="http://localhost:8888/ATMS_Server/ATMS/mex" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

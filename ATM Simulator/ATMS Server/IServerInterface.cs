@@ -18,8 +18,8 @@ namespace ATMS_Server
 
 
         [OperationContract]
-        void RegisterClient(int id);
-    
+        int RegisterClient(int id);
+
 
     }
 

@@ -8,11 +8,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ATMS_Client.ServiceReference1 {
+namespace Client.ServiceReference1 {
     
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ServiceModel.ServiceContractAttribute(Namespace="ATMS_Server", ConfigurationName="ServiceReference1.IServerInterface", CallbackContract=typeof(ATMS_Client.ServiceReference1.IServerInterfaceCallback))]
+    [System.ServiceModel.ServiceContractAttribute(Namespace="ATMS_Server", ConfigurationName="ServiceReference1.IServerInterface", CallbackContract=typeof(Client.ServiceReference1.IServerInterfaceCallback))]
     public interface IServerInterface {
         
         [System.ServiceModel.OperationContractAttribute(Action="ATMS_Server/IServerInterface/ReturnPoke", ReplyAction="ATMS_Server/IServerInterface/ReturnPokeResponse")]
@@ -22,10 +22,10 @@ namespace ATMS_Client.ServiceReference1 {
         System.Threading.Tasks.Task<string> ReturnPokeAsync();
         
         [System.ServiceModel.OperationContractAttribute(Action="ATMS_Server/IServerInterface/RegisterClient", ReplyAction="ATMS_Server/IServerInterface/RegisterClientResponse")]
-        void RegisterClient(int id);
+        int RegisterClient(int id);
         
         [System.ServiceModel.OperationContractAttribute(Action="ATMS_Server/IServerInterface/RegisterClient", ReplyAction="ATMS_Server/IServerInterface/RegisterClientResponse")]
-        System.Threading.Tasks.Task RegisterClientAsync(int id);
+        System.Threading.Tasks.Task<int> RegisterClientAsync(int id);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -36,12 +36,12 @@ namespace ATMS_Client.ServiceReference1 {
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public interface IServerInterfaceChannel : ATMS_Client.ServiceReference1.IServerInterface, System.ServiceModel.IClientChannel {
+    public interface IServerInterfaceChannel : Client.ServiceReference1.IServerInterface, System.ServiceModel.IClientChannel {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class ServerInterfaceClient : System.ServiceModel.DuplexClientBase<ATMS_Client.ServiceReference1.IServerInterface>, ATMS_Client.ServiceReference1.IServerInterface {
+    public partial class ServerInterfaceClient : System.ServiceModel.DuplexClientBase<Client.ServiceReference1.IServerInterface>, Client.ServiceReference1.IServerInterface {
         
         public ServerInterfaceClient(System.ServiceModel.InstanceContext callbackInstance) : 
                 base(callbackInstance) {
@@ -71,11 +71,11 @@ namespace ATMS_Client.ServiceReference1 {
             return base.Channel.ReturnPokeAsync();
         }
         
-        public void RegisterClient(int id) {
-            base.Channel.RegisterClient(id);
+        public int RegisterClient(int id) {
+            return base.Channel.RegisterClient(id);
         }
         
-        public System.Threading.Tasks.Task RegisterClientAsync(int id) {
+        public System.Threading.Tasks.Task<int> RegisterClientAsync(int id) {
             return base.Channel.RegisterClientAsync(id);
         }
     }
