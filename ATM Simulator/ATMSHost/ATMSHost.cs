@@ -8,7 +8,7 @@ using ATMS_Server;
 using System.ServiceModel.Description;
 namespace ATMSHost
 {
-    class Program
+    class ATMSHost
     {
         static void Main(string[] args)
         {
