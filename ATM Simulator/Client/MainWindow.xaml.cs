@@ -14,10 +14,10 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.ServiceModel;
 using ATMS_Server;
-using Client.ServiceReference1;
+using ATMS_Client.ServiceReference1;
 using System.Threading;
 
-namespace Client
+namespace ATMS_Client
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -29,7 +29,6 @@ namespace Client
         public MainWindow()
         {
             InitializeComponent();
-
 
             // Construct InstanceContext to handle messages on callback interface
             InstanceContext instanceContext = new InstanceContext(new CallbackHandler(updateClient));
@@ -46,13 +45,9 @@ namespace Client
         //implement a metho  for the callback handler to manipulate the iunterface
         public void updateClient(string data)
         {
-
-          
-
-
             if (Dispatcher.CheckAccess())
-            {      
-                Dispatcher.Invoke(() => updateBox.Text =data);
+            {
+                Dispatcher.Invoke(() => updateBox.Text = data);
             }
             else
             {
@@ -66,11 +61,6 @@ namespace Client
             int ID = c1.RegisterClient(9999);
 
             updateBox.Text = ID.ToString();
-
-
         }
-
-
-
     }
 }

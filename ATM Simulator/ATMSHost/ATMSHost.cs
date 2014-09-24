@@ -6,16 +6,13 @@ using System.Threading.Tasks;
 using System.ServiceModel;
 using ATMS_Server;
 using System.ServiceModel.Description;
-namespace ATMSHost
+
+namespace ATMS_Host
 {
     class ATMSHost
     {
         static void Main(string[] args)
         {
-
-
-
-
             // Step 1 Create a URI to serve as the base address.
             Uri baseAddress = new Uri("http://localhost:8888/ATMS_Server/ATMS");
 
@@ -50,5 +47,5 @@ namespace ATMSHost
         }
     }
 }
-        
-    
+
+

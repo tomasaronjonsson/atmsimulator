@@ -8,8 +8,10 @@ namespace ATMS_Model
 {
     class ScenarioLayer
     {
+        /*
         public int layerLevel;
         public Scenario scenario;
         public int timeOffSetSeconds;
+        */
     }
 }

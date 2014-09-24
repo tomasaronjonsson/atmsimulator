@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using ATMS_Server;
 
-namespace Client
+namespace ATMS_Client
 {
-    class CallbackHandler : Client.ServiceReference1.IServerInterfaceCallback
+    class CallbackHandler : ATMS_Client.ServiceReference1.IServerInterfaceCallback
     {
         public delegate void callbackDelegate(String data);
         callbackDelegate callbackMethod;

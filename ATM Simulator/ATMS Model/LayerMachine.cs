@@ -8,6 +8,7 @@ namespace ATMS_Model
 {
     class LayerMachine
     {
+        /*
         public List<ScenarioLayer> scenarioLayers;
         /*
         Scenario getMergedAtTime(Scenario scenario, int time)

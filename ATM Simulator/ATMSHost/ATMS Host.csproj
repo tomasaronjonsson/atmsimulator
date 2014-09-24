@@ -7,7 +7,7 @@
     <ProjectGuid>{0BEF71D8-9C78-4587-B907-48FD928629A8}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ATMSHost</RootNamespace>
+    <RootNamespace>ATMS_Host</RootNamespace>
     <AssemblyName>ATMSHost</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

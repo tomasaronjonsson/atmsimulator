@@ -7,22 +7,16 @@ using System.Text;
 
 namespace ATMS_Server
 {
-    // NOTE: You can use the "Rename" command on the "Refactor" menu to change the interface name "IService1" in both code and config file together.
     [ServiceContract(Namespace = "ATMS_Server", SessionMode = SessionMode.Allowed,
-                  CallbackContract = typeof(IClientCallbackInterface))]
+                     CallbackContract = typeof(IClientCallbackInterface))]
     public interface IServerInterface
     {
-
         [OperationContract]
         string ReturnPoke();
 
-
         [OperationContract]
         int RegisterClient(int id);
-
-
     }
-
 
     public interface IClientCallbackInterface
     {
@@ -30,5 +24,4 @@ namespace ATMS_Server
         void updateClient(string data);
         // TODO: Add your callback service operations here
     }
-
 }

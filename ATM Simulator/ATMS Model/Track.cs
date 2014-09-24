@@ -18,11 +18,5 @@ namespace ATMS_Model
             plots = new List<Plot>();
             plots.Add(p1);
         }
-
-        /*skeleton
-        Plot getNow()
-        {
-            //return new Plot();
-        }*/
     }
 }
