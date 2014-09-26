@@ -18,6 +18,12 @@
   <wsdl:message name="IServerInterface_RegisterClient_OutputMessage">
     <wsdl:part name="parameters" element="tns:RegisterClientResponse" />
   </wsdl:message>
+  <wsdl:message name="IServerInterface_createSimulation_InputMessage">
+    <wsdl:part name="parameters" element="tns:createSimulation" />
+  </wsdl:message>
+  <wsdl:message name="IServerInterface_createSimulation_OutputMessage">
+    <wsdl:part name="parameters" element="tns:createSimulationResponse" />
+  </wsdl:message>
   <wsdl:message name="IServerInterface_updateClient_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:updateClient" />
   </wsdl:message>
@@ -29,6 +35,10 @@
     <wsdl:operation name="RegisterClient">
       <wsdl:input wsaw:Action="ATMS_Server/IServerInterface/RegisterClient" message="tns:IServerInterface_RegisterClient_InputMessage" />
       <wsdl:output wsaw:Action="ATMS_Server/IServerInterface/RegisterClientResponse" message="tns:IServerInterface_RegisterClient_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="createSimulation">
+      <wsdl:input wsaw:Action="ATMS_Server/IServerInterface/createSimulation" message="tns:IServerInterface_createSimulation_InputMessage" />
+      <wsdl:output wsaw:Action="ATMS_Server/IServerInterface/createSimulationResponse" message="tns:IServerInterface_createSimulation_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="updateClient">
       <wsdl:output wsaw:Action="ATMS_Server/IServerInterface/updateClient" message="tns:IServerInterface_updateClient_OutputCallbackMessage" />

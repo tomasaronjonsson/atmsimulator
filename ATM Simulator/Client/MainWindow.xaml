@@ -4,10 +4,13 @@
         Title="MainWindow" Height="350" Width="525">
     <Grid>
         <StackPanel HorizontalAlignment="Center" Orientation="Vertical">
-            <Button Content="Register" Click="Button_Click"/>
+            <Button Content="Register" Click="Register_Click"/>
             <Button Content="Poke server" Click="PokeServer_Click"/>
             <TextBox Name="resultBox" Text="Click above to poke the server" Margin="5" Width="170" Height="25" />
             <TextBox Name="updateBox" Text="Waiting for server updates..." Margin="5" Width="170" Height="25"/>
+            <TextBox Name="timestampBox" Text="Set the first timestamp" Margin="5" Width="170" Height="25"/>
+            <Button Content="Create Simulation" Click="CreateSimulation_Click"/>
+            <Label Name="resultLabel" Content="waiting for server confirmation..."/>
         </StackPanel>
     </Grid>
 </Window>

@@ -56,11 +56,16 @@ namespace ATMS_Client
 
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void Register_Click(object sender, RoutedEventArgs e)
         {
             int ID = c1.RegisterClient(9999);
 
             updateBox.Text = ID.ToString();
+        }
+
+        private void CreateSimulation_Click(object sender, RoutedEventArgs e)
+        {
+            c1.createSimulation(timestampBox.Text);
         }
     }
 }

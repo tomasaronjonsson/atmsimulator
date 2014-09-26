@@ -6,6 +6,7 @@ using System.ServiceModel;
 using System.ServiceModel.Description;
 using System.Text;
 using System.Threading;
+using ATMS_Model;
 
 namespace ATMS_Server
 {
@@ -14,6 +15,8 @@ namespace ATMS_Server
     {
         private static Dictionary<int, IClientCallbackInterface> clients = new Dictionary<int, IClientCallbackInterface>();
 
+        public List<Scenario> simulation;
+
         public MainSimulation()
         {
         }
@@ -21,25 +24,21 @@ namespace ATMS_Server
         //respond to poke method
         public string ReturnPoke()
         {
-            ThreadPool.QueueUserWorkItem(a => hiAfter5sec());
             return "Ouch";
-        }
-
-        public void hiAfter5sec()
-        {
-            Thread.Sleep(5000);
-            hiClient();
         }
 
         //to test the callback
         public void hiClient()
         {
+            Thread.Sleep(5000);
+
             foreach (KeyValuePair<int, IClientCallbackInterface> entry in clients)
                 entry.Value.updateClient("hi!");
         }
 
         public int RegisterClient(int id)
         {
+            ThreadPool.QueueUserWorkItem(a => hiClient());
             if (id > 999)
             {
                 try
@@ -53,6 +52,33 @@ namespace ATMS_Server
                 return id;
             }
             return -1;
+        }
+
+        //From here
+
+        public void notifyClients()
+        {
+            Thread.Sleep(2000);
+            foreach (KeyValuePair<int, IClientCallbackInterface> entry in clients)
+                entry.Value.updateClient(simulation.Count().ToString());
+        }
+
+        public void createSimulation(string timestamp)
+        {
+            Plot p = new Plot(timestamp);
+            Track t = new Track(p);
+            Scenario s = new Scenario(t);
+
+            try
+            {
+                simulation = new List<Scenario>();
+                simulation.Add(s);
+            }
+            catch (Exception)
+            {
+                throw;
+            };
+            ThreadPool.QueueUserWorkItem(a => notifyClients());
         }
     }
 }

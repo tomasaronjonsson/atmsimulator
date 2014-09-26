@@ -16,6 +16,9 @@ namespace ATMS_Server
 
         [OperationContract]
         int RegisterClient(int id);
+
+        [OperationContract]
+        void createSimulation(string timestamp);
     }
 
     public interface IClientCallbackInterface

@@ -26,6 +26,18 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="createSimulation">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="timestamp" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="createSimulationResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
   <xs:element name="updateClient">
     <xs:complexType>
       <xs:sequence>
