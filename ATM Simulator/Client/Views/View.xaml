@@ -4,13 +4,12 @@
         Title="View" Height="350" Width="525">
     <Grid>
         <StackPanel HorizontalAlignment="Center" Orientation="Vertical">
-            <Button Content="Register" Click="Register_Click"/>
-            <Button Content="Poke server" Click="PokeServer_Click"/>
-            <TextBox Name="resultBox" Text="Click above to poke the server" Margin="5" Width="170" Height="25" />
-            <TextBox Name="updateBox" Text="Waiting for server updates..." Margin="5" Width="170" Height="25"/>
-            <TextBox Name="timestampBox" Text="Set the first timestamp" Margin="5" Width="170" Height="25"/>
-            <Button Content="Create Simulation" Click="CreateSimulation_Click"/>
-            <Label Name="resultLabel" Content="waiting for server confirmation..."/>
+            <Button Content="Register"/>
+            <Button Content="Poke server" Command="{Binding PokeServer}"/>
+            <TextBox Name="resultBox" Text="{Binding resultBox }" />
+            <TextBox Name="updateBox" Text="{Binding plotModel.plot.timestamp}"/>
+            <TextBox Name="timestampBox" Text="{Binding timestampBox}"/>
+            <Button Content="Create Simulation"/>
         </StackPanel>
     </Grid>
 </Window>

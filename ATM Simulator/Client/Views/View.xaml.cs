@@ -16,6 +16,7 @@ using System.ServiceModel;
 using ATMS_Server;
 using ATMS_Client.ServiceReference1;
 using System.Threading;
+using ATMS_Client.ViewModels;
 
 namespace ATMS_Client.Views
 
@@ -25,48 +26,10 @@ namespace ATMS_Client.Views
     /// </summary>
     public partial class View : Window
     {
-        public ServerInterfaceClient c1;
-
         public View()
         {
             InitializeComponent();
-
-            // Construct InstanceContext to handle messages on callback interface
-            InstanceContext instanceContext = new InstanceContext(new CallbackHandler(updateClient));
-
-            //create a client
-            this.c1 = new ServerInterfaceClient(instanceContext);
-        }
-
-        //Click event method that pokes the server by calling a method which returns a simple string
-        private void PokeServer_Click(object sender, RoutedEventArgs e)
-        {
-            resultBox.Text = c1.ReturnPoke();
-        }
-        //implement a metho  for the callback handler to manipulate the iunterface
-        public void updateClient(string data)
-        {
-            if (Dispatcher.CheckAccess())
-            {
-                Dispatcher.Invoke(() => updateBox.Text = data);
-            }
-            else
-            {
-                updateBox.Text = data;
-            }
-
-        }
-
-        private void Register_Click(object sender, RoutedEventArgs e)
-        {
-            int ID = c1.RegisterClient(9999);
-
-            updateBox.Text = ID.ToString();
-        }
-
-        private void CreateSimulation_Click(object sender, RoutedEventArgs e)
-        {
-            c1.createSimulation(timestampBox.Text);
+            DataContext = new ViewModel();
         }
     }
 }

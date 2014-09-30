@@ -26,6 +26,7 @@
     <MetadataFile FileName="service.wsdl" MetadataType="Wsdl" ID="51cf470c-290f-495b-b343-6c12912da7aa" SourceId="1" SourceUrl="http://localhost:8888/ATMS_Server/ATMS/mex" />
     <MetadataFile FileName="ATMS_Server.xsd" MetadataType="Schema" ID="9b6ae0bb-0f44-4423-801e-9b209374d891" SourceId="1" SourceUrl="http://localhost:8888/ATMS_Server/ATMS/mex" />
     <MetadataFile FileName="service.xsd" MetadataType="Schema" ID="e3be87f7-956f-42e6-aa52-f98ca5ade393" SourceId="1" SourceUrl="http://localhost:8888/ATMS_Server/ATMS/mex" />
+    <MetadataFile FileName="ATMS_Model.xsd" MetadataType="Schema" ID="d4ec9701-50ba-48b8-be25-23e5845763bd" SourceId="1" SourceUrl="http://localhost:8888/ATMS_Server/ATMS/mex" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

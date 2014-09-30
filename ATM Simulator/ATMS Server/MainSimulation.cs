@@ -22,9 +22,9 @@ namespace ATMS_Server
         }
 
         //respond to poke method
-        public string ReturnPoke()
+        public Plot ReturnPoke()
         {
-            return "Ouch";
+            return new Plot("Ouch");
         }
 
         //to test the callback

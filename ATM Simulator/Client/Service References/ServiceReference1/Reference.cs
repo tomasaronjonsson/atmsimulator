@@ -16,10 +16,10 @@ namespace ATMS_Client.ServiceReference1 {
     public interface IServerInterface {
         
         [System.ServiceModel.OperationContractAttribute(Action="ATMS_Server/IServerInterface/ReturnPoke", ReplyAction="ATMS_Server/IServerInterface/ReturnPokeResponse")]
-        string ReturnPoke();
+        ATMS_Model.Plot ReturnPoke();
         
         [System.ServiceModel.OperationContractAttribute(Action="ATMS_Server/IServerInterface/ReturnPoke", ReplyAction="ATMS_Server/IServerInterface/ReturnPokeResponse")]
-        System.Threading.Tasks.Task<string> ReturnPokeAsync();
+        System.Threading.Tasks.Task<ATMS_Model.Plot> ReturnPokeAsync();
         
         [System.ServiceModel.OperationContractAttribute(Action="ATMS_Server/IServerInterface/RegisterClient", ReplyAction="ATMS_Server/IServerInterface/RegisterClientResponse")]
         int RegisterClient(int id);
@@ -69,11 +69,11 @@ namespace ATMS_Client.ServiceReference1 {
                 base(callbackInstance, binding, remoteAddress) {
         }
         
-        public string ReturnPoke() {
+        public ATMS_Model.Plot ReturnPoke() {
             return base.Channel.ReturnPoke();
         }
         
-        public System.Threading.Tasks.Task<string> ReturnPokeAsync() {
+        public System.Threading.Tasks.Task<ATMS_Model.Plot> ReturnPokeAsync() {
             return base.Channel.ReturnPokeAsync();
         }
         

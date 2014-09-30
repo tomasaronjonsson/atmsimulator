@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ATMS_Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -12,7 +13,7 @@ namespace ATMS_Server
     public interface IServerInterface
     {
         [OperationContract]
-        string ReturnPoke();
+        Plot ReturnPoke();
 
         [OperationContract]
         int RegisterClient(int id);

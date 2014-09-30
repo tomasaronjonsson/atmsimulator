@@ -1,14 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace ATMS_Model
 {
+    [Serializable]
     public class Plot
     {
-        public string timestamp; //made it string just for test purpsoe
+        public string timestamp { get; set; }
         public double x; //position 
         public double y; //position 
         public double z; //altitude
@@ -22,5 +24,7 @@ namespace ATMS_Model
             this.timestamp = timestamp;
             this.takeOver = false;
         }
+
+        
     }
 }
