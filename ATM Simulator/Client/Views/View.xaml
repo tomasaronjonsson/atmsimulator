@@ -1,7 +1,7 @@
-﻿<Window x:Class="ATMS_Client.MainWindow"
+﻿<Window x:Class="ATMS_Client.Views.View"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="MainWindow" Height="350" Width="525">
+        Title="View" Height="350" Width="525">
     <Grid>
         <StackPanel HorizontalAlignment="Center" Orientation="Vertical">
             <Button Content="Register" Click="Register_Click"/>

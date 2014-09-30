@@ -17,16 +17,17 @@ using ATMS_Server;
 using ATMS_Client.ServiceReference1;
 using System.Threading;
 
-namespace ATMS_Client
+namespace ATMS_Client.Views
+
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for View.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class View : Window
     {
         public ServerInterfaceClient c1;
 
-        public MainWindow()
+        public View()
         {
             InitializeComponent();
 
