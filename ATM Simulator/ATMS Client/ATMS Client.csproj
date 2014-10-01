@@ -55,7 +55,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Commands\PokeRefreshCommand.cs" />
     <Compile Include="Commands\PokeServerCommand.cs" />
+    <Compile Include="Commands\RegisterCommand.cs" />
     <Compile Include="Models\Model.cs" />
     <Compile Include="Models\PlotModel.cs" />
     <Compile Include="Service References\ServiceReference1\Reference.cs">

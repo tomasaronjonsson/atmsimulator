@@ -12,8 +12,7 @@ namespace ATMS_Client.Models
     class Model : IServerInterfaceCallback
     {
         ServerInterfaceClient c1;
-
-        string someData;
+        public string someData;
         private ViewModel viewModel;
 
 
@@ -31,15 +30,19 @@ namespace ATMS_Client.Models
 
         public void updateClient(string data)
         {
-            if (data != null)
-                someData = data;
+            //if (data != null)
+                viewModel.updateBox = data;
 
         }
 
         public void poke()
         {
-
             viewModel.plotModel = new PlotModel(c1.ReturnPoke());
+        }
+
+        public void register(int id)
+        {
+            c1.RegisterClient(id);
         }
     }
 }

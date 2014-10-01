@@ -15,8 +15,6 @@ namespace ATMS_Client.Models
 {
     public class PlotModel : INotifyPropertyChanged
     {
-
-
         //a test constructor to initialize a plot with the minimum required arguments
         public PlotModel(Plot data)
         {

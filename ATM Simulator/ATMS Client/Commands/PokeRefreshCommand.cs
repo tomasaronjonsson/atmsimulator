@@ -8,14 +8,15 @@ using System.Windows.Input;
 
 namespace ATMS_Client.Commands
 {
-    class PokeServerCommand : ICommand
+    class PokeRefreshCommand : ICommand
     {
         ViewModel vm;
 
-        public PokeServerCommand(ViewModel vm)
+        public PokeRefreshCommand(ViewModel vm)
         {
             this.vm = vm;
         }
+
         public bool CanExecute(object parameter)
         {
             return true;
@@ -29,7 +30,7 @@ namespace ATMS_Client.Commands
 
         public void Execute(object parameter)
         {
-            vm.Poke();
+            vm.Refresh();
         }
     }
 }

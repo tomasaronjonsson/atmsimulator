@@ -1,15 +1,16 @@
 ﻿<Window x:Class="ATMS_Client.Views.View"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="View" Height="350" Width="525">
-    <Grid>
-        <StackPanel HorizontalAlignment="Center" Orientation="Vertical">
-            <Button Content="Register"/>
+        Title="View" MinHeight="350" MinWidth="500" WindowStartupLocation="CenterScreen"
+        Height="350" Width="500">
+    <StackPanel>
+        <Canvas Height="300" VerticalAlignment="Top"></Canvas>
+        <StackPanel Height="25" HorizontalAlignment="Right" Orientation="Horizontal">
+            <Button Content="Register" Command="{Binding Register}"/>
             <Button Content="Poke server" Command="{Binding PokeServer}"/>
-            <TextBox Name="resultBox" Text="{Binding resultBox }" />
-            <TextBox Name="updateBox" Text="{Binding plotModel.plot.timestamp}"/>
-            <TextBox Name="timestampBox" Text="{Binding timestampBox}"/>
-            <Button Content="Create Simulation"/>
+            <Button Content="Refresh Poke" Command="{Binding RefreshPoke}"/>
+            <TextBox Name="updateBox" Text="{Binding updateBox }" />
+            <TextBox Name="resultBox" Text="{Binding plotModel.plot.timestamp}"/>
         </StackPanel>
-    </Grid>
+    </StackPanel>
 </Window>
