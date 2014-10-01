@@ -31,7 +31,7 @@ namespace ATMS_Client.Models
         public void updateClient(string data)
         {
             //if (data != null)
-                viewModel.updateBox = data;
+                viewModel.serviceBox = data;
 
         }
 

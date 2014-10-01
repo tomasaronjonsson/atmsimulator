@@ -30,6 +30,7 @@ namespace ATMS_Client.Commands
         public void Execute(object parameter)
         {
             vm.Poke();
+            vm.Register();
         }
     }
 }

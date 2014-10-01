@@ -2,15 +2,17 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="View" MinHeight="350" MinWidth="500" WindowStartupLocation="CenterScreen"
-        Height="350" Width="500">
+        Height="366" Width="500">
     <StackPanel>
-        <Canvas Height="300" VerticalAlignment="Top"></Canvas>
+        <Canvas Height="300" VerticalAlignment="Top">
+            
+        </Canvas>
         <StackPanel Height="25" HorizontalAlignment="Right" Orientation="Horizontal">
-            <Button Content="Register" Command="{Binding Register}"/>
-            <Button Content="Poke server" Command="{Binding PokeServer}"/>
-            <Button Content="Refresh Poke" Command="{Binding RefreshPoke}"/>
-            <TextBox Name="updateBox" Text="{Binding updateBox }" />
-            <TextBox Name="resultBox" Text="{Binding plotModel.plot.timestamp}"/>
+            <Button Content="Test WCF" Command="{Binding TestWCF}"/>
+            <Label Content="service call:"/>
+            <TextBox Name="serviceBox" Text="{Binding plotModel.plot.timestamp}" Width="75" TextChanged="okService" />
+            <Label Content="callback:"/>
+            <TextBox Name="callbackBox" Text="{Binding serviceBox}" Width="75" TextChanged="okCallback" />
         </StackPanel>
     </StackPanel>
 </Window>

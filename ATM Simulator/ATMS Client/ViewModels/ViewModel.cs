@@ -21,19 +21,18 @@ namespace ATMS_Client.ViewModels
             set
             {
                 _plotModel = value;
-                //OnPropertyChanged("plotModel");
+                OnPropertyChanged("plotModel");
             }
         }
 
-
-        private string _updateBox;
-        public string updateBox
+        private string _serviceBox;
+        public string serviceBox
         {
-            get { return _updateBox; }
+            get { return _serviceBox; }
             set
             {
-                _updateBox = value;
-                OnPropertyChanged("updateBox");
+                _serviceBox = value;
+                OnPropertyChanged("serviceBox");
             }
         }
         public string resultBox { get; set; }
@@ -50,23 +49,9 @@ namespace ATMS_Client.ViewModels
             plotModel = new PlotModel(new Plot("test"));
 
             timestampBox = "Set the first timestamp";
-            PokeServer = new PokeServerCommand(this);
-            RefreshPoke = new PokeRefreshCommand(this);
-            Register = new RegisterCommand(this);
+            TestWCF = new PokeServerCommand(this);
         }
-        public ICommand PokeServer
-        {
-            get;
-            private set;
-        }
-
-        public ICommand RefreshPoke
-        {
-            get;
-            private set;
-        }
-
-        public ICommand Register
+        public ICommand TestWCF
         {
             get;
             private set;
@@ -77,17 +62,11 @@ namespace ATMS_Client.ViewModels
             model.poke();
         }
 
-        internal void Refresh()
-        {
-            OnPropertyChanged("plotModel");
-        }
-
-        internal void register()
+        internal void Register()
         {
             model.register(9999);
         }
-
-     
+    
 
         #region INotifyPropertyChanged Members
 
