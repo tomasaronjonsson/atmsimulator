@@ -1,0 +1,1 @@
+"C:\Program Files (x86)\Microsoft SDKs\Windows\v8.1A\bin\NETFX 4.5.1 Tools\svcutil.exe" /language:cs /out:generatedProxy.cs /config:app.config http://localhost:8888/ATMS_Server/ATMS
