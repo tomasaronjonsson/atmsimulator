@@ -16,16 +16,22 @@ namespace ATMS_Client.ServiceReference1 {
     public interface IServerInterface {
         
         [System.ServiceModel.OperationContractAttribute(Action="ATMS_Server/IServerInterface/ReturnPoke", ReplyAction="ATMS_Server/IServerInterface/ReturnPokeResponse")]
-        string ReturnPoke();
+        ATMS_Model.Plot ReturnPoke();
         
         [System.ServiceModel.OperationContractAttribute(Action="ATMS_Server/IServerInterface/ReturnPoke", ReplyAction="ATMS_Server/IServerInterface/ReturnPokeResponse")]
-        System.Threading.Tasks.Task<string> ReturnPokeAsync();
+        System.Threading.Tasks.Task<ATMS_Model.Plot> ReturnPokeAsync();
         
         [System.ServiceModel.OperationContractAttribute(Action="ATMS_Server/IServerInterface/RegisterClient", ReplyAction="ATMS_Server/IServerInterface/RegisterClientResponse")]
-        void RegisterClient(int id);
+        int RegisterClient(int id);
         
         [System.ServiceModel.OperationContractAttribute(Action="ATMS_Server/IServerInterface/RegisterClient", ReplyAction="ATMS_Server/IServerInterface/RegisterClientResponse")]
-        System.Threading.Tasks.Task RegisterClientAsync(int id);
+        System.Threading.Tasks.Task<int> RegisterClientAsync(int id);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="ATMS_Server/IServerInterface/createSimulation", ReplyAction="ATMS_Server/IServerInterface/createSimulationResponse")]
+        void createSimulation(string timestamp);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="ATMS_Server/IServerInterface/createSimulation", ReplyAction="ATMS_Server/IServerInterface/createSimulationResponse")]
+        System.Threading.Tasks.Task createSimulationAsync(string timestamp);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -63,20 +69,28 @@ namespace ATMS_Client.ServiceReference1 {
                 base(callbackInstance, binding, remoteAddress) {
         }
         
-        public string ReturnPoke() {
+        public ATMS_Model.Plot ReturnPoke() {
             return base.Channel.ReturnPoke();
         }
         
-        public System.Threading.Tasks.Task<string> ReturnPokeAsync() {
+        public System.Threading.Tasks.Task<ATMS_Model.Plot> ReturnPokeAsync() {
             return base.Channel.ReturnPokeAsync();
         }
         
-        public void RegisterClient(int id) {
-            base.Channel.RegisterClient(id);
+        public int RegisterClient(int id) {
+            return base.Channel.RegisterClient(id);
         }
         
-        public System.Threading.Tasks.Task RegisterClientAsync(int id) {
+        public System.Threading.Tasks.Task<int> RegisterClientAsync(int id) {
             return base.Channel.RegisterClientAsync(id);
+        }
+        
+        public void createSimulation(string timestamp) {
+            base.Channel.createSimulation(timestamp);
+        }
+        
+        public System.Threading.Tasks.Task createSimulationAsync(string timestamp) {
+            return base.Channel.createSimulationAsync(timestamp);
         }
     }
 }
