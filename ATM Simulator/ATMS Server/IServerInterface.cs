@@ -19,7 +19,7 @@ namespace ATMS_Server
         int RegisterClient(int id);
 
         [OperationContract]
-        void createSimulation(string timestamp);
+        void createSimulation();
     }
 
     public interface IClientCallbackInterface
@@ -27,5 +27,8 @@ namespace ATMS_Server
         [OperationContract(IsOneWay = true)]
         void updateClient(string data);
         // TODO: Add your callback service operations here
+
+        [OperationContract(IsOneWay = true)]
+        void notifyNewScenario(string data);
     }
 }

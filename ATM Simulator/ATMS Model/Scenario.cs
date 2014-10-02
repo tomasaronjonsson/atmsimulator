@@ -11,6 +11,12 @@ namespace ATMS_Model
         public int scenarioID;
         public List<Track> tracks;
 
+        public Scenario(int id)
+        {
+            scenarioID = id;
+            tracks = new List<Track>();
+        }
+
         //Test constructor to initialize a prototype scenario
         public Scenario(Track t1)
         {

@@ -1,18 +1,23 @@
 ﻿<Window x:Class="ATMS_Client.Views.View"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="View" MinHeight="350" MinWidth="500" WindowStartupLocation="CenterScreen"
-        Height="366" Width="500">
+        Title="View test panel" MinHeight="363" MinWidth="500" WindowStartupLocation="CenterScreen"
+        Height="363" Width="500">
     <StackPanel>
-        <Canvas Height="300" VerticalAlignment="Top">
-            
-        </Canvas>
+        <StackPanel Height="300" Orientation="Horizontal">
+            <StackPanel Width="100" HorizontalAlignment="Left">
+                <Button Content="Create Scenario" Command="{Binding CreateScenario}"/>
+            </StackPanel>
+            <ListBox Width="390">
+                <ListBoxItem Content="{Binding newScenarioString}"></ListBoxItem>
+            </ListBox>
+        </StackPanel>
         <StackPanel Height="25" HorizontalAlignment="Right" Orientation="Horizontal">
             <Button Content="Test WCF" Command="{Binding TestWCF}"/>
             <Label Content="service call:"/>
             <TextBox Name="serviceBox" Text="{Binding plotModel.plot.timestamp}" Width="75" TextChanged="okService" />
             <Label Content="callback:"/>
-            <TextBox Name="callbackBox" Text="{Binding serviceBox}" Width="75" TextChanged="okCallback" />
+            <TextBox Name="callbackBox" Text="{Binding callbackBox}" Width="75" TextChanged="okCallback" />
         </StackPanel>
     </StackPanel>
 </Window>

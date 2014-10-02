@@ -51,7 +51,7 @@ namespace ATMS_Client.Views
 
         private void okCallback(object sender, TextChangedEventArgs e)
         {
-            if (callbackBox.Text == "OK")
+            if (callbackBox.Text.Contains("OK"))
             {
                 callbackBox.Background = Brushes.Green;
                 callbackBox.Foreground = converter.ConvertFromString(textColor) as Brush;

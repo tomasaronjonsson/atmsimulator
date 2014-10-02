@@ -13,8 +13,9 @@ namespace ATMS_Client.ViewModels
 {
     public class ViewModel : INotifyPropertyChanged
     {
+        Model model;
 
-        private PlotModel _plotModel;
+        PlotModel _plotModel;
         public PlotModel plotModel
         {
             get { return _plotModel; }
@@ -25,33 +26,43 @@ namespace ATMS_Client.ViewModels
             }
         }
 
-        private string _serviceBox;
-        public string serviceBox
+        string _callbackBox;
+        public string callbackBox
         {
-            get { return _serviceBox; }
+            get { return _callbackBox; }
             set
             {
-                _serviceBox = value;
-                OnPropertyChanged("serviceBox");
+                _callbackBox = value;
+                OnPropertyChanged("callbackBox");
             }
         }
-        public string resultBox { get; set; }
-        public string timestampBox { get; set; }
 
-
-        Model model;
+        string _newScenarioString;
+        public string newScenarioString
+        {
+            get { return _newScenarioString; }
+            set
+            {
+                _newScenarioString = value;
+                OnPropertyChanged("newScenarioString");
+            }
+        }
 
         public ViewModel()
         {
             model = new Model(this);
-            resultBox = "Click above to poke the server";
-
             plotModel = new PlotModel(new Plot("test"));
-
-            timestampBox = "Set the first timestamp";
             TestWCF = new PokeServerCommand(this);
+            CreateScenario = new CreateScenarioCommand(this);
         }
+
         public ICommand TestWCF
+        {
+            get;
+            private set;
+        }
+
+        public ICommand CreateScenario
         {
             get;
             private set;
@@ -64,9 +75,14 @@ namespace ATMS_Client.ViewModels
 
         internal void Register()
         {
-            model.register(9999);
+            Random randomNumber = new Random();
+            model.register(randomNumber.Next(1000, 10000));
         }
-    
+
+        internal void newScenario()
+        {
+            model.newScenario();
+        }
 
         #region INotifyPropertyChanged Members
 
@@ -83,7 +99,5 @@ namespace ATMS_Client.ViewModels
         }
 
         #endregion
-
-       
     }
 }

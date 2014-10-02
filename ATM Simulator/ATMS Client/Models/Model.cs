@@ -18,7 +18,6 @@ namespace ATMS_Client.Models
 
         public Model(ViewModel viewModel)
         {
-
             // Construct InstanceContext to handle messages on callback interface
             InstanceContext instanceContext = new InstanceContext(this);
 
@@ -26,13 +25,6 @@ namespace ATMS_Client.Models
             this.c1 = new ServerInterfaceClient(instanceContext);
 
             this.viewModel = viewModel;
-        }
-
-        public void updateClient(string data)
-        {
-            //if (data != null)
-                viewModel.serviceBox = data;
-
         }
 
         public void poke()
@@ -43,6 +35,21 @@ namespace ATMS_Client.Models
         public void register(int id)
         {
             c1.RegisterClient(id);
+        }
+
+        public void updateClient(string data)
+        {
+            viewModel.callbackBox = data;
+        }
+
+        public void newScenario()
+        {
+            c1.createSimulation();
+        }
+
+        public void notifyNewScenario(string data)
+        {
+            viewModel.newScenarioString = data;
         }
     }
 }

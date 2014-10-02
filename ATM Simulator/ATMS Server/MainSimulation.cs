@@ -13,12 +13,16 @@ namespace ATMS_Server
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single, ConcurrencyMode = ConcurrencyMode.Multiple)]
     public class MainSimulation : IServerInterface
     {
-        private static Dictionary<int, IClientCallbackInterface> clients = new Dictionary<int, IClientCallbackInterface>();
+        private static Dictionary<int, IClientCallbackInterface> clients;
 
         public List<Scenario> simulation;
+        int scenarioIDSigner;
 
         public MainSimulation()
         {
+            scenarioIDSigner = 1;
+            clients = new Dictionary<int, IClientCallbackInterface>();
+            simulation = new List<Scenario>();
         }
 
         //respond to poke method
@@ -33,20 +37,21 @@ namespace ATMS_Server
             Thread.Sleep(5000);
 
             foreach (KeyValuePair<int, IClientCallbackInterface> entry in clients)
-                entry.Value.updateClient("OK");
+                entry.Value.updateClient(String.Format("OK {0}", clients.Count().ToString()));
         }
 
         public int RegisterClient(int id)
         {
-            ThreadPool.QueueUserWorkItem(a => hiClient());
+
             if (id > 999)
             {
                 try
                 {
                     IClientCallbackInterface callback = OperationContext.Current.GetCallbackChannel<IClientCallbackInterface>();
                     clients.Add(id, callback);
+                    ThreadPool.QueueUserWorkItem(a => hiClient());
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                 }
                 return id;
@@ -58,27 +63,25 @@ namespace ATMS_Server
 
         public void notifyClients()
         {
-            Thread.Sleep(2000);
+            Thread.Sleep(5000);
+
             foreach (KeyValuePair<int, IClientCallbackInterface> entry in clients)
-                entry.Value.updateClient(simulation.Count().ToString());
+                entry.Value.notifyNewScenario(String.Format("We currently have {0} new scenarios.", simulation.Count().ToString()));
         }
 
-        public void createSimulation(string timestamp)
+        public void createSimulation()
         {
-            Plot p = new Plot(timestamp);
-            Track t = new Track(p);
-            Scenario s = new Scenario(t);
-
+            Scenario s = new Scenario(scenarioIDSigner);
             try
             {
-                simulation = new List<Scenario>();
                 simulation.Add(s);
+                ThreadPool.QueueUserWorkItem(a => notifyClients());
+                scenarioIDSigner++; //increment the ID
             }
             catch (Exception)
             {
                 throw;
             };
-            ThreadPool.QueueUserWorkItem(a => notifyClients());
         }
     }
 }

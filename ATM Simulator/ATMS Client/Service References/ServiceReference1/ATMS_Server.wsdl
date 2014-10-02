@@ -28,6 +28,9 @@
   <wsdl:message name="IServerInterface_updateClient_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:updateClient" />
   </wsdl:message>
+  <wsdl:message name="IServerInterface_notifyNewScenario_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:notifyNewScenario" />
+  </wsdl:message>
   <wsdl:portType name="IServerInterface">
     <wsdl:operation name="ReturnPoke">
       <wsdl:input wsaw:Action="ATMS_Server/IServerInterface/ReturnPoke" message="tns:IServerInterface_ReturnPoke_InputMessage" />
@@ -43,6 +46,9 @@
     </wsdl:operation>
     <wsdl:operation name="updateClient">
       <wsdl:output wsaw:Action="ATMS_Server/IServerInterface/updateClient" message="tns:IServerInterface_updateClient_OutputCallbackMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="notifyNewScenario">
+      <wsdl:output wsaw:Action="ATMS_Server/IServerInterface/notifyNewScenario" message="tns:IServerInterface_notifyNewScenario_OutputCallbackMessage" />
     </wsdl:operation>
   </wsdl:portType>
 </wsdl:definitions>

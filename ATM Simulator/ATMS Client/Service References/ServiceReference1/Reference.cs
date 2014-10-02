@@ -28,10 +28,10 @@ namespace ATMS_Client.ServiceReference1 {
         System.Threading.Tasks.Task<int> RegisterClientAsync(int id);
         
         [System.ServiceModel.OperationContractAttribute(Action="ATMS_Server/IServerInterface/createSimulation", ReplyAction="ATMS_Server/IServerInterface/createSimulationResponse")]
-        void createSimulation(string timestamp);
+        void createSimulation();
         
         [System.ServiceModel.OperationContractAttribute(Action="ATMS_Server/IServerInterface/createSimulation", ReplyAction="ATMS_Server/IServerInterface/createSimulationResponse")]
-        System.Threading.Tasks.Task createSimulationAsync(string timestamp);
+        System.Threading.Tasks.Task createSimulationAsync();
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -39,6 +39,9 @@ namespace ATMS_Client.ServiceReference1 {
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="ATMS_Server/IServerInterface/updateClient")]
         void updateClient(string data);
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="ATMS_Server/IServerInterface/notifyNewScenario")]
+        void notifyNewScenario(string data);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -85,12 +88,12 @@ namespace ATMS_Client.ServiceReference1 {
             return base.Channel.RegisterClientAsync(id);
         }
         
-        public void createSimulation(string timestamp) {
-            base.Channel.createSimulation(timestamp);
+        public void createSimulation() {
+            base.Channel.createSimulation();
         }
         
-        public System.Threading.Tasks.Task createSimulationAsync(string timestamp) {
-            return base.Channel.createSimulationAsync(timestamp);
+        public System.Threading.Tasks.Task createSimulationAsync() {
+            return base.Channel.createSimulationAsync();
         }
     }
 }

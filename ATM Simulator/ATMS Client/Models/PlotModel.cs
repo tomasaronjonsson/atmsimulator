@@ -1,14 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel;
 using ATMS_Model;
 
 namespace ATMS_Client.Models
@@ -51,7 +41,7 @@ namespace ATMS_Client.Models
 
         #endregion
 
-        public string ToString()
+        public override string ToString()
         {
             return _plot.timestamp;
         }

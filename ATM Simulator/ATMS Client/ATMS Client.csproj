@@ -55,6 +55,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Commands\CreateScenarioCommand.cs" />
     <Compile Include="Commands\PokeServerCommand.cs" />
     <Compile Include="Models\Model.cs" />
     <Compile Include="Models\PlotModel.cs" />
