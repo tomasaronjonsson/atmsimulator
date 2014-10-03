@@ -27,6 +27,7 @@ namespace ATMS_Client.Models
             this.viewModel = viewModel;
         }
 
+        #region service methods
         public void poke()
         {
             viewModel.plotModel = new PlotModel(c1.ReturnPoke());
@@ -37,19 +38,22 @@ namespace ATMS_Client.Models
             c1.RegisterClient(id);
         }
 
-        public void updateClient(string data)
-        {
-            viewModel.callbackBox = data;
-        }
-
         public void newScenario()
         {
             c1.createSimulation();
+        }
+        #endregion
+
+        #region callback methods
+        public void updateClient(string data)
+        {
+            viewModel.callbackBox = data;
         }
 
         public void notifyNewScenario(string data)
         {
             viewModel.newScenarioString = data;
         }
+        #endregion
     }
 }

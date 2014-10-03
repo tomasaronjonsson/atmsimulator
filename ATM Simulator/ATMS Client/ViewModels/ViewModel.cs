@@ -56,6 +56,7 @@ namespace ATMS_Client.ViewModels
             CreateScenario = new CreateScenarioCommand(this);
         }
 
+        #region ICommands
         public ICommand TestWCF
         {
             get;
@@ -67,7 +68,9 @@ namespace ATMS_Client.ViewModels
             get;
             private set;
         }
+        #endregion
 
+        #region methods
         internal void Poke()
         {
             model.poke();
@@ -83,6 +86,7 @@ namespace ATMS_Client.ViewModels
         {
             model.newScenario();
         }
+        #endregion
 
         #region INotifyPropertyChanged Members
 
