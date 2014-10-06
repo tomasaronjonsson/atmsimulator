@@ -27,12 +27,12 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="createSimulation">
+  <xs:element name="createScenario">
     <xs:complexType>
       <xs:sequence />
     </xs:complexType>
   </xs:element>
-  <xs:element name="createSimulationResponse">
+  <xs:element name="createScenarioResponse">
     <xs:complexType>
       <xs:sequence />
     </xs:complexType>
@@ -47,7 +47,7 @@
   <xs:element name="notifyNewScenario">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" name="data" nillable="true" type="xs:string" />
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/ATMS_Model" minOccurs="0" name="data" nillable="true" type="q2:Scenario" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

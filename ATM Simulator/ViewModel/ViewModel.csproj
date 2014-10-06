@@ -58,6 +58,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ATMS Model\ATMS Model.csproj">
+      <Project>{a44c7c47-a72e-4418-8cad-cdf9bc3d9cd9}</Project>
+      <Name>ATMS Model</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Model\Model.csproj">
       <Project>{3f21da51-768d-4a5f-9f4c-a785abfba995}</Project>
       <Name>Model</Name>

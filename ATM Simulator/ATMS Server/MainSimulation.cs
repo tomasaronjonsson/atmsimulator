@@ -84,7 +84,7 @@ namespace ATMS_Server
             Thread.Sleep(5000);
 
             foreach (KeyValuePair<int, IClientCallbackInterface> entry in clients)
-                entry.Value.notifyNewScenario(String.Format("We currently have {0} new scenarios.", layeredScenarios.Count().ToString()));
+                entry.Value.notifyNewScenario(mainScenario);
         }
 
         public void createScenario()
@@ -98,7 +98,7 @@ namespace ATMS_Server
             {
                 throw;
             };
-
+            //for debugging purposes
             populateScenario(mainScenario);
         }
 

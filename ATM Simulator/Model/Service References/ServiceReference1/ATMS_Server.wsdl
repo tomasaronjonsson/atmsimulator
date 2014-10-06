@@ -19,11 +19,11 @@
   <wsdl:message name="IServerInterface_RegisterClient_OutputMessage">
     <wsdl:part name="parameters" element="tns:RegisterClientResponse" />
   </wsdl:message>
-  <wsdl:message name="IServerInterface_createSimulation_InputMessage">
-    <wsdl:part name="parameters" element="tns:createSimulation" />
+  <wsdl:message name="IServerInterface_createScenario_InputMessage">
+    <wsdl:part name="parameters" element="tns:createScenario" />
   </wsdl:message>
-  <wsdl:message name="IServerInterface_createSimulation_OutputMessage">
-    <wsdl:part name="parameters" element="tns:createSimulationResponse" />
+  <wsdl:message name="IServerInterface_createScenario_OutputMessage">
+    <wsdl:part name="parameters" element="tns:createScenarioResponse" />
   </wsdl:message>
   <wsdl:message name="IServerInterface_updateClient_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:updateClient" />
@@ -40,9 +40,9 @@
       <wsdl:input wsaw:Action="ATMS_Server/IServerInterface/RegisterClient" message="tns:IServerInterface_RegisterClient_InputMessage" />
       <wsdl:output wsaw:Action="ATMS_Server/IServerInterface/RegisterClientResponse" message="tns:IServerInterface_RegisterClient_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="createSimulation">
-      <wsdl:input wsaw:Action="ATMS_Server/IServerInterface/createSimulation" message="tns:IServerInterface_createSimulation_InputMessage" />
-      <wsdl:output wsaw:Action="ATMS_Server/IServerInterface/createSimulationResponse" message="tns:IServerInterface_createSimulation_OutputMessage" />
+    <wsdl:operation name="createScenario">
+      <wsdl:input wsaw:Action="ATMS_Server/IServerInterface/createScenario" message="tns:IServerInterface_createScenario_InputMessage" />
+      <wsdl:output wsaw:Action="ATMS_Server/IServerInterface/createScenarioResponse" message="tns:IServerInterface_createScenario_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="updateClient">
       <wsdl:output wsaw:Action="ATMS_Server/IServerInterface/updateClient" message="tns:IServerInterface_updateClient_OutputCallbackMessage" />

@@ -2,7 +2,12 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="View test panel" MinHeight="363" MinWidth="500" WindowStartupLocation="CenterScreen"
-        Height="363" Width="500">
+        Height="363" Width="500"
+        xmlns:vm="clr-namespace:ViewModel;assembly=ViewModel">
+
+    <Window.DataContext>
+        <vm:SimulationViewModel />
+    </Window.DataContext>
 
     <StackPanel>
         <StackPanel Height="300" Orientation="Horizontal">
@@ -10,15 +15,7 @@
                 <Button Content="Create Scenario" Command="{Binding CreateScenario}"/>
             </StackPanel>
             <ListBox Width="390">
-                <ListBoxItem Content="{Binding newScenarioString}"></ListBoxItem>
             </ListBox>
-        </StackPanel>
-        <StackPanel Height="25" HorizontalAlignment="Right" Orientation="Horizontal">
-            <Button Content="Test WCF" Command="{Binding TestWCF}"/>
-            <Label Content="service call:"/>
-            <TextBox Name="serviceBox" Text="{Binding plotModel.plot.timestamp}" Width="75"  />
-            <Label Content="callback:"/>
-            <TextBox Name="callbackBox" Text="{Binding callbackBox}" Width="75"/>
         </StackPanel>
     </StackPanel>
 </Window>

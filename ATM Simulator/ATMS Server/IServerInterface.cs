@@ -29,6 +29,6 @@ namespace ATMS_Server
         // TODO: Add your callback service operations here
 
         [OperationContract(IsOneWay = true)]
-        void notifyNewScenario(string data);
+        void notifyNewScenario(Scenario data);
     }
 }

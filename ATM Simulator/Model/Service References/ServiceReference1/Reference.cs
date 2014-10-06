@@ -9,138 +9,17 @@
 //------------------------------------------------------------------------------
 
 namespace Model.ServiceReference1 {
-    using System.Runtime.Serialization;
-    using System;
     
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="Plot", Namespace="http://schemas.datacontract.org/2004/07/ATMS_Model")]
-    [System.SerializableAttribute()]
-    public partial class Plot : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        private string timestampk__BackingFieldField;
-        
-        private double speedField;
-        
-        private bool takeOverField;
-        
-        private double xField;
-        
-        private double yField;
-        
-        private double zField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(Name="<timestamp>k__BackingField", IsRequired=true)]
-        public string timestampk__BackingField {
-            get {
-                return this.timestampk__BackingFieldField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.timestampk__BackingFieldField, value) != true)) {
-                    this.timestampk__BackingFieldField = value;
-                    this.RaisePropertyChanged("timestampk__BackingField");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public double speed {
-            get {
-                return this.speedField;
-            }
-            set {
-                if ((this.speedField.Equals(value) != true)) {
-                    this.speedField = value;
-                    this.RaisePropertyChanged("speed");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public bool takeOver {
-            get {
-                return this.takeOverField;
-            }
-            set {
-                if ((this.takeOverField.Equals(value) != true)) {
-                    this.takeOverField = value;
-                    this.RaisePropertyChanged("takeOver");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public double x {
-            get {
-                return this.xField;
-            }
-            set {
-                if ((this.xField.Equals(value) != true)) {
-                    this.xField = value;
-                    this.RaisePropertyChanged("x");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public double y {
-            get {
-                return this.yField;
-            }
-            set {
-                if ((this.yField.Equals(value) != true)) {
-                    this.yField = value;
-                    this.RaisePropertyChanged("y");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public double z {
-            get {
-                return this.zField;
-            }
-            set {
-                if ((this.zField.Equals(value) != true)) {
-                    this.zField = value;
-                    this.RaisePropertyChanged("z");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(Namespace="ATMS_Server", ConfigurationName="ServiceReference1.IServerInterface", CallbackContract=typeof(Model.ServiceReference1.IServerInterfaceCallback))]
     public interface IServerInterface {
         
         [System.ServiceModel.OperationContractAttribute(Action="ATMS_Server/IServerInterface/ReturnPoke", ReplyAction="ATMS_Server/IServerInterface/ReturnPokeResponse")]
-        Model.ServiceReference1.Plot ReturnPoke();
+        ATMS_Model.Plot ReturnPoke();
         
         [System.ServiceModel.OperationContractAttribute(Action="ATMS_Server/IServerInterface/ReturnPoke", ReplyAction="ATMS_Server/IServerInterface/ReturnPokeResponse")]
-        System.Threading.Tasks.Task<Model.ServiceReference1.Plot> ReturnPokeAsync();
+        System.Threading.Tasks.Task<ATMS_Model.Plot> ReturnPokeAsync();
         
         [System.ServiceModel.OperationContractAttribute(Action="ATMS_Server/IServerInterface/RegisterClient", ReplyAction="ATMS_Server/IServerInterface/RegisterClientResponse")]
         int RegisterClient(int id);
@@ -148,11 +27,11 @@ namespace Model.ServiceReference1 {
         [System.ServiceModel.OperationContractAttribute(Action="ATMS_Server/IServerInterface/RegisterClient", ReplyAction="ATMS_Server/IServerInterface/RegisterClientResponse")]
         System.Threading.Tasks.Task<int> RegisterClientAsync(int id);
         
-        [System.ServiceModel.OperationContractAttribute(Action="ATMS_Server/IServerInterface/createSimulation", ReplyAction="ATMS_Server/IServerInterface/createSimulationResponse")]
-        void createSimulation();
+        [System.ServiceModel.OperationContractAttribute(Action="ATMS_Server/IServerInterface/createScenario", ReplyAction="ATMS_Server/IServerInterface/createScenarioResponse")]
+        void createScenario();
         
-        [System.ServiceModel.OperationContractAttribute(Action="ATMS_Server/IServerInterface/createSimulation", ReplyAction="ATMS_Server/IServerInterface/createSimulationResponse")]
-        System.Threading.Tasks.Task createSimulationAsync();
+        [System.ServiceModel.OperationContractAttribute(Action="ATMS_Server/IServerInterface/createScenario", ReplyAction="ATMS_Server/IServerInterface/createScenarioResponse")]
+        System.Threading.Tasks.Task createScenarioAsync();
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -162,7 +41,7 @@ namespace Model.ServiceReference1 {
         void updateClient(string data);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="ATMS_Server/IServerInterface/notifyNewScenario")]
-        void notifyNewScenario(string data);
+        void notifyNewScenario(ATMS_Model.Scenario data);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -193,11 +72,11 @@ namespace Model.ServiceReference1 {
                 base(callbackInstance, binding, remoteAddress) {
         }
         
-        public Model.ServiceReference1.Plot ReturnPoke() {
+        public ATMS_Model.Plot ReturnPoke() {
             return base.Channel.ReturnPoke();
         }
         
-        public System.Threading.Tasks.Task<Model.ServiceReference1.Plot> ReturnPokeAsync() {
+        public System.Threading.Tasks.Task<ATMS_Model.Plot> ReturnPokeAsync() {
             return base.Channel.ReturnPokeAsync();
         }
         
@@ -209,12 +88,12 @@ namespace Model.ServiceReference1 {
             return base.Channel.RegisterClientAsync(id);
         }
         
-        public void createSimulation() {
-            base.Channel.createSimulation();
+        public void createScenario() {
+            base.Channel.createScenario();
         }
         
-        public System.Threading.Tasks.Task createSimulationAsync() {
-            return base.Channel.createSimulationAsync();
+        public System.Threading.Tasks.Task createScenarioAsync() {
+            return base.Channel.createScenarioAsync();
         }
     }
 }
