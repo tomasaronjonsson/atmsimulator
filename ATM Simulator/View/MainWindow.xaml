@@ -15,6 +15,7 @@
                 <Button Content="Create Scenario" Command="{Binding CreateScenario}"/>
             </StackPanel>
             <ListBox Width="390">
+                <ListBoxItem Content="{Binding plots}"></ListBoxItem>
             </ListBox>
         </StackPanel>
     </StackPanel>

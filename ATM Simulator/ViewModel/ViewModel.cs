@@ -14,8 +14,24 @@ namespace ViewModel
 {
     public class SimulationViewModel : ViewModelBase
     {
+
+
+
         SimulationModel model;
-        List<Plot> plots = new List<Plot>();
+        private List<Plot> _plots;
+        public List<Plot> plots
+        {
+            get { return _plots; }
+            set
+            {
+                if (value != _plots)
+                {
+                    _plots = value;
+                    RaisePropertyChanged("plots");
+                }
+            }
+        }
+
 
         private RelayCommand _CreateScenario;
         public RelayCommand CreateScenario
@@ -39,17 +55,25 @@ namespace ViewModel
             }
         }
 
+
         public SimulationViewModel()
         {
             model = new SimulationModel();
+            
+            
+            _plots = new List<Plot>();
+
+
+
             Messenger.Default.Register<Scenario>(this, handleScenarioUpdate);
         }
-
         private void handleScenarioUpdate(Scenario obj)
         {
             plots.Clear();
 
-            //plots = obj.tracks
+            var temp = obj.tracks.Select(x => x.plots.Select(a => a));
+
+            plots = (List<Plot>)temp;
         }
     }
 }
