@@ -43,7 +43,7 @@ namespace ATMS_Client.Models
 
         public override string ToString()
         {
-            return _plot.timestamp;
+            return _plot.test;
         }
     }
 }

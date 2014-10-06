@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -10,11 +11,11 @@ namespace ATMS_Client.Commands
 {
     class PokeServerCommand : ICommand
     {
-        ViewModel vm;
+        ViewModel viewModel;
 
         public PokeServerCommand(ViewModel vm)
         {
-            this.vm = vm;
+            this.viewModel = vm;
         }
         public bool CanExecute(object parameter)
         {
@@ -29,8 +30,12 @@ namespace ATMS_Client.Commands
 
         public void Execute(object parameter)
         {
-            vm.Poke();
-            vm.Register();
+            ThreadPool.QueueUserWorkItem(delegate(object state)
+            {
+                viewModel.Poke();
+                viewModel.Register();
+            });
+
         }
     }
 }
