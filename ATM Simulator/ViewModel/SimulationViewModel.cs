@@ -18,6 +18,8 @@ namespace ViewModel
 
 
         SimulationModel model;
+
+
         private List<Plot> _plots;
         public List<Plot> plots
         {
@@ -58,14 +60,17 @@ namespace ViewModel
 
         public SimulationViewModel()
         {
-            model = new SimulationModel();
-            
-            
-            _plots = new List<Plot>();
 
+
+            model = new SimulationModel();
 
 
             Messenger.Default.Register<Scenario>(this, handleScenarioUpdate);
+
+
+
+            _plots = new List<Plot>();
+
         }
         private void handleScenarioUpdate(Scenario obj)
         {

@@ -32,6 +32,11 @@ namespace ATMS_Model
             this.test = data;
             this.takeOver = false;
         }
-        
+
+
+        public string ToString()
+        {
+            return String.Format("{0} - X: {1} y: {2} z: {3} ", timestamp, x, y, z);
+        }
     }
 }

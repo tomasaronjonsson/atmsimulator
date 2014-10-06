@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Model
 {
-    class CallbackHandler : IClientCallbackInterface
+    class CallbackHandler : Model.ATMS_Service.IServerInterfaceCallback
     {
 
         SimulationModel model;
@@ -29,5 +29,6 @@ namespace Model
         {
             model.mainScenario = data;
         }
+
     }
 }

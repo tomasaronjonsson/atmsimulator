@@ -14,9 +14,13 @@
             <StackPanel Width="100" HorizontalAlignment="Left">
                 <Button Content="Create Scenario" Command="{Binding CreateScenario}"/>
             </StackPanel>
-            <ListBox Width="390">
-                <ListBoxItem Content="{Binding plots}"></ListBoxItem>
-            </ListBox>
+            <ListBox x:Name="map" Grid.Row="1" BorderThickness="0" ItemsSource="{Binding plots }" MinWidth="390">
+                <ListBox.ItemTemplate>
+                 <DataTemplate>
+                 <TextBlock Text="{Binding ToString}"/>
+         </DataTemplate>
+       </ListBox.ItemTemplate>
+     </ListBox>
         </StackPanel>
     </StackPanel>
 </Window>
