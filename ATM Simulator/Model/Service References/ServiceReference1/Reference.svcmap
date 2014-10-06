@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="fd7a50a6-eaef-46aa-951a-cbaf981d8a4a" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:8888/ATMS_Server/ATMS/mex" Protocol="mex" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="ATMS_Server.wsdl" MetadataType="Wsdl" ID="ac5f6ed4-e388-4d90-b149-04a5fca366ae" SourceId="1" SourceUrl="http://localhost:8888/ATMS_Server/ATMS/mex" />
+    <MetadataFile FileName="service.wsdl" MetadataType="Wsdl" ID="09322621-d873-425d-896f-7ac165311801" SourceId="1" SourceUrl="http://localhost:8888/ATMS_Server/ATMS/mex" />
+    <MetadataFile FileName="ATMS_Server.xsd" MetadataType="Schema" ID="2db71dd0-ee4f-4541-a402-f43b32623d11" SourceId="1" SourceUrl="http://localhost:8888/ATMS_Server/ATMS/mex" />
+    <MetadataFile FileName="service.xsd" MetadataType="Schema" ID="edfc8f36-eec4-489e-91a2-dacd3e54080e" SourceId="1" SourceUrl="http://localhost:8888/ATMS_Server/ATMS/mex" />
+    <MetadataFile FileName="ATMS_Model.xsd" MetadataType="Schema" ID="f083ea6e-e2da-406e-a816-6f06f70b1689" SourceId="1" SourceUrl="http://localhost:8888/ATMS_Server/ATMS/mex" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>
