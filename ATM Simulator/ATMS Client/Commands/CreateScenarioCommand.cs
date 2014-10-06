@@ -10,15 +10,15 @@ namespace ATMS_Client.Commands
 {
     class CreateScenarioCommand : ICommand
     {
-        ViewModel vm;
+        ViewModel viewModel;
 
         public CreateScenarioCommand(ViewModel vm)
         {
-            this.vm = vm;
+            this.viewModel = vm;
         }
         public bool CanExecute(object parameter)
         {
-            return true;
+            return viewModel.serverAvailable;
         }
 
         public event EventHandler CanExecuteChanged
@@ -29,7 +29,7 @@ namespace ATMS_Client.Commands
 
         public void Execute(object parameter)
         {
-            vm.newScenario();
+            viewModel.newScenario();
         }
     }
 }

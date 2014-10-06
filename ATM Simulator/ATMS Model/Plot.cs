@@ -10,7 +10,9 @@ namespace ATMS_Model
     [Serializable]
     public class Plot
     {
-        public string timestamp { get; set; }
+        //for testing
+        public string test { get; set; }
+        public DateTime timestamp { get; set; }
         public double x; //position 
         public double y; //position 
         public double z; //altitude
@@ -18,13 +20,18 @@ namespace ATMS_Model
 
         public bool takeOver; //needs to be reviewed
 
-        //a test constructor to initialize a plot with the minimum required arguments
-        public Plot(string timestamp)
+        public Plot()
         {
-            this.timestamp = timestamp;
             this.takeOver = false;
         }
 
+
+        //for testing
+        public Plot(String data)
+        {
+            this.test = data;
+            this.takeOver = false;
+        }
         
     }
 }

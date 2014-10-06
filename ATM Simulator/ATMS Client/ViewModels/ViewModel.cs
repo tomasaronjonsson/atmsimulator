@@ -15,6 +15,10 @@ namespace ATMS_Client.ViewModels
     {
         Model model;
 
+
+
+        #region properties
+
         PlotModel _plotModel;
         public PlotModel plotModel
         {
@@ -48,6 +52,18 @@ namespace ATMS_Client.ViewModels
             }
         }
 
+        private bool _serverAvailable = false;
+        public bool serverAvailable
+        {
+            get { return _serverAvailable; }
+            set
+            {
+                _serverAvailable = value;
+                OnPropertyChanged("serverAvailable");
+            }
+        }
+        #endregion
+
         public ViewModel()
         {
             model = new Model(this);
@@ -78,8 +94,8 @@ namespace ATMS_Client.ViewModels
 
         internal void Register()
         {
-            Random randomNumber = new Random();
-            model.register(randomNumber.Next(1000, 10000));
+            model.register();
+
         }
 
         internal void newScenario()

@@ -19,7 +19,7 @@ namespace ATMS_Server
         int RegisterClient(int id);
 
         [OperationContract]
-        void createSimulation();
+        void createScenario();
     }
 
     public interface IClientCallbackInterface

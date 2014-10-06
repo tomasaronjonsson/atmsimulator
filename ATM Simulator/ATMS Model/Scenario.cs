@@ -8,21 +8,14 @@ namespace ATMS_Model
 {
     public class Scenario
     {
-        public int scenarioID;
-        public List<Track> tracks;
+        //to store the list of tracks witihin the scenario
+        public List<Track> tracks { get; set; }
 
-        public Scenario(int id)
+
+        public Scenario()
         {
-            scenarioID = id;
             tracks = new List<Track>();
         }
-
-        //Test constructor to initialize a prototype scenario
-        public Scenario(Track t1)
-        {
-            scenarioID = 001;
-            tracks = new List<Track>();
-            tracks.Add(t1);
-        }
+        
     }
 }

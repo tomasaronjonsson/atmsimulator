@@ -5,13 +5,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.ServiceModel;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace ATMS_Client.Models
 {
     class Model : IServerInterfaceCallback
     {
-        ServerInterfaceClient c1;
+
+
+        private int clientID = 0;
+        private ServerInterfaceClient c1;
+
+
         public string someData;
         private ViewModel viewModel;
 
@@ -33,9 +39,11 @@ namespace ATMS_Client.Models
             viewModel.plotModel = new PlotModel(c1.ReturnPoke());
         }
 
-        public void register(int id)
+        public void register()
         {
-            c1.RegisterClient(id);
+            
+            clientID = c1.RegisterClient(clientID);
+            viewModel.serverAvailable = true;
         }
 
         public void newScenario()

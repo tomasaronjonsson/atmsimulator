@@ -8,15 +8,14 @@ namespace ATMS_Model
 {
     public class Track
     {
-        public int trackID;
-        public List<Plot> plots;
+        //to store the trackid 
+        public int trackID {get; set; }
+        //to store the list of plots
+        public List<Plot> plots { get; set; }
 
-        //Test constructor to initialize a prototype track
-        public Track(Plot p1)
+        public Track()
         {
-            trackID = 001;
             plots = new List<Plot>();
-            plots.Add(p1);
         }
     }
 }
