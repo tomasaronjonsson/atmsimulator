@@ -49,7 +49,7 @@ namespace ViewModel
         {
             plots.Clear();
 
-            plots = obj.tracks
+            //plots = obj.tracks
         }
     }
 }
