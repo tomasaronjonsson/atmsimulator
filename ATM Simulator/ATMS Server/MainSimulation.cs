@@ -46,7 +46,8 @@ namespace ATMS_Server
                 IClientCallbackInterface callback = OperationContext.Current.GetCallbackChannel<IClientCallbackInterface>();
                 clients.Add(id, callback);
                 //for testing / debugging purposes - it freezez up upon startup
-                //callback.notifyNewScenario(mainScenario);
+                ThreadPool.QueueUserWorkItem(a => { Thread.Sleep(5000); callback.notifyNewScenario(mainScenario); });
+                
             }
             catch (Exception)
             {
