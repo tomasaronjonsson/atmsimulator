@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/ATMS_Model" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/ATMS_Model" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:complexType name="Plot">
+    <xs:sequence>
+      <xs:element name="_x003C_test_x003E_k__BackingField" nillable="true" type="xs:string" />
+      <xs:element name="_x003C_timestamp_x003E_k__BackingField" type="xs:dateTime" />
+      <xs:element name="speed" type="xs:double" />
+      <xs:element name="takeOver" type="xs:boolean" />
+      <xs:element name="x" type="xs:double" />
+      <xs:element name="y" type="xs:double" />
+      <xs:element name="z" type="xs:double" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Plot" nillable="true" type="tns:Plot" />
+  <xs:complexType name="Scenario">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="tracks" nillable="true" type="tns:ArrayOfTrack" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Scenario" nillable="true" type="tns:Scenario" />
+  <xs:complexType name="ArrayOfTrack">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Track" nillable="true" type="tns:Track" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfTrack" nillable="true" type="tns:ArrayOfTrack" />
+  <xs:complexType name="Track">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="plots" nillable="true" type="tns:ArrayOfPlot" />
+      <xs:element minOccurs="0" name="trackID" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Track" nillable="true" type="tns:Track" />
+  <xs:complexType name="ArrayOfPlot">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Plot" nillable="true" type="tns:Plot" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfPlot" nillable="true" type="tns:ArrayOfPlot" />
+</xs:schema>

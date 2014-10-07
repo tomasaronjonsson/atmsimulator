@@ -21,6 +21,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ViewModel", "ViewModel\ViewModel.csproj", "{6F1428CD-540B-48AB-9984-A01751180182}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "View", "View\View.csproj", "{416FB3E3-A52A-44F4-A619-9E733B57FF0C}"
+	ProjectSection(ProjectDependencies) = postProject
+		{5C34C8BB-7DF3-461F-8D1B-034F75932822} = {5C34C8BB-7DF3-461F-8D1B-034F75932822}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

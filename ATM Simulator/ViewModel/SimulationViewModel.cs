@@ -74,11 +74,25 @@ namespace ViewModel
         }
         private void handleScenarioUpdate(Scenario obj)
         {
+            //fix later
             plots.Clear();
 
-            var temp = obj.tracks.Select(x => x.plots.Select(a => a));
+            //var temp = obj.tracks.Select(x => x.plots.Select(a => a));
+            //plots = (List<Plot>)temp;
 
-            plots = (List<Plot>)temp;
+
+            foreach (Track t in obj.tracks)
+            {
+                foreach(Plot p in t.plots)
+                {
+                    plots.Add(p);
+                }
+            }
+            RaisePropertyChanged("plots");
+
+
+
+
         }
     }
 }

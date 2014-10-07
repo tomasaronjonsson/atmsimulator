@@ -90,6 +90,8 @@ namespace ATMS_Server
         public void createScenario()
         {
             mainScenario = new Scenario();
+            populateScenario(mainScenario);
+
             try
             {
                 ThreadPool.QueueUserWorkItem(a => notifyClients());
@@ -99,7 +101,7 @@ namespace ATMS_Server
                 throw;
             };
             //for debugging purposes
-            populateScenario(mainScenario);
+         
         }
 
         //test method for populating scenarios with test data

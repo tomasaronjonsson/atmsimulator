@@ -8,11 +8,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Model.ATMS_Service {
+namespace Model.ServiceReference1 {
     
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ServiceModel.ServiceContractAttribute(Namespace="ATMS_Server", ConfigurationName="ATMS_Service.IServerInterface", CallbackContract=typeof(Model.ATMS_Service.IServerInterfaceCallback))]
+    [System.ServiceModel.ServiceContractAttribute(Namespace="ATMS_Server", ConfigurationName="ServiceReference1.IServerInterface", CallbackContract=typeof(Model.ServiceReference1.IServerInterfaceCallback))]
     public interface IServerInterface {
         
         [System.ServiceModel.OperationContractAttribute(Action="ATMS_Server/IServerInterface/ReturnPoke", ReplyAction="ATMS_Server/IServerInterface/ReturnPokeResponse")]
@@ -45,12 +45,12 @@ namespace Model.ATMS_Service {
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public interface IServerInterfaceChannel : Model.ATMS_Service.IServerInterface, System.ServiceModel.IClientChannel {
+    public interface IServerInterfaceChannel : Model.ServiceReference1.IServerInterface, System.ServiceModel.IClientChannel {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class ServerInterfaceClient : System.ServiceModel.DuplexClientBase<Model.ATMS_Service.IServerInterface>, Model.ATMS_Service.IServerInterface {
+    public partial class ServerInterfaceClient : System.ServiceModel.DuplexClientBase<Model.ServiceReference1.IServerInterface>, Model.ServiceReference1.IServerInterface {
         
         public ServerInterfaceClient(System.ServiceModel.InstanceContext callbackInstance) : 
                 base(callbackInstance) {

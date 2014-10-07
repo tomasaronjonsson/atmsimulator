@@ -1,7 +1,7 @@
 ﻿using ATMS_Model;
 using ATMS_Server;
 using GalaSoft.MvvmLight.Messaging;
-using Model.ATMS_Service;
+using Model.ServiceReference1;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,12 +27,18 @@ namespace Model
         //to indicate if the server is aviable for query
         public bool isServerAvailable;
 
+
+        private Scenario _mainScenario;
         public Scenario mainScenario
         {
             set
             {
-                mainScenario = value;
+                _mainScenario = value;
                 Messenger.Default.Send(value);
+            }
+            get
+            {
+                return _mainScenario;
             }
         }
 
