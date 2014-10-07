@@ -81,9 +81,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="packages.config" />
     <None Include="Properties\DataSources\ATMS_Model.Plot.datasource" />
     <None Include="Service References\ServiceReference1\ATMS_Model.xsd">
