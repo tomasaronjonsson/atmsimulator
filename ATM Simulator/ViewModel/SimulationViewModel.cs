@@ -66,21 +66,20 @@ namespace ViewModel
 
         private void handleScenarioUpdate(Scenario obj)
         {
-            //create a temporary list to work on
-            List<Plot> temp = new List<Plot>();
-
-            foreach (Track t in obj.tracks)
+            if (obj != null)
             {
-                foreach (Plot p in t.plots)
+                //create a temporary list to work on
+                List<Plot> temp = new List<Plot>();
+
+                foreach (Track t in obj.tracks)
                 {
-                    temp.Add(p);
+                    foreach (Plot p in t.plots)
+                    {
+                        temp.Add(p);
+                    }
                 }
+                plots = temp;
             }
-
-            plots = temp;
-
-            /*var temp1 = obj.tracks.Select(x => x.plots.Select(a => a));
-            plots = (List<Plot>)temp1;*/
         }
     }
 }
