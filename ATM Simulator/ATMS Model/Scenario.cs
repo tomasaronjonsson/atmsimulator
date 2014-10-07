@@ -11,11 +11,9 @@ namespace ATMS_Model
         //to store the list of tracks witihin the scenario
         public List<Track> tracks { get; set; }
 
-
         public Scenario()
         {
             tracks = new List<Track>();
         }
-        
     }
 }

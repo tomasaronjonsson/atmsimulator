@@ -15,49 +15,23 @@ namespace ATMS_Server
     {
         private static Dictionary<int, IClientCallbackInterface> clients;
 
-
         private int availableClientID = 1000;
 
-        //declaring the scenario we will have has the "main" scenario, where changes are saved etc.
+        //this is the main scenario
         private Scenario mainScenario;
-
-
 
         //declaring a dictionary to store the layered scenarios , the 
         private Dictionary<int, Scenario> layeredScenarios;
 
 
-        //declaring an integer to automatically increment when we add layered scenarios
-        private int scenarioIDSigner;
-
         public MainSimulation()
         {
-            scenarioIDSigner = 1;
             clients = new Dictionary<int, IClientCallbackInterface>();
             layeredScenarios = new Dictionary<int, Scenario>();
         }
 
-
-        #region test
-        //respond to poke method
-        public Plot ReturnPoke()
-        {
-            return new Plot("Ok");
-        }
-
-        //to test the callback
-        public void hiClient()
-        {
-            Thread.Sleep(5000);
-
-            foreach (KeyValuePair<int, IClientCallbackInterface> entry in clients)
-                entry.Value.updateClient(String.Format("OK {0}", clients.Count().ToString()));
-        }
-        #endregion test
-
         public int RegisterClient(int id)
         {
-
             if (id < 1000)
             {
                 while (clients.ContainsKey(availableClientID))
@@ -71,18 +45,14 @@ namespace ATMS_Server
             {
                 IClientCallbackInterface callback = OperationContext.Current.GetCallbackChannel<IClientCallbackInterface>();
                 clients.Add(id, callback);
-                //for testing / debugging purposes
-                ThreadPool.QueueUserWorkItem(a => hiClient());
-            }
-            catch (Exception) { }
-            try
-            {
-                ThreadPool.QueueUserWorkItem(a => notifyClients());
+                //for testing / debugging purposes - it freezez up upon startup
+                //callback.notifyNewScenario(mainScenario);
             }
             catch (Exception)
             {
                 throw;
-            };
+            }
+
             return id;
         }
 
@@ -107,14 +77,11 @@ namespace ATMS_Server
             {
                 throw;
             };
-            //for debugging purposes
-         
         }
 
         //test method for populating scenarios with test data
         private void populateScenario(Scenario sc)
         {
-
             //here we are going to add 3 tracks, with 3 plots each for testing later
 
             #region track1
@@ -159,7 +126,6 @@ namespace ATMS_Server
             //addting track 1 the scenario
             sc.tracks.Add(t1);
 
-
             #region track2
             //creating the second track for out test scenario
             Track t2 = new Track();
@@ -199,7 +165,6 @@ namespace ATMS_Server
             //addting track 2 the scenario
             sc.tracks.Add(t2);
 
-
             #region track3
             //creating the third track for our test scenario
             Track t3 = new Track();
@@ -238,6 +203,5 @@ namespace ATMS_Server
             //addting track 3 the scenario
             sc.tracks.Add(t3);
         }
-
     }
 }

@@ -13,20 +13,16 @@ namespace Model
 {
     public class SimulationModel : Messenger
     {
-
-
         private int clientID;
-        
+
         //to store the handler for the callbacks from the server
         CallbackHandler callbackhandling;
-        
 
         //to store the instance of the server client
         public ServerInterfaceClient server;
-        
+
         //to indicate if the server is aviable for query
         public bool isServerAvailable;
-
 
         private Scenario _mainScenario;
         public Scenario mainScenario
@@ -42,17 +38,16 @@ namespace Model
             }
         }
 
+
         public SimulationModel()
         {
-           
             //callback handler
             callbackhandling = new CallbackHandler(this);
-            
+
             // Construct InstanceContext to handle messages on callback interface
             InstanceContext instanceContext = new InstanceContext(callbackhandling);
 
-
-           Console.WriteLine( instanceContext.State);
+            Console.WriteLine(instanceContext.State);
             try
             {
                 //create a client
@@ -65,19 +60,14 @@ namespace Model
                 throw new Exception("ATMS-0001: Couldn't connect to the server");
             }
 
-
-
             isServerAvailable = false;
             clientID = 0;
-           
-
 
             clientID = server.RegisterClient(clientID);
             if (clientID != 0)
             {
                 isServerAvailable = true;
             }
-            
         }
         #region ViewModel calls
         public void createScenario()
@@ -87,8 +77,6 @@ namespace Model
             isServerAvailable = true;
         }
         #endregion
-
-
 
         public void updateClient(string data)
         {

@@ -14,15 +14,10 @@ namespace ViewModel
 {
     public class SimulationViewModel : ViewModelBase
     {
-
-
-
         SimulationModel model;
 
-
+        //these hold the list of plots 
         private List<Plot> _plots;
-
-
         public List<Plot> plots
         {
             get { return _plots; }
@@ -36,7 +31,7 @@ namespace ViewModel
             }
         }
 
-
+        //this is the create scenario command that calls the create scenario method from the model
         private RelayCommand _CreateScenario;
         public RelayCommand CreateScenario
         {
@@ -54,37 +49,29 @@ namespace ViewModel
                            return model.isServerAvailable;
                        });
                 }
-
                 return _CreateScenario;
             }
         }
 
-
         public SimulationViewModel()
         {
-
-
             model = new SimulationModel();
 
-
+            //This listens to the brodcasted messages sent by the Messenger
             Messenger.Default.Register<Scenario>(this, handleScenarioUpdate);
 
-
-
+            //initialize the plots list
             _plots = new List<Plot>();
-
         }
+
         private void handleScenarioUpdate(Scenario obj)
         {
+            //create a temporary list to work on
             List<Plot> temp = new List<Plot>();
-
-            //var temp = obj.tracks.Select(x => x.plots.Select(a => a));
-            //plots = (List<Plot>)temp;
-
 
             foreach (Track t in obj.tracks)
             {
-                foreach(Plot p in t.plots)
+                foreach (Plot p in t.plots)
                 {
                     temp.Add(p);
                 }
@@ -92,10 +79,8 @@ namespace ViewModel
 
             plots = temp;
 
-           // RaisePropertyChanged("plots");
-
-
-
+            /*var temp1 = obj.tracks.Select(x => x.plots.Select(a => a));
+            plots = (List<Plot>)temp1;*/
         }
     }
 }

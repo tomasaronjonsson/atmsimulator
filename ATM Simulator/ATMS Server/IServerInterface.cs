@@ -13,9 +13,6 @@ namespace ATMS_Server
     public interface IServerInterface
     {
         [OperationContract]
-        Plot ReturnPoke();
-
-        [OperationContract]
         int RegisterClient(int id);
 
         [OperationContract]
@@ -26,8 +23,8 @@ namespace ATMS_Server
     {
         [OperationContract(IsOneWay = true)]
         void updateClient(string data);
-        // TODO: Add your callback service operations here
 
+        //notifies all clients of all the changes
         [OperationContract(IsOneWay = true)]
         void notifyNewScenario(Scenario data);
     }

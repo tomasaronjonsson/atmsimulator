@@ -10,19 +10,17 @@ namespace Model
 {
     class CallbackHandler : Model.ServiceReference1.IServerInterfaceCallback
     {
-
         SimulationModel model;
 
         public CallbackHandler(SimulationModel model)
         {
-            this.model = model;    
+            this.model = model;
         }
 
 
         public void updateClient(string data)
         {
-            //throw new NotImplementedException();
-            
+            throw new NotImplementedException("ATMS/Model_0001: updateClient() not implemented");
         }
 
         public void notifyNewScenario(Scenario data)

@@ -9,9 +9,9 @@ namespace ATMS_Model
     public class Track
     {
         //to store the trackid 
-        public int trackID {get; set; }
+        public int trackID;
         //to store the list of plots
-        public List<Plot> plots { get; set; }
+        public List<Plot> plots;
 
         public Track()
         {

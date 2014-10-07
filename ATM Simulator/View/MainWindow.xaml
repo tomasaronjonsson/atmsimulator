@@ -16,11 +16,11 @@
             </StackPanel>
             <ListBox ItemsSource="{Binding plots}" MinWidth="390">
                 <ListBox.ItemTemplate>
-                 <DataTemplate>
-                 <TextBlock Text="{Binding }"/>
-         </DataTemplate>
-       </ListBox.ItemTemplate>
-     </ListBox>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding }"/>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
         </StackPanel>
         <Label Content="{Binding plots.Count }"/>
     </StackPanel>
