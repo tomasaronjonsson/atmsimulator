@@ -14,14 +14,15 @@
             <StackPanel Width="100" HorizontalAlignment="Left">
                 <Button Content="Create Scenario" Command="{Binding CreateScenario}"/>
             </StackPanel>
-            <ListBox ItemsSource="{Binding plots }" MinWidth="390">
+            <ListBox ItemsSource="{Binding plots}" MinWidth="390">
                 <ListBox.ItemTemplate>
                  <DataTemplate>
-                 <TextBlock Text="{Binding ToString}"/>
+                 <TextBlock Text="{Binding }"/>
          </DataTemplate>
        </ListBox.ItemTemplate>
      </ListBox>
         </StackPanel>
+        <Label Content="{Binding plots.Count }"/>
     </StackPanel>
 </Window>
 

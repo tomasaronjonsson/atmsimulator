@@ -34,7 +34,7 @@ namespace ATMS_Model
         }
 
 
-        public string ToString()
+        public override string ToString()
         {
             return String.Format("{0} - X: {1} y: {2} z: {3} ", timestamp, x, y, z);
         }

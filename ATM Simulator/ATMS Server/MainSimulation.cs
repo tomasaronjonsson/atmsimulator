@@ -75,7 +75,14 @@ namespace ATMS_Server
                 ThreadPool.QueueUserWorkItem(a => hiClient());
             }
             catch (Exception) { }
-
+            try
+            {
+                ThreadPool.QueueUserWorkItem(a => notifyClients());
+            }
+            catch (Exception)
+            {
+                throw;
+            };
             return id;
         }
 
@@ -165,16 +172,17 @@ namespace ATMS_Server
             t2_1.y = 130;
             t2_1.z = 140;
             //add the plot to the track
-            t2.plots.Add(t1_1);
+            t2.plots.Add(t2_1);
 
             //second plot within the second track after 4 seonds
             Plot t2_2 = new Plot();
             t2_2.timestamp = DateTime.Now.AddSeconds(4);
             t2_2.speed = 500;
-            t2_2.x = 25;
-            t2_2.y = 35;
-            t2_2.z = 35;
-
+            t2_2.x = 125;
+            t2_2.y = 135;
+            t2_2.z = 135;
+            //add the plot to the track
+            t2.plots.Add(t2_2);
 
             //third plot within the second track after 8 seonds
             Plot t2_3 = new Plot();
@@ -183,6 +191,8 @@ namespace ATMS_Server
             t2_3.x = 130;
             t2_3.y = 140;
             t2_3.z = 130;
+            //add the plot to the track
+            t2.plots.Add(t2_3);
 
             #endregion track2
 
@@ -202,7 +212,7 @@ namespace ATMS_Server
             t3_1.y = 230;
             t3_1.z = 240;
             //add the plot to the track
-            t2.plots.Add(t1_1);
+            t2.plots.Add(t3_1);
 
             //second plot within the third track after 4 seonds
             Plot t3_2 = new Plot();
@@ -211,7 +221,8 @@ namespace ATMS_Server
             t3_2.x = 225;
             t3_2.y = 225;
             t3_2.z = 235;
-
+            //add the plot to the track
+            t2.plots.Add(t3_2);
 
             //third plot within the third track after 8 seonds
             Plot t3_3 = new Plot();
@@ -220,7 +231,8 @@ namespace ATMS_Server
             t3_3.x = 230;
             t3_3.y = 240;
             t3_3.z = 230;
-
+            //add the plot to the track
+            t2.plots.Add(t3_3);
             #endregion track3
 
             //addting track 3 the scenario

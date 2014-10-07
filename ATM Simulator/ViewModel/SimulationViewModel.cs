@@ -21,6 +21,8 @@ namespace ViewModel
 
 
         private List<Plot> _plots;
+
+
         public List<Plot> plots
         {
             get { return _plots; }
@@ -74,8 +76,7 @@ namespace ViewModel
         }
         private void handleScenarioUpdate(Scenario obj)
         {
-            //fix later
-            plots.Clear();
+            List<Plot> temp = new List<Plot>();
 
             //var temp = obj.tracks.Select(x => x.plots.Select(a => a));
             //plots = (List<Plot>)temp;
@@ -85,11 +86,13 @@ namespace ViewModel
             {
                 foreach(Plot p in t.plots)
                 {
-                    plots.Add(p);
+                    temp.Add(p);
                 }
             }
-            RaisePropertyChanged("plots");
 
+            plots = temp;
+
+           // RaisePropertyChanged("plots");
 
 
 
