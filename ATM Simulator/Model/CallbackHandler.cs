@@ -22,7 +22,6 @@ namespace Model
             model.mainScenario = data;
         }
 
-
         public void notifyTimeUpdate(int currentServerTime)
         {
             model.currentServerTime = currentServerTime;

@@ -8,7 +8,6 @@ namespace ATMS_Server
 {
     public class TimeWorker
     {
-
         private MainSimulation mainSimulation;
 
         private volatile bool stop;
@@ -27,12 +26,10 @@ namespace ATMS_Server
 
             }
         }
+
         public void RequestStop()
         {
             stop = true;
         }
-
-
-
     }
 }

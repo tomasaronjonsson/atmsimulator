@@ -16,10 +16,10 @@ namespace Model.ServiceReference1 {
     public interface IServerInterface {
         
         [System.ServiceModel.OperationContractAttribute(Action="ATMS_Server/IServerInterface/RegisterClient", ReplyAction="ATMS_Server/IServerInterface/RegisterClientResponse")]
-        int RegisterClient(int id);
+        void RegisterClient();
         
         [System.ServiceModel.OperationContractAttribute(Action="ATMS_Server/IServerInterface/RegisterClient", ReplyAction="ATMS_Server/IServerInterface/RegisterClientResponse")]
-        System.Threading.Tasks.Task<int> RegisterClientAsync(int id);
+        System.Threading.Tasks.Task RegisterClientAsync();
         
         [System.ServiceModel.OperationContractAttribute(Action="ATMS_Server/IServerInterface/createScenario", ReplyAction="ATMS_Server/IServerInterface/createScenarioResponse")]
         void createScenario();
@@ -32,6 +32,12 @@ namespace Model.ServiceReference1 {
         
         [System.ServiceModel.OperationContractAttribute(Action="ATMS_Server/IServerInterface/playSimulation", ReplyAction="ATMS_Server/IServerInterface/playSimulationResponse")]
         System.Threading.Tasks.Task playSimulationAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="ATMS_Server/IServerInterface/checkIfRegistered", ReplyAction="ATMS_Server/IServerInterface/checkIfRegisteredResponse")]
+        bool checkIfRegistered();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="ATMS_Server/IServerInterface/checkIfRegistered", ReplyAction="ATMS_Server/IServerInterface/checkIfRegisteredResponse")]
+        System.Threading.Tasks.Task<bool> checkIfRegisteredAsync();
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -72,12 +78,12 @@ namespace Model.ServiceReference1 {
                 base(callbackInstance, binding, remoteAddress) {
         }
         
-        public int RegisterClient(int id) {
-            return base.Channel.RegisterClient(id);
+        public void RegisterClient() {
+            base.Channel.RegisterClient();
         }
         
-        public System.Threading.Tasks.Task<int> RegisterClientAsync(int id) {
-            return base.Channel.RegisterClientAsync(id);
+        public System.Threading.Tasks.Task RegisterClientAsync() {
+            return base.Channel.RegisterClientAsync();
         }
         
         public void createScenario() {
@@ -94,6 +100,14 @@ namespace Model.ServiceReference1 {
         
         public System.Threading.Tasks.Task playSimulationAsync() {
             return base.Channel.playSimulationAsync();
+        }
+        
+        public bool checkIfRegistered() {
+            return base.Channel.checkIfRegistered();
+        }
+        
+        public System.Threading.Tasks.Task<bool> checkIfRegisteredAsync() {
+            return base.Channel.checkIfRegisteredAsync();
         }
     }
 }

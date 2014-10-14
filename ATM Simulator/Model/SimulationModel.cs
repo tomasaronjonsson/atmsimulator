@@ -51,54 +51,71 @@ namespace Model
                 }
             }
         }
-        
+
 
         public SimulationModel()
         {
             //callback handler
             callbackhandling = new CallbackHandler(this);
 
-            // Construct InstanceContext to handle messages on callback interface
-            InstanceContext instanceContext = new InstanceContext(callbackhandling);
-
-            Console.WriteLine(instanceContext.State);
-            try
-            {
-                //create a client
-                server = new ServerInterfaceClient(instanceContext);
-            }
-            catch (Exception e)
-            {
-                //exception thrown! print it somewhere
-                Console.WriteLine(e.ToString());
-                throw new Exception("ATMS-0001: Couldn't connect to the server");
-            }
+            checkServer();
 
             isServerAvailable = false;
             clientID = 0;
-
-            clientID = server.RegisterClient(clientID);
-            if (clientID != 0)
+            if (checkServer())
             {
                 isServerAvailable = true;
             }
         }
+
+        //use this method to check the server status and channel every time you call the server
+        private bool checkServer()
+        {
+            try
+            {
+                if (server == null)
+                {
+                    InstanceContext instanceContext = new InstanceContext(callbackhandling);
+                    server = new ServerInterfaceClient(instanceContext);
+                }
+                if (server.State != CommunicationState.Opened)
+                {
+                    InstanceContext instanceContext = new InstanceContext(callbackhandling);
+                    server = new ServerInterfaceClient(instanceContext);
+                }
+                if (!server.checkIfRegistered())
+                {
+                    server.RegisterClient();
+                }
+                return true;
+            }
+            catch (Exception)
+            {
+                throw new Exception("ATMS/Model-0002: Failed to check the server.");
+            }
+            return false;
+        }
+
         #region ViewModel calls
         public void createScenario()
         {
             isServerAvailable = false;
-            server.createScenario();
+            if (checkServer())
+            {
+                server.createScenario();
+            }
             isServerAvailable = true;
         }
         public void play()
         {
             isServerAvailable = false;
-            server.playSimulation();
+            if (checkServer())
+            {
+                server.playSimulation();
+            }
             isServerAvailable = true;
         }
         #endregion
-
-       
 
         public void notifyNewScenario(Scenario data)
         {

@@ -25,6 +25,12 @@
   <wsdl:message name="IServerInterface_playSimulation_OutputMessage">
     <wsdl:part name="parameters" element="tns:playSimulationResponse" />
   </wsdl:message>
+  <wsdl:message name="IServerInterface_checkIfRegistered_InputMessage">
+    <wsdl:part name="parameters" element="tns:checkIfRegistered" />
+  </wsdl:message>
+  <wsdl:message name="IServerInterface_checkIfRegistered_OutputMessage">
+    <wsdl:part name="parameters" element="tns:checkIfRegisteredResponse" />
+  </wsdl:message>
   <wsdl:message name="IServerInterface_notifyTimeUpdate_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:notifyTimeUpdate" />
   </wsdl:message>
@@ -43,6 +49,10 @@
     <wsdl:operation name="playSimulation">
       <wsdl:input wsaw:Action="ATMS_Server/IServerInterface/playSimulation" message="tns:IServerInterface_playSimulation_InputMessage" />
       <wsdl:output wsaw:Action="ATMS_Server/IServerInterface/playSimulationResponse" message="tns:IServerInterface_playSimulation_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="checkIfRegistered">
+      <wsdl:input wsaw:Action="ATMS_Server/IServerInterface/checkIfRegistered" message="tns:IServerInterface_checkIfRegistered_InputMessage" />
+      <wsdl:output wsaw:Action="ATMS_Server/IServerInterface/checkIfRegisteredResponse" message="tns:IServerInterface_checkIfRegistered_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="notifyTimeUpdate">
       <wsdl:output wsaw:Action="ATMS_Server/IServerInterface/notifyTimeUpdate" message="tns:IServerInterface_notifyTimeUpdate_OutputCallbackMessage" />

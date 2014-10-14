@@ -13,7 +13,7 @@ namespace ATMS_Server
     public interface IServerInterface
     {
         [OperationContract]
-        int RegisterClient(int id);
+        void RegisterClient();
 
         [OperationContract]
         void createScenario();
@@ -21,6 +21,8 @@ namespace ATMS_Server
         [OperationContract]
         void playSimulation();
 
+        [OperationContract]
+        bool checkIfRegistered();
     }
 
     public interface IClientCallbackInterface

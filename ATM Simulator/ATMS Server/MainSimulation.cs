@@ -13,8 +13,7 @@ namespace ATMS_Server
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single, ConcurrencyMode = ConcurrencyMode.Multiple)]
     public class MainSimulation : IServerInterface
     {
-        private static Dictionary<int, IClientCallbackInterface> clients;
-
+        private static List<IClientCallbackInterface> clients;
 
         private int availableClientID;
 
@@ -30,14 +29,10 @@ namespace ATMS_Server
         Thread timeThread;
 
 
-
-
-
         public MainSimulation()
         {
-
             #region Initilizing variables
-            clients = new Dictionary<int, IClientCallbackInterface>();
+            clients = new List<IClientCallbackInterface>();
 
             layeredScenarios = new Dictionary<int, Scenario>();
 
@@ -45,9 +40,6 @@ namespace ATMS_Server
 
             availableClientID = 1000;
             #endregion
-
-
-
         }
 
         /*
@@ -66,31 +58,23 @@ namespace ATMS_Server
             timeThread.Start();
         }
 
-        public int RegisterClient(int id)
+        public void RegisterClient()
         {
-            if (id < 1000)
-            {
-                while (clients.ContainsKey(availableClientID))
-                {
-                    availableClientID++;
-                }
-                id = availableClientID;
-            }
-
             try
             {
                 IClientCallbackInterface callback = OperationContext.Current.GetCallbackChannel<IClientCallbackInterface>();
-                clients.Add(id, callback);
-                //for testing / debugging purposes - it freezez up upon startup
-                ThreadPool.QueueUserWorkItem(a => { Thread.Sleep(5000); callback.notifyNewScenario(mainScenario); });
+                clients.Add(callback);
 
+                //for testing / debugging purposes - it freezez up upon startup
+                if (mainScenario != null)
+                {
+                    ThreadPool.QueueUserWorkItem(a => { Thread.Sleep(5000); callback.notifyNewScenario(mainScenario); });
+                }
             }
             catch (Exception)
             {
-                throw;
+                throw new Exception("ATMS-MainSimulation-0001: Failed to register client");
             }
-
-            return id;
         }
 
         public void createScenario()
@@ -107,6 +91,15 @@ namespace ATMS_Server
             };
         }
 
+        public bool checkIfRegistered()
+        {
+            if (clients.Contains(OperationContext.Current.GetCallbackChannel<IClientCallbackInterface>()))
+            {
+                return true;
+            }
+            return false;
+        }
+
         #endregion
 
         /*
@@ -116,11 +109,8 @@ namespace ATMS_Server
 
         public void notifyClients()
         {
-            //todo FIX THIS FUCKERS
-            Thread.Sleep(5000);
-
-            foreach (KeyValuePair<int, IClientCallbackInterface> entry in clients)
-                entry.Value.notifyNewScenario(mainScenario);
+            foreach (IClientCallbackInterface entry in clients)
+                entry.notifyNewScenario(mainScenario);
         }
 
         #endregion
@@ -250,9 +240,6 @@ namespace ATMS_Server
             sc.tracks.Add(t3);
         }
 
-
-
-
         public void tickTock()
         {
             //incrementing the time by the value in the radarinterval
@@ -260,7 +247,7 @@ namespace ATMS_Server
 
             //notifying listening clients of the update
             //TODO catch a timeout exception here
-            clients.Select(x => x.Value).ToList().ForEach(c => c.notifyTimeUpdate(currentServerTime));
+            clients.ForEach(c => c.notifyTimeUpdate(currentServerTime));
         }
     }
 }
