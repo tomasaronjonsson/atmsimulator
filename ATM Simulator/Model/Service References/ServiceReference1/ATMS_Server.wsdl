@@ -7,12 +7,6 @@
       <xsd:import namespace="http://schemas.datacontract.org/2004/07/ATMS_Model" />
     </xsd:schema>
   </wsdl:types>
-  <wsdl:message name="IServerInterface_ReturnPoke_InputMessage">
-    <wsdl:part name="parameters" element="tns:ReturnPoke" />
-  </wsdl:message>
-  <wsdl:message name="IServerInterface_ReturnPoke_OutputMessage">
-    <wsdl:part name="parameters" element="tns:ReturnPokeResponse" />
-  </wsdl:message>
   <wsdl:message name="IServerInterface_RegisterClient_InputMessage">
     <wsdl:part name="parameters" element="tns:RegisterClient" />
   </wsdl:message>
@@ -25,17 +19,19 @@
   <wsdl:message name="IServerInterface_createScenario_OutputMessage">
     <wsdl:part name="parameters" element="tns:createScenarioResponse" />
   </wsdl:message>
-  <wsdl:message name="IServerInterface_updateClient_OutputCallbackMessage">
-    <wsdl:part name="parameters" element="tns:updateClient" />
+  <wsdl:message name="IServerInterface_playSimulation_InputMessage">
+    <wsdl:part name="parameters" element="tns:playSimulation" />
+  </wsdl:message>
+  <wsdl:message name="IServerInterface_playSimulation_OutputMessage">
+    <wsdl:part name="parameters" element="tns:playSimulationResponse" />
+  </wsdl:message>
+  <wsdl:message name="IServerInterface_notifyTimeUpdate_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:notifyTimeUpdate" />
   </wsdl:message>
   <wsdl:message name="IServerInterface_notifyNewScenario_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:notifyNewScenario" />
   </wsdl:message>
   <wsdl:portType name="IServerInterface">
-    <wsdl:operation name="ReturnPoke">
-      <wsdl:input wsaw:Action="ATMS_Server/IServerInterface/ReturnPoke" message="tns:IServerInterface_ReturnPoke_InputMessage" />
-      <wsdl:output wsaw:Action="ATMS_Server/IServerInterface/ReturnPokeResponse" message="tns:IServerInterface_ReturnPoke_OutputMessage" />
-    </wsdl:operation>
     <wsdl:operation name="RegisterClient">
       <wsdl:input wsaw:Action="ATMS_Server/IServerInterface/RegisterClient" message="tns:IServerInterface_RegisterClient_InputMessage" />
       <wsdl:output wsaw:Action="ATMS_Server/IServerInterface/RegisterClientResponse" message="tns:IServerInterface_RegisterClient_OutputMessage" />
@@ -44,8 +40,12 @@
       <wsdl:input wsaw:Action="ATMS_Server/IServerInterface/createScenario" message="tns:IServerInterface_createScenario_InputMessage" />
       <wsdl:output wsaw:Action="ATMS_Server/IServerInterface/createScenarioResponse" message="tns:IServerInterface_createScenario_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="updateClient">
-      <wsdl:output wsaw:Action="ATMS_Server/IServerInterface/updateClient" message="tns:IServerInterface_updateClient_OutputCallbackMessage" />
+    <wsdl:operation name="playSimulation">
+      <wsdl:input wsaw:Action="ATMS_Server/IServerInterface/playSimulation" message="tns:IServerInterface_playSimulation_InputMessage" />
+      <wsdl:output wsaw:Action="ATMS_Server/IServerInterface/playSimulationResponse" message="tns:IServerInterface_playSimulation_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="notifyTimeUpdate">
+      <wsdl:output wsaw:Action="ATMS_Server/IServerInterface/notifyTimeUpdate" message="tns:IServerInterface_notifyTimeUpdate_OutputCallbackMessage" />
     </wsdl:operation>
     <wsdl:operation name="notifyNewScenario">
       <wsdl:output wsaw:Action="ATMS_Server/IServerInterface/notifyNewScenario" message="tns:IServerInterface_notifyNewScenario_OutputCallbackMessage" />

@@ -15,7 +15,8 @@ namespace ATMS_Server
     {
         private static Dictionary<int, IClientCallbackInterface> clients;
 
-        private int availableClientID = 1000;
+
+        private int availableClientID;
 
         //this is the main scenario
         private Scenario mainScenario;
@@ -23,11 +24,46 @@ namespace ATMS_Server
         //declaring a dictionary to store the layered scenarios , the 
         private Dictionary<int, Scenario> layeredScenarios;
 
+        //current server time in seconds
+        int currentServerTime;
+        //the thread for incrementing time (current server time)
+        Thread timeThread;
+
+
+
+
 
         public MainSimulation()
         {
+
+            #region Initilizing variables
             clients = new Dictionary<int, IClientCallbackInterface>();
+
             layeredScenarios = new Dictionary<int, Scenario>();
+
+            currentServerTime = 0;
+
+            availableClientID = 1000;
+            #endregion
+
+
+
+        }
+
+        /*
+         *  The implementation of the IServerInterface for the duplex contract
+         * */
+        #region IserverInterface
+
+        public void playSimulation()
+        {
+            //notify all client we are playing
+            //  clients.Select(x => x.Value).ToList().ForEach(c => c.notifyTimeUpdate(currentServerTime));
+
+            //start the timeworker thread who is responsable for calinn the incremental time funciton depending on the radarinterval
+            TimeWorker worker = new TimeWorker(this);
+            timeThread = new Thread(worker.DoWork);
+            timeThread.Start();
         }
 
         public int RegisterClient(int id)
@@ -47,7 +83,7 @@ namespace ATMS_Server
                 clients.Add(id, callback);
                 //for testing / debugging purposes - it freezez up upon startup
                 ThreadPool.QueueUserWorkItem(a => { Thread.Sleep(5000); callback.notifyNewScenario(mainScenario); });
-                
+
             }
             catch (Exception)
             {
@@ -57,28 +93,37 @@ namespace ATMS_Server
             return id;
         }
 
+        public void createScenario()
+        {
+            try
+            {
+                mainScenario = new Scenario();
+                populateScenario(mainScenario);
+                ThreadPool.QueueUserWorkItem(a => notifyClients());
+            }
+            catch (Exception)
+            {
+                throw new Exception("ATMS-MainSimulation-0001: Failed to create a new scenario");
+            };
+        }
+
+        #endregion
+
+        /*
+         *  The implementation of the callbacks to the callbackinteerface in the duplex contract
+         * */
+        #region Communication with client
+
         public void notifyClients()
         {
+            //todo FIX THIS FUCKERS
             Thread.Sleep(5000);
 
             foreach (KeyValuePair<int, IClientCallbackInterface> entry in clients)
                 entry.Value.notifyNewScenario(mainScenario);
         }
 
-        public void createScenario()
-        {
-            mainScenario = new Scenario();
-            populateScenario(mainScenario);
-
-            try
-            {
-                ThreadPool.QueueUserWorkItem(a => notifyClients());
-            }
-            catch (Exception)
-            {
-                throw;
-            };
-        }
+        #endregion
 
         //test method for populating scenarios with test data
         private void populateScenario(Scenario sc)
@@ -203,6 +248,19 @@ namespace ATMS_Server
 
             //addting track 3 the scenario
             sc.tracks.Add(t3);
+        }
+
+
+
+
+        public void tickTock()
+        {
+            //incrementing the time by the value in the radarinterval
+            currentServerTime += ATMS_Model.BuisnessLogicValues.radarInterval;
+
+            //notifying listening clients of the update
+            //TODO catch a timeout exception here
+            clients.Select(x => x.Value).ToList().ForEach(c => c.notifyTimeUpdate(currentServerTime));
         }
     }
 }

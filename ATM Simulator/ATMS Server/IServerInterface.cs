@@ -17,12 +17,16 @@ namespace ATMS_Server
 
         [OperationContract]
         void createScenario();
+
+        [OperationContract]
+        void playSimulation();
+
     }
 
     public interface IClientCallbackInterface
     {
         [OperationContract(IsOneWay = true)]
-        void updateClient(string data);
+        void notifyTimeUpdate(int currentServerTime);
 
         //notifies all clients of all the changes
         [OperationContract(IsOneWay = true)]

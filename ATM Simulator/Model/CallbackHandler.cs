@@ -17,16 +17,15 @@ namespace Model
             this.model = model;
         }
 
-
-        public void updateClient(string data)
-        {
-            throw new NotImplementedException("ATMS/Model_0001: updateClient() not implemented");
-        }
-
         public void notifyNewScenario(Scenario data)
         {
             model.mainScenario = data;
         }
 
+
+        public void notifyTimeUpdate(int currentServerTime)
+        {
+            model.currentServerTime = currentServerTime;
+        }
     }
 }
