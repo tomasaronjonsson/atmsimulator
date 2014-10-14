@@ -15,6 +15,12 @@ namespace Model.ServiceReference1 {
     [System.ServiceModel.ServiceContractAttribute(Namespace="ATMS_Server", ConfigurationName="ServiceReference1.IServerInterface", CallbackContract=typeof(Model.ServiceReference1.IServerInterfaceCallback))]
     public interface IServerInterface {
         
+        [System.ServiceModel.OperationContractAttribute(Action="ATMS_Server/IServerInterface/ReturnPoke", ReplyAction="ATMS_Server/IServerInterface/ReturnPokeResponse")]
+        ATMS_Model.Plot ReturnPoke();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="ATMS_Server/IServerInterface/ReturnPoke", ReplyAction="ATMS_Server/IServerInterface/ReturnPokeResponse")]
+        System.Threading.Tasks.Task<ATMS_Model.Plot> ReturnPokeAsync();
+        
         [System.ServiceModel.OperationContractAttribute(Action="ATMS_Server/IServerInterface/RegisterClient", ReplyAction="ATMS_Server/IServerInterface/RegisterClientResponse")]
         int RegisterClient(int id);
         
@@ -26,19 +32,13 @@ namespace Model.ServiceReference1 {
         
         [System.ServiceModel.OperationContractAttribute(Action="ATMS_Server/IServerInterface/createScenario", ReplyAction="ATMS_Server/IServerInterface/createScenarioResponse")]
         System.Threading.Tasks.Task createScenarioAsync();
-        
-        [System.ServiceModel.OperationContractAttribute(Action="ATMS_Server/IServerInterface/playSimulation", ReplyAction="ATMS_Server/IServerInterface/playSimulationResponse")]
-        void playSimulation();
-        
-        [System.ServiceModel.OperationContractAttribute(Action="ATMS_Server/IServerInterface/playSimulation", ReplyAction="ATMS_Server/IServerInterface/playSimulationResponse")]
-        System.Threading.Tasks.Task playSimulationAsync();
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public interface IServerInterfaceCallback {
         
-        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="ATMS_Server/IServerInterface/notifyTimeUpdate")]
-        void notifyTimeUpdate(int currentServerTime);
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="ATMS_Server/IServerInterface/updateClient")]
+        void updateClient(string data);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="ATMS_Server/IServerInterface/notifyNewScenario")]
         void notifyNewScenario(ATMS_Model.Scenario data);
@@ -72,6 +72,14 @@ namespace Model.ServiceReference1 {
                 base(callbackInstance, binding, remoteAddress) {
         }
         
+        public ATMS_Model.Plot ReturnPoke() {
+            return base.Channel.ReturnPoke();
+        }
+        
+        public System.Threading.Tasks.Task<ATMS_Model.Plot> ReturnPokeAsync() {
+            return base.Channel.ReturnPokeAsync();
+        }
+        
         public int RegisterClient(int id) {
             return base.Channel.RegisterClient(id);
         }
@@ -86,14 +94,6 @@ namespace Model.ServiceReference1 {
         
         public System.Threading.Tasks.Task createScenarioAsync() {
             return base.Channel.createScenarioAsync();
-        }
-        
-        public void playSimulation() {
-            base.Channel.playSimulation();
-        }
-        
-        public System.Threading.Tasks.Task playSimulationAsync() {
-            return base.Channel.playSimulationAsync();
         }
     }
 }

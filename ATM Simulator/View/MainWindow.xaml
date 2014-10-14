@@ -13,7 +13,6 @@
         <StackPanel Height="300" Orientation="Horizontal">
             <StackPanel Width="100" HorizontalAlignment="Left">
                 <Button Content="Create Scenario" Command="{Binding CreateScenario}"/>
-                <Button Content="Play" Command="{Binding Play}"/>
             </StackPanel>
             <ListBox ItemsSource="{Binding plots}" MinWidth="390">
                 <ListBox.ItemTemplate>

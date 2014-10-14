@@ -38,20 +38,6 @@ namespace Model
             }
         }
 
-        private int _currentServerTime;
-        public int currentServerTime
-        {
-            get { return _currentServerTime; }
-            set
-            {
-                if (value != _currentServerTime)
-                {
-                    _currentServerTime = value;
-                    Messenger.Default.Send(value);
-                }
-            }
-        }
-        
 
         public SimulationModel()
         {
@@ -90,15 +76,12 @@ namespace Model
             server.createScenario();
             isServerAvailable = true;
         }
-        public void play()
-        {
-            isServerAvailable = false;
-            server.playSimulation();
-            isServerAvailable = true;
-        }
         #endregion
 
-       
+        public void updateClient(string data)
+        {
+            throw new NotImplementedException();
+        }
 
         public void notifyNewScenario(Scenario data)
         {

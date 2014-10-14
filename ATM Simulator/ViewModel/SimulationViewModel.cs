@@ -16,25 +16,6 @@ namespace ViewModel
     {
         SimulationModel model;
 
-
-        //storing the global time in seconds
-        public int viewModelCurrentTime;
-
-        public SimulationViewModel()
-        {
-            model = new SimulationModel();
-            viewModelCurrentTime = 0;
-
-
-            //This listens to the brodcasted messages sent by the Messenger
-            Messenger.Default.Register<Scenario>(this, handleScenarioUpdate);
-            //This listens to the brodcasted messages sent by the Messenger
-            Messenger.Default.Register<int>(this, handleServerTimeUpdate);
-
-            //initialize the plots list
-            _plots = new List<Plot>();
-        }
-
         //these hold the list of plots 
         private List<Plot> _plots;
         public List<Plot> plots
@@ -50,8 +31,6 @@ namespace ViewModel
             }
         }
 
-
-        #region RelayCommands
         //this is the create scenario command that calls the create scenario method from the model
         private RelayCommand _CreateScenario;
         public RelayCommand CreateScenario
@@ -74,47 +53,34 @@ namespace ViewModel
             }
         }
 
-        private RelayCommand _Play;
-        public RelayCommand Play
+        public SimulationViewModel()
         {
-            get
-            {
-                if (_Play == null)
-                {
-                    _Play = new RelayCommand(
-                       () =>
-                       {
-                           model.play();
-                       },
-                       () =>
-                       {
-                           return model.isServerAvailable;
-                       });
-                }
-                return _Play;
-            }
-        }
+            model = new SimulationModel();
 
+            //This listens to the brodcasted messages sent by the Messenger
+            Messenger.Default.Register<Scenario>(this, handleScenarioUpdate);
 
-        #endregion
-
-
-        #region messenger listening methods
-
-
-        private void handleServerTimeUpdate(int currentServertime)
-        {
-            viewModelCurrentTime = currentServertime;
-
-            plots = model.mainScenario.getNow(viewModelCurrentTime);
+            //initialize the plots list
+            _plots = new List<Plot>();
         }
 
         private void handleScenarioUpdate(Scenario obj)
         {
             //create a temporary list to work on
-            plots = obj.getNow(viewModelCurrentTime);
-        }
+            List<Plot> temp = new List<Plot>();
 
-        #endregion
+            foreach (Track t in obj.tracks)
+            {
+                foreach (Plot p in t.plots)
+                {
+                    temp.Add(p);
+                }
+            }
+
+            plots = temp;
+
+            /*var temp1 = obj.tracks.Select(x => x.plots.Select(a => a));
+            plots = (List<Plot>)temp1;*/
+        }
     }
 }
