@@ -9,10 +9,15 @@ using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
 
+//for debugging
+using System.Diagnostics;
+
 namespace Model
 {
     public class SimulationModel : Messenger
     {
+
+
         //to store the handler for the callbacks from the server
         CallbackHandler callbackhandling;
 
@@ -57,14 +62,9 @@ namespace Model
 
             //callback handler
             callbackhandling = new CallbackHandler(this);
-
-            checkServer();
-
             isServerAvailable = false;
-            if (checkServer())
-            {
-                isServerAvailable = true;
-            }
+
+            isServerAvailable = checkServer();          
         }
 
         //use this method to check the server status and channel every time you call the server
@@ -82,16 +82,14 @@ namespace Model
                     InstanceContext instanceContext = new InstanceContext(callbackhandling);
                     server = new ServerInterfaceClient(instanceContext);
                 }
-                if (!server.checkIfRegistered())
-                {
-                    server.RegisterClient();
-                }
                 return true;
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                debugMessage(e.StackTrace);
                 throw new Exception("ATMS/Model-0002: Failed to check the server.");
             }
+            return false;
         }
 
         #region ViewModel calls
@@ -118,6 +116,11 @@ namespace Model
         public void notifyNewScenario(Scenario data)
         {
             mainScenario = data;
+        }
+
+        public void debugMessage(string stackTrace)
+        {
+            Debug.WriteLine("Client" + stackTrace);   
         }
     }
 }

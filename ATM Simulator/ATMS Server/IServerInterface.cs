@@ -21,8 +21,6 @@ namespace ATMS_Server
         [OperationContract]
         void playSimulation();
 
-        [OperationContract]
-        bool checkIfRegistered();
     }
 
     public interface IClientCallbackInterface

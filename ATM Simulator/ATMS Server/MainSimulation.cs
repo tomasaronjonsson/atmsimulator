@@ -8,6 +8,9 @@ using System.Text;
 using System.Threading;
 using ATMS_Model;
 
+//for debugging
+using System.Diagnostics;
+
 namespace ATMS_Server
 {
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single, ConcurrencyMode = ConcurrencyMode.Multiple)]
@@ -26,6 +29,8 @@ namespace ATMS_Server
         //the thread for incrementing time (current server time)
         Thread timeThread;
 
+
+
         public MainSimulation()
         {
             #region Initilizing variables
@@ -34,6 +39,9 @@ namespace ATMS_Server
             layeredScenarios = new Dictionary<int, Scenario>();
 
             currentServerTime = 0;
+
+            mainScenario = new Scenario();
+
             #endregion
         }
 
@@ -44,10 +52,11 @@ namespace ATMS_Server
 
         public void playSimulation()
         {
-            //notify all client we are playing
-            //  clients.Select(x => x.Value).ToList().ForEach(c => c.notifyTimeUpdate(currentServerTime));
+            //check if the client is in the callback list
+            checkIfRegistered();
 
-            //start the timeworker thread who is responsable for calinn the incremental time funciton depending on the radarinterval
+
+            //start the timeworker thread who is responsable for calling the incremental time funciton depending on the radarinterval
             TimeWorker worker = new TimeWorker(this);
             timeThread = new Thread(worker.DoWork);
             timeThread.Start();
@@ -60,15 +69,15 @@ namespace ATMS_Server
                 IClientCallbackInterface callback = OperationContext.Current.GetCallbackChannel<IClientCallbackInterface>();
                 clients.Add(callback);
 
-                //for testing / debugging purposes - it freezez up upon startup
-                if (mainScenario != null)
-                {
-                    ThreadPool.QueueUserWorkItem(a => { Thread.Sleep(5000); callback.notifyNewScenario(mainScenario); });
-                }
+                //send the first 
+                ThreadPool.QueueUserWorkItem(work => handleClientCallback(() => { callback.notifyNewScenario(mainScenario); }, callback));
+
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                debugMessage(e);
                 throw new Exception("ATMS-MainSimulation-0001: Failed to register client");
+
             }
         }
 
@@ -76,24 +85,32 @@ namespace ATMS_Server
         {
             try
             {
+                //check if the client is in the callback list
+                checkIfRegistered();
+
                 mainScenario = new Scenario();
-                populateScenario(mainScenario);
+                populateScenarioBigger(mainScenario);
                 ThreadPool.QueueUserWorkItem(a => notifyClients());
+
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                debugMessage(e);
                 throw new Exception("ATMS-MainSimulation-0001: Failed to create a new scenario");
             };
         }
 
-        public bool checkIfRegistered()
+        public void checkIfRegistered()
         {
-            if (clients.Contains(OperationContext.Current.GetCallbackChannel<IClientCallbackInterface>()))
+            IClientCallbackInterface callback = OperationContext.Current.GetCallbackChannel<IClientCallbackInterface>();
+
+            if (!clients.Contains(callback))
             {
-                return true;
+                clients.Add(callback);
             }
-            return false;
         }
+
+
 
         #endregion
 
@@ -102,23 +119,75 @@ namespace ATMS_Server
          * */
         #region Communication with client
 
-        //Thread to handle the callbacks
-        private void handleClientCallbacks(Action a, IClientCallbackInterface client, List<IClientCallbackInterface> clientsList)
-        {
-            TimeoutWorker t = new TimeoutWorker();
-            t.DoWork(a, client, clientsList);
-        }
+
 
         public void notifyClients()
         {
             foreach (IClientCallbackInterface entry in clients)
             {
                 //Handle the client callbacks, 1st argument is the function, 2nd is the client and 3rd is the client list
-                handleClientCallbacks(() => { entry.notifyNewScenario(mainScenario); }, entry, clients);
+                ThreadPool.QueueUserWorkItem(work => handleClientCallback(() => { entry.notifyNewScenario(mainScenario); }, entry));
             }
         }
 
         #endregion
+
+
+        public void tickTock()
+        {
+            //incrementing the time by the value in the radarinterval
+            currentServerTime += ATMS_Model.BuisnessLogicValues.radarInterval;
+
+            //notifying listening clients of the update
+            foreach (IClientCallbackInterface entry in clients)
+            {
+                ThreadPool.QueueUserWorkItem(work => handleClientCallback(() => { entry.notifyTimeUpdate(currentServerTime); }, entry));
+
+            }
+        }
+
+
+        public void handleClientCallback(Action action, IClientCallbackInterface client)
+        {
+
+            try
+            {
+                action.Invoke();
+            }
+            catch (Exception e)
+            {
+                clients.Remove(client);
+                debugMessage(e);
+            }
+
+        }
+        #region test methods
+        private void populateScenarioBigger(Scenario sc)
+        {
+            int tracks = 10;
+            int plots = 50;
+
+
+            for (int i = 0; i < tracks; i++)
+            {
+                Track track = new Track();
+                track.trackID = i;
+
+                for (int a = 0; a < plots; a++)
+                {
+                    Plot plot = new Plot();
+                    plot.timestamp = DateTime.Now.AddSeconds(a * BuisnessLogicValues.radarInterval);
+                    plot.speed = a;
+                    plot.x = a * 2;
+                    plot.y = a * 3;
+                    plot.z = a * 4;
+
+                    track.plots.Add(plot);
+                }
+                sc.tracks.Add(track);
+            }
+        }
+
 
         //TEST method for populating scenarios with test data
         private void populateScenario(Scenario sc)
@@ -244,17 +313,15 @@ namespace ATMS_Server
             //addting track 3 the scenario
             sc.tracks.Add(t3);
         }
+        #endregion
 
-        public void tickTock()
+        public void debugMessage(Exception e)
         {
-            //incrementing the time by the value in the radarinterval
-            currentServerTime += ATMS_Model.BuisnessLogicValues.radarInterval;
-
-            //notifying listening clients of the update
-            foreach (IClientCallbackInterface entry in clients)
-            {
-                handleClientCallbacks(() => { entry.notifyTimeUpdate(currentServerTime); }, entry, clients);
-            }
+            Debug.WriteLine("Excpetion" + e);
+            Debug.WriteLine("Stacktrace:" + e.StackTrace);
         }
     }
+
+
+
 }

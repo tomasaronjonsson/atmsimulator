@@ -62,7 +62,6 @@
     <Compile Include="IServerInterface.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="MainSimulation.cs" />
-    <Compile Include="TimeoutWorker.cs" />
     <Compile Include="TimeWorker.cs" />
   </ItemGroup>
   <ItemGroup>
