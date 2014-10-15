@@ -27,6 +27,7 @@ namespace ATMS_Server
 
     public interface IClientCallbackInterface
     {
+        //notifies all clients of all the time related changes
         [OperationContract(IsOneWay = true)]
         void notifyTimeUpdate(int currentServerTime);
 

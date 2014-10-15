@@ -84,7 +84,6 @@ namespace ViewModel
                     _Play = new RelayCommand(
                        () =>
                        {
-
                            model.play();
                        },
                        () =>

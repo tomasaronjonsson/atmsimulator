@@ -33,14 +33,17 @@ namespace ATMS_Model
 
             if (basetime == DateTime.MinValue)
             {
-               //if basetime is not set, find the basetime for the scenario, it only needs to do this once
+                //if basetime is not set, find the basetime for the scenario, it only needs to do this once
                 // should this be strong typed?
-                var test1 = tracks.SelectMany(x => x.plots.Select(l => l.timestamp)).Min();
-
-                basetime = (DateTime)test1;
-
+                try
+                {
+                    var query = tracks.SelectMany(x => x.plots.Select(l => l.timestamp)).Min();
+                    basetime = (DateTime)query;
+                }
+                catch (InvalidOperationException)
+                {
+                }
             }
-
 
             var gettingAllPlots = tracks.SelectMany(x =>
                 x.plots.Where(p => (p.timestamp < basetime.AddSeconds(seconds + BuisnessLogicValues.radarInterval))
@@ -48,10 +51,6 @@ namespace ATMS_Model
             ));
 
             return gettingAllPlots.ToList();
-
-
         }
-
-
     }
 }

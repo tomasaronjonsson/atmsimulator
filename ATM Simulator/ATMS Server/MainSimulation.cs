@@ -15,8 +15,6 @@ namespace ATMS_Server
     {
         private static List<IClientCallbackInterface> clients;
 
-        private int availableClientID;
-
         //this is the main scenario
         private Scenario mainScenario;
 
@@ -28,7 +26,6 @@ namespace ATMS_Server
         //the thread for incrementing time (current server time)
         Thread timeThread;
 
-
         public MainSimulation()
         {
             #region Initilizing variables
@@ -37,8 +34,6 @@ namespace ATMS_Server
             layeredScenarios = new Dictionary<int, Scenario>();
 
             currentServerTime = 0;
-
-            availableClientID = 1000;
             #endregion
         }
 
@@ -107,15 +102,25 @@ namespace ATMS_Server
          * */
         #region Communication with client
 
+        //Thread to handle the callbacks
+        private void handleClientCallbacks(Action a, IClientCallbackInterface client, List<IClientCallbackInterface> clientsList)
+        {
+            TimeoutWorker t = new TimeoutWorker();
+            t.DoWork(a, client, clientsList);
+        }
+
         public void notifyClients()
         {
             foreach (IClientCallbackInterface entry in clients)
-                entry.notifyNewScenario(mainScenario);
+            {
+                //Handle the client callbacks, 1st argument is the function, 2nd is the client and 3rd is the client list
+                handleClientCallbacks(() => { entry.notifyNewScenario(mainScenario); }, entry, clients);
+            }
         }
 
         #endregion
 
-        //test method for populating scenarios with test data
+        //TEST method for populating scenarios with test data
         private void populateScenario(Scenario sc)
         {
             //here we are going to add 3 tracks, with 3 plots each for testing later
@@ -246,8 +251,10 @@ namespace ATMS_Server
             currentServerTime += ATMS_Model.BuisnessLogicValues.radarInterval;
 
             //notifying listening clients of the update
-            //TODO catch a timeout exception here
-            clients.ForEach(c => c.notifyTimeUpdate(currentServerTime));
+            foreach (IClientCallbackInterface entry in clients)
+            {
+                handleClientCallbacks(() => { entry.notifyTimeUpdate(currentServerTime); }, entry, clients);
+            }
         }
     }
 }

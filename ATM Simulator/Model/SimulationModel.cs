@@ -13,8 +13,6 @@ namespace Model
 {
     public class SimulationModel : Messenger
     {
-        private int clientID;
-
         //to store the handler for the callbacks from the server
         CallbackHandler callbackhandling;
 
@@ -55,13 +53,14 @@ namespace Model
 
         public SimulationModel()
         {
+            mainScenario = new Scenario();
+
             //callback handler
             callbackhandling = new CallbackHandler(this);
 
             checkServer();
 
             isServerAvailable = false;
-            clientID = 0;
             if (checkServer())
             {
                 isServerAvailable = true;
@@ -93,7 +92,6 @@ namespace Model
             {
                 throw new Exception("ATMS/Model-0002: Failed to check the server.");
             }
-            return false;
         }
 
         #region ViewModel calls
