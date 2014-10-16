@@ -7,11 +7,11 @@
       <xsd:import namespace="http://schemas.datacontract.org/2004/07/ATMS_Model" />
     </xsd:schema>
   </wsdl:types>
-  <wsdl:message name="IServerInterface_RegisterClient_InputMessage">
-    <wsdl:part name="parameters" element="tns:RegisterClient" />
+  <wsdl:message name="IServerInterface_populateClient_InputMessage">
+    <wsdl:part name="parameters" element="tns:populateClient" />
   </wsdl:message>
-  <wsdl:message name="IServerInterface_RegisterClient_OutputMessage">
-    <wsdl:part name="parameters" element="tns:RegisterClientResponse" />
+  <wsdl:message name="IServerInterface_populateClient_OutputMessage">
+    <wsdl:part name="parameters" element="tns:populateClientResponse" />
   </wsdl:message>
   <wsdl:message name="IServerInterface_createScenario_InputMessage">
     <wsdl:part name="parameters" element="tns:createScenario" />
@@ -32,9 +32,9 @@
     <wsdl:part name="parameters" element="tns:notifyNewScenario" />
   </wsdl:message>
   <wsdl:portType name="IServerInterface">
-    <wsdl:operation name="RegisterClient">
-      <wsdl:input wsaw:Action="ATMS_Server/IServerInterface/RegisterClient" message="tns:IServerInterface_RegisterClient_InputMessage" />
-      <wsdl:output wsaw:Action="ATMS_Server/IServerInterface/RegisterClientResponse" message="tns:IServerInterface_RegisterClient_OutputMessage" />
+    <wsdl:operation name="populateClient">
+      <wsdl:input wsaw:Action="ATMS_Server/IServerInterface/populateClient" message="tns:IServerInterface_populateClient_InputMessage" />
+      <wsdl:output wsaw:Action="ATMS_Server/IServerInterface/populateClientResponse" message="tns:IServerInterface_populateClient_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="createScenario">
       <wsdl:input wsaw:Action="ATMS_Server/IServerInterface/createScenario" message="tns:IServerInterface_createScenario_InputMessage" />

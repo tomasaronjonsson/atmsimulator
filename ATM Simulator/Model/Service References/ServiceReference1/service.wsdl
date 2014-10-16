@@ -103,7 +103,7 @@
       </wsp:All>
     </wsp:ExactlyOne>
   </wsp:Policy>
-  <wsp:Policy wsu:Id="WSDualHttpBinding_IServerInterface_RegisterClient_Input_policy">
+  <wsp:Policy wsu:Id="WSDualHttpBinding_IServerInterface_populateClient_Input_policy">
     <wsp:ExactlyOne>
       <wsp:All>
         <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
@@ -126,7 +126,7 @@
       </wsp:All>
     </wsp:ExactlyOne>
   </wsp:Policy>
-  <wsp:Policy wsu:Id="WSDualHttpBinding_IServerInterface_RegisterClient_output_policy">
+  <wsp:Policy wsu:Id="WSDualHttpBinding_IServerInterface_populateClient_output_policy">
     <wsp:ExactlyOne>
       <wsp:All>
         <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
@@ -292,14 +292,14 @@
   <wsdl:binding name="WSDualHttpBinding_IServerInterface" type="i0:IServerInterface">
     <wsp:PolicyReference URI="#WSDualHttpBinding_IServerInterface_policy" />
     <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
-    <wsdl:operation name="RegisterClient">
-      <soap12:operation soapAction="ATMS_Server/IServerInterface/RegisterClient" style="document" />
+    <wsdl:operation name="populateClient">
+      <soap12:operation soapAction="ATMS_Server/IServerInterface/populateClient" style="document" />
       <wsdl:input>
-        <wsp:PolicyReference URI="#WSDualHttpBinding_IServerInterface_RegisterClient_Input_policy" />
+        <wsp:PolicyReference URI="#WSDualHttpBinding_IServerInterface_populateClient_Input_policy" />
         <soap12:body use="literal" />
       </wsdl:input>
       <wsdl:output>
-        <wsp:PolicyReference URI="#WSDualHttpBinding_IServerInterface_RegisterClient_output_policy" />
+        <wsp:PolicyReference URI="#WSDualHttpBinding_IServerInterface_populateClient_output_policy" />
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>

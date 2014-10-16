@@ -26,22 +26,18 @@ namespace ATMS_Server
 
         //current server time in seconds
         int currentServerTime;
+
         //the thread for incrementing time (current server time)
         Thread timeThread;
-
 
 
         public MainSimulation()
         {
             #region Initilizing variables
             clients = new List<IClientCallbackInterface>();
-
             layeredScenarios = new Dictionary<int, Scenario>();
-
             currentServerTime = 0;
-
             mainScenario = new Scenario();
-
             #endregion
         }
 
@@ -55,21 +51,23 @@ namespace ATMS_Server
             //check if the client is in the callback list
             checkIfRegistered();
 
-
-            //start the timeworker thread who is responsable for calling the incremental time funciton depending on the radarinterval
-            TimeWorker worker = new TimeWorker(this);
-            timeThread = new Thread(worker.DoWork);
-            timeThread.Start();
+            if (timeThread == null)
+            {
+                //start the timeworker thread who is responsable for calling the incremental time funciton depending on the radarinterval
+                TimeWorker worker = new TimeWorker(this);
+                timeThread = new Thread(worker.DoWork);
+                timeThread.Start();
+            }
         }
 
-        public void RegisterClient()
+        public void populateClient()
         {
             try
             {
+                checkIfRegistered();
                 IClientCallbackInterface callback = OperationContext.Current.GetCallbackChannel<IClientCallbackInterface>();
-                clients.Add(callback);
 
-                //send the first 
+                //send the data 
                 ThreadPool.QueueUserWorkItem(work => handleClientCallback(() => { callback.notifyNewScenario(mainScenario); }, callback));
 
             }
@@ -135,14 +133,16 @@ namespace ATMS_Server
                 {
                     //handle that the scenario is to big and can't be sent like this 
                     debugMessage(e);
-                    
+
                 }
             }
         }
 
         #endregion
 
-
+        /*
+         *  Implementation of the time incrementer and the notification of the clients
+         * */
         public void tickTock()
         {
             //incrementing the time by the value in the radarinterval
@@ -156,7 +156,6 @@ namespace ATMS_Server
             }
         }
 
-
         public void handleClientCallback(Action action, IClientCallbackInterface client)
         {
 
@@ -169,7 +168,6 @@ namespace ATMS_Server
                 clients.Remove(client);
                 debugMessage(e);
             }
-
         }
         #region test methods
         private void populateScenarioBigger(Scenario sc)
@@ -331,7 +329,4 @@ namespace ATMS_Server
             Debug.WriteLine("Stacktrace:" + e.StackTrace);
         }
     }
-
-
-
 }

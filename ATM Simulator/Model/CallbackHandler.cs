@@ -25,6 +25,7 @@ namespace Model
         public void notifyTimeUpdate(int currentServerTime)
         {
             model.currentServerTime = currentServerTime;
+            model.serverIsPlaying = true;
         }
     }
 }

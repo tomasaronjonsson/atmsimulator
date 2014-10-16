@@ -16,8 +16,6 @@ namespace Model
 {
     public class SimulationModel : Messenger
     {
-
-
         //to store the handler for the callbacks from the server
         CallbackHandler callbackhandling;
 
@@ -25,7 +23,10 @@ namespace Model
         public ServerInterfaceClient server;
 
         //to indicate if the server is aviable for query
-        public bool isServerAvailable;
+        public bool serverIsAvailable;
+
+        public bool serverIsPlaying;
+
 
         private Scenario _mainScenario;
         public Scenario mainScenario
@@ -55,21 +56,29 @@ namespace Model
             }
         }
 
-
         public SimulationModel()
         {
             mainScenario = new Scenario();
-
             //callback handler
             callbackhandling = new CallbackHandler(this);
-            isServerAvailable = false;
+            startUp();
+        }
 
-            isServerAvailable = checkServer();          
+        //takes care of the server connection and populating the new instance of the client if that is the case
+        public void startUp()
+        {
+            handleServerConnection();
+            server.populateClientAsync();
+
+            serverIsAvailable = true;
+            serverIsPlaying = false;
         }
 
         //use this method to check the server status and channel every time you call the server
-        private bool checkServer()
+        private void handleServerConnection()
         {
+            serverIsAvailable = false;
+
             try
             {
                 if (server == null)
@@ -82,34 +91,26 @@ namespace Model
                     InstanceContext instanceContext = new InstanceContext(callbackhandling);
                     server = new ServerInterfaceClient(instanceContext);
                 }
-                return true;
             }
             catch (Exception e)
             {
                 debugMessage(e.StackTrace);
                 throw new Exception("ATMS/Model-0002: Failed to check the server.");
             }
-            return false;
         }
 
-        #region ViewModel calls
+        #region Calls from the ViewModel
         public async Task createScenario()
         {
-            isServerAvailable = false;
-            if (checkServer())
-            {
-                await server.createScenarioAsync();
-            }
-            isServerAvailable = true;
+            handleServerConnection();
+            await server.createScenarioAsync();
+            serverIsAvailable = true;
         }
-        public void playSimulation()
+        public async Task playSimulation()
         {
-            isServerAvailable = false;
-            if (checkServer())
-            {
-                server.playSimulation();
-            }
-            isServerAvailable = true;
+            handleServerConnection();
+            await server.playSimulationAsync();
+            serverIsAvailable = true;
         }
         #endregion
 
@@ -120,7 +121,7 @@ namespace Model
 
         public void debugMessage(string stackTrace)
         {
-            Debug.WriteLine("Client" + stackTrace);   
+            Debug.WriteLine("Client" + stackTrace);
         }
     }
 }

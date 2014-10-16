@@ -13,14 +13,13 @@ namespace ATMS_Server
     public interface IServerInterface
     {
         [OperationContract]
-        void RegisterClient();
+        void populateClient();
 
         [OperationContract]
         void createScenario();
 
         [OperationContract]
         void playSimulation();
-
     }
 
     public interface IClientCallbackInterface

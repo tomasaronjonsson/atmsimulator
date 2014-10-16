@@ -16,7 +16,6 @@ namespace ViewModel
     {
         SimulationModel model;
 
-
         //storing the global time in seconds
         public int viewModelCurrentTime;
 
@@ -50,7 +49,6 @@ namespace ViewModel
             }
         }
 
-
         #region RelayCommands
         //this is the create scenario command that calls the create scenario method from the model
         private RelayCommand _CreateScenario;
@@ -61,13 +59,13 @@ namespace ViewModel
                 if (_CreateScenario == null)
                 {
                     _CreateScenario = new RelayCommand(
-                       () =>
+                       async () =>
                        {
-                          model.createScenario();
+                           await model.createScenario();
                        },
                        () =>
                        {
-                           return model.isServerAvailable;
+                           return model.serverIsAvailable;
                        });
                 }
                 return _CreateScenario;
@@ -82,13 +80,13 @@ namespace ViewModel
                 if (_PlaySimulation == null)
                 {
                     _PlaySimulation = new RelayCommand(
-                       () =>
+                       async () =>
                        {
-                           model.playSimulation();
+                           await model.playSimulation();
                        },
                        () =>
                        {
-                           return model.isServerAvailable;
+                           return model.serverIsAvailable && !model.serverIsPlaying;
                        });
                 }
                 return _PlaySimulation;
@@ -99,9 +97,9 @@ namespace ViewModel
         #endregion
 
 
-        #region messenger listening methods
+        #region Listening methods for the messenger
 
-
+        //listens to the scenario time update
         private void handleServerTimeUpdate(int currentServertime)
         {
             viewModelCurrentTime = currentServertime;
@@ -109,6 +107,7 @@ namespace ViewModel
             plots = model.mainScenario.getNow(viewModelCurrentTime);
         }
 
+        //listens to the scenario update
         private void handleScenarioUpdate(Scenario obj)
         {
             //create a temporary list to work on

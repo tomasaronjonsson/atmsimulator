@@ -1,12 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="ATMS_Server" elementFormDefault="qualified" targetNamespace="ATMS_Server" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:import namespace="http://schemas.datacontract.org/2004/07/ATMS_Model" />
-  <xs:element name="RegisterClient">
+  <xs:element name="populateClient">
     <xs:complexType>
       <xs:sequence />
     </xs:complexType>
   </xs:element>
-  <xs:element name="RegisterClientResponse">
+  <xs:element name="populateClientResponse">
     <xs:complexType>
       <xs:sequence />
     </xs:complexType>

@@ -15,11 +15,11 @@ namespace Model.ServiceReference1 {
     [System.ServiceModel.ServiceContractAttribute(Namespace="ATMS_Server", ConfigurationName="ServiceReference1.IServerInterface", CallbackContract=typeof(Model.ServiceReference1.IServerInterfaceCallback))]
     public interface IServerInterface {
         
-        [System.ServiceModel.OperationContractAttribute(Action="ATMS_Server/IServerInterface/RegisterClient", ReplyAction="ATMS_Server/IServerInterface/RegisterClientResponse")]
-        void RegisterClient();
+        [System.ServiceModel.OperationContractAttribute(Action="ATMS_Server/IServerInterface/populateClient", ReplyAction="ATMS_Server/IServerInterface/populateClientResponse")]
+        void populateClient();
         
-        [System.ServiceModel.OperationContractAttribute(Action="ATMS_Server/IServerInterface/RegisterClient", ReplyAction="ATMS_Server/IServerInterface/RegisterClientResponse")]
-        System.Threading.Tasks.Task RegisterClientAsync();
+        [System.ServiceModel.OperationContractAttribute(Action="ATMS_Server/IServerInterface/populateClient", ReplyAction="ATMS_Server/IServerInterface/populateClientResponse")]
+        System.Threading.Tasks.Task populateClientAsync();
         
         [System.ServiceModel.OperationContractAttribute(Action="ATMS_Server/IServerInterface/createScenario", ReplyAction="ATMS_Server/IServerInterface/createScenarioResponse")]
         void createScenario();
@@ -72,12 +72,12 @@ namespace Model.ServiceReference1 {
                 base(callbackInstance, binding, remoteAddress) {
         }
         
-        public void RegisterClient() {
-            base.Channel.RegisterClient();
+        public void populateClient() {
+            base.Channel.populateClient();
         }
         
-        public System.Threading.Tasks.Task RegisterClientAsync() {
-            return base.Channel.RegisterClientAsync();
+        public System.Threading.Tasks.Task populateClientAsync() {
+            return base.Channel.populateClientAsync();
         }
         
         public void createScenario() {
