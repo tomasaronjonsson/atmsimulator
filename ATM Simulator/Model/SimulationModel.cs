@@ -22,11 +22,37 @@ namespace Model
         //to store the instance of the server client
         public ServerInterfaceClient server;
 
+        #region properties
         //to indicate if the server is aviable for query
-        public bool serverIsAvailable;
+        private bool _serverIsPlaying;
+        public bool serverIsPlaying
+        {
+            get { return _serverIsPlaying; }
+            set
+            {
+                if (value != _serverIsPlaying)
+                {
+                    _serverIsPlaying = value;
+                    Messenger.Default.Send(value);
+                }
+            }
+        }
 
-        public bool serverIsPlaying;
+        private bool _serverIsAvailable;
 
+        public bool serverIsAvailable
+        {
+            get { return _serverIsAvailable; }
+            set
+            {
+                if (value != _serverIsAvailable)
+                {
+                    _serverIsAvailable = value;
+                    Messenger.Default.Send(value);
+                }
+            }
+        }
+         
 
         private Scenario _mainScenario;
         public Scenario mainScenario
@@ -56,12 +82,16 @@ namespace Model
             }
         }
 
+        #endregion
         public SimulationModel()
         {
+
+            serverIsAvailable = false;
+            serverIsPlaying = false;
+
             mainScenario = new Scenario();
             //callback handler
             callbackhandling = new CallbackHandler(this);
-            startUp();
         }
 
         //takes care of the server connection and populating the new instance of the client if that is the case
@@ -71,7 +101,6 @@ namespace Model
             server.populateClientAsync();
 
             serverIsAvailable = true;
-            serverIsPlaying = false;
         }
 
         //use this method to check the server status and channel every time you call the server

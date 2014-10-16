@@ -21,8 +21,13 @@ namespace ViewModel
 
         public SimulationViewModel()
         {
-            model = new SimulationModel();
+
+            // initilization of the viewmodel 
             viewModelCurrentTime = 0;
+            serverIsAvailable = false;
+            serverIsPlaying = false;
+
+
 
 
             //This listens to the brodcasted messages sent by the Messenger
@@ -30,8 +35,57 @@ namespace ViewModel
             //This listens to the brodcasted messages sent by the Messenger
             Messenger.Default.Register<int>(this, handleServerTimeUpdate);
 
+            //This listens to the brodcasted messages sent by the Messenger
+            Messenger.Default.Register<bool>(this, handleBoolChanges);
+
             //initialize the plots list
             _plots = new List<Plot>();
+
+            //end of initilization of the viewmodel
+
+            model = new SimulationModel();
+
+
+            model.startUp();
+        }
+
+
+
+
+        #region properties
+
+        private bool _serverIsPlaying;
+        public bool serverIsPlaying
+        {
+            get { return _serverIsPlaying; }
+            set
+            {
+                if (value != _serverIsPlaying)
+                {
+                    _serverIsPlaying = value;
+                    if (_PlaySimulation != null)
+                        _PlaySimulation.RaiseCanExecuteChanged();
+                    RaisePropertyChanged("serverIsPlaying");
+                }
+            }
+        }
+
+        private bool _serverIsAvailable;
+        public bool serverIsAvailable
+        {
+            get { return _serverIsAvailable; }
+            set
+            {
+                if (value != _serverIsAvailable)
+                {
+                    _serverIsAvailable = value;
+                    if (_CreateScenario != null)
+                        _CreateScenario.RaiseCanExecuteChanged();
+                    if (_PlaySimulation != null)
+                        _PlaySimulation.RaiseCanExecuteChanged();
+                    RaisePropertyChanged("serverIsAvilable");
+                }
+            }
         }
 
         //these hold the list of plots 
@@ -65,9 +119,10 @@ namespace ViewModel
                        },
                        () =>
                        {
-                           return model.serverIsAvailable;
+                           return serverIsAvailable;
                        });
                 }
+
                 return _CreateScenario;
             }
         }
@@ -83,10 +138,12 @@ namespace ViewModel
                        async () =>
                        {
                            await model.playSimulation();
+
+                           serverIsPlaying = true;
                        },
                        () =>
                        {
-                           return model.serverIsAvailable && !model.serverIsPlaying;
+                           return serverIsAvailable && !serverIsPlaying;
                        });
                 }
                 return _PlaySimulation;
@@ -96,7 +153,7 @@ namespace ViewModel
 
         #endregion
 
-
+        #endregion
         #region Listening methods for the messenger
 
         //listens to the scenario time update
@@ -114,6 +171,15 @@ namespace ViewModel
             plots = obj.getNow(viewModelCurrentTime);
         }
 
+        private void handleBoolChanges(bool obj)
+        {
+            if (model != null)
+            {
+                serverIsPlaying = model.serverIsPlaying;
+                serverIsAvailable = model.serverIsAvailable;
+            }
+
+        }
         #endregion
     }
 }
