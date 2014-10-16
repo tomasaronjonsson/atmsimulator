@@ -31,18 +31,6 @@
       <xs:sequence />
     </xs:complexType>
   </xs:element>
-  <xs:element name="checkIfRegistered">
-    <xs:complexType>
-      <xs:sequence />
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="checkIfRegisteredResponse">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element minOccurs="0" name="checkIfRegisteredResult" type="xs:boolean" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
   <xs:element name="notifyTimeUpdate">
     <xs:complexType>
       <xs:sequence>

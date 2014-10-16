@@ -90,7 +90,8 @@ namespace ATMS_Server
 
                 mainScenario = new Scenario();
                 populateScenarioBigger(mainScenario);
-                ThreadPool.QueueUserWorkItem(a => notifyClients());
+                //sending the new scenario to the clients
+                ThreadPool.QueueUserWorkItem(a => sendNewScenario());
 
             }
             catch (Exception e)
@@ -121,12 +122,21 @@ namespace ATMS_Server
 
 
 
-        public void notifyClients()
+        public void sendNewScenario()
         {
             foreach (IClientCallbackInterface entry in clients)
             {
-                //Handle the client callbacks, 1st argument is the function, 2nd is the client and 3rd is the client list
-                ThreadPool.QueueUserWorkItem(work => handleClientCallback(() => { entry.notifyNewScenario(mainScenario); }, entry));
+                try
+                {
+                    //Handle the client callbacks, 1st argument is the function, 2nd is the client and 3rd is the client list
+                    ThreadPool.QueueUserWorkItem(work => handleClientCallback(() => { entry.notifyNewScenario(mainScenario); }, entry));
+                }
+                catch (Exception e)
+                {
+                    //handle that the scenario is to big and can't be sent like this 
+                    debugMessage(e);
+                    
+                }
             }
         }
 
@@ -165,7 +175,7 @@ namespace ATMS_Server
         private void populateScenarioBigger(Scenario sc)
         {
             int tracks = 10;
-            int plots = 50;
+            int plots = 20;
 
 
             for (int i = 0; i < tracks; i++)

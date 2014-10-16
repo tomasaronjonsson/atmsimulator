@@ -32,12 +32,6 @@ namespace Model.ServiceReference1 {
         
         [System.ServiceModel.OperationContractAttribute(Action="ATMS_Server/IServerInterface/playSimulation", ReplyAction="ATMS_Server/IServerInterface/playSimulationResponse")]
         System.Threading.Tasks.Task playSimulationAsync();
-        
-        [System.ServiceModel.OperationContractAttribute(Action="ATMS_Server/IServerInterface/checkIfRegistered", ReplyAction="ATMS_Server/IServerInterface/checkIfRegisteredResponse")]
-        bool checkIfRegistered();
-        
-        [System.ServiceModel.OperationContractAttribute(Action="ATMS_Server/IServerInterface/checkIfRegistered", ReplyAction="ATMS_Server/IServerInterface/checkIfRegisteredResponse")]
-        System.Threading.Tasks.Task<bool> checkIfRegisteredAsync();
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -100,14 +94,6 @@ namespace Model.ServiceReference1 {
         
         public System.Threading.Tasks.Task playSimulationAsync() {
             return base.Channel.playSimulationAsync();
-        }
-        
-        public bool checkIfRegistered() {
-            return base.Channel.checkIfRegistered();
-        }
-        
-        public System.Threading.Tasks.Task<bool> checkIfRegisteredAsync() {
-            return base.Channel.checkIfRegisteredAsync();
         }
     }
 }
