@@ -63,7 +63,7 @@ namespace ViewModel
                     _CreateScenario = new RelayCommand(
                        () =>
                        {
-                           model.createScenario();
+                          model.createScenario();
                        },
                        () =>
                        {
@@ -74,24 +74,24 @@ namespace ViewModel
             }
         }
 
-        private RelayCommand _Play;
-        public RelayCommand Play
+        private RelayCommand _PlaySimulation;
+        public RelayCommand PlaySimulation
         {
             get
             {
-                if (_Play == null)
+                if (_PlaySimulation == null)
                 {
-                    _Play = new RelayCommand(
+                    _PlaySimulation = new RelayCommand(
                        () =>
                        {
-                           model.play();
+                           model.playSimulation();
                        },
                        () =>
                        {
                            return model.isServerAvailable;
                        });
                 }
-                return _Play;
+                return _PlaySimulation;
             }
         }
 

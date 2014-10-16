@@ -93,16 +93,16 @@ namespace Model
         }
 
         #region ViewModel calls
-        public void createScenario()
+        public async Task createScenario()
         {
             isServerAvailable = false;
             if (checkServer())
             {
-                server.createScenario();
+                await server.createScenarioAsync();
             }
             isServerAvailable = true;
         }
-        public void play()
+        public void playSimulation()
         {
             isServerAvailable = false;
             if (checkServer())
