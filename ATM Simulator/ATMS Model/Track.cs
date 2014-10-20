@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace ATMS_Model
 {
+    [Serializable]
     public class Track
     {
         //to store the trackid 

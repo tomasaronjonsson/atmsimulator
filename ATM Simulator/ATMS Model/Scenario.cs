@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace ATMS_Model
 {
+    [Serializable]
     public class Scenario
     {
         //to store the list of tracks witihin the scenario

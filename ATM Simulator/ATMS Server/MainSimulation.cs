@@ -172,8 +172,8 @@ namespace ATMS_Server
         #region test methods
         private void populateScenarioBigger(Scenario sc)
         {
-            int tracks = 10;
-            int plots = 20;
+            int tracks = 1000;
+            int plots = 1000;
 
 
             for (int i = 0; i < tracks; i++)
