@@ -59,8 +59,8 @@ namespace ViewModel
 
         #region properties
 
-        private List<MapCustomElement> _planes;
-        public List<MapCustomElement> planes
+        private List<MapDot> _planes;
+        public List<MapDot> planes
         {
             get { return _planes; }
             set
@@ -120,7 +120,7 @@ namespace ViewModel
                 {
                     _plots = value;
                     RaisePropertyChanged("plots");
-                    populatePLanes();
+                    
                 }
             }
         }
@@ -184,7 +184,7 @@ namespace ViewModel
             viewModelCurrentTime = currentServertime;
 
             plots = model.mainScenario.getNow(viewModelCurrentTime);
-
+            populatePLanes();
 
         }
 
@@ -193,6 +193,8 @@ namespace ViewModel
         {
             //create a temporary list to work on
             plots = obj.getNow(viewModelCurrentTime);
+
+            populatePLanes();
         }
 
         private void handleBoolChanges(bool obj)
@@ -209,12 +211,13 @@ namespace ViewModel
 
         private void populatePLanes()
         {
-            List<MapCustomElement> tempPlaneList = new List<MapCustomElement>();
+            List<MapDot> tempPlaneList = new List<MapDot>();
 
             foreach (Plot p in plots) {
-                MapCustomElement temp = new MapCustomElement();
+                MapDot temp = new MapDot();
                 GeoPoint geo = new GeoPoint();
                 //todo fix
+                temp.Size = 20;
                 geo.Latitude = p.latitude;
                 geo.Longitude = p.longitude;
 

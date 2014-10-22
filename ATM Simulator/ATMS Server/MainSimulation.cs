@@ -188,8 +188,20 @@ namespace ATMS_Server
                     Plot plot = new Plot();
                     plot.timestamp = DateTime.Now.AddSeconds(a * BuisnessLogicValues.radarInterval);
                     plot.speed = a;
-                    plot.latitude = baseLatitude + (i );
-                    plot.longitude = baseLongitude + (i);
+                    double l =  ((i + a) * 0.1);
+                    if (i % 2 == 0)
+                    {
+                        l *= -1;
+                    }
+
+                    double la = ((i + a) * 0.1);
+                    if (i % 2 == 1)
+                    {
+                        la *= -1;
+                    }
+
+                    plot.latitude = baseLatitude + l;
+                    plot.longitude = baseLongitude + la;
                     //todo
                     plot.altitude = a * 4;
 
