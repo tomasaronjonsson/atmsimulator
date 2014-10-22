@@ -5,9 +5,13 @@ using GalaSoft.MvvmLight.Messaging;
 using Model;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DevExpress.Xpf.Map;
+using DevExpress.Map;
+using System.Windows.Controls;
 
 
 namespace ViewModel
@@ -27,6 +31,7 @@ namespace ViewModel
             serverIsAvailable = false;
             serverIsPlaying = false;
 
+            planes = null;
 
 
 
@@ -53,6 +58,22 @@ namespace ViewModel
 
 
         #region properties
+
+        private List<MapCustomElement> _planes;
+        public List<MapCustomElement> planes
+        {
+            get { return _planes; }
+            set
+            {
+                if (value != _planes)
+                {
+                    _planes = value;
+                    RaisePropertyChanged("planes");
+                }
+            }
+        }
+        
+
 
         private bool _serverIsPlaying;
         public bool serverIsPlaying
@@ -99,6 +120,7 @@ namespace ViewModel
                 {
                     _plots = value;
                     RaisePropertyChanged("plots");
+                    populatePLanes();
                 }
             }
         }
@@ -162,6 +184,8 @@ namespace ViewModel
             viewModelCurrentTime = currentServertime;
 
             plots = model.mainScenario.getNow(viewModelCurrentTime);
+
+
         }
 
         //listens to the scenario update
@@ -181,5 +205,27 @@ namespace ViewModel
 
         }
         #endregion
+
+
+        private void populatePLanes()
+        {
+            List<MapCustomElement> tempPlaneList = new List<MapCustomElement>();
+
+            foreach (Plot p in plots) {
+                MapCustomElement temp = new MapCustomElement();
+                GeoPoint geo = new GeoPoint();
+                //todo fix
+                geo.Latitude = p.latitude;
+                geo.Longitude = p.longitude;
+
+                
+                temp.Location = geo;
+                tempPlaneList.Add(temp);
+
+            }
+
+            planes = tempPlaneList;
+           
+        }
     }
 }

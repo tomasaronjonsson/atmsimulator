@@ -172,9 +172,11 @@ namespace ATMS_Server
         #region test methods
         private void populateScenarioBigger(Scenario sc)
         {
-            int tracks = 1000;
+            int tracks = 5;
             int plots = 1000;
-
+   
+            double baseLatitude = 55.850223;
+            double baseLongitude = 9.829360;
 
             for (int i = 0; i < tracks; i++)
             {
@@ -186,9 +188,10 @@ namespace ATMS_Server
                     Plot plot = new Plot();
                     plot.timestamp = DateTime.Now.AddSeconds(a * BuisnessLogicValues.radarInterval);
                     plot.speed = a;
-                    plot.x = a * 2;
-                    plot.y = a * 3;
-                    plot.z = a * 4;
+                    plot.latitude = baseLatitude + (i );
+                    plot.longitude = baseLongitude + (i);
+                    //todo
+                    plot.altitude = a * 4;
 
                     track.plots.Add(plot);
                 }
@@ -210,9 +213,9 @@ namespace ATMS_Server
             Plot t1_1 = new Plot();
             t1_1.timestamp = DateTime.Now;
             t1_1.speed = 500;
-            t1_1.x = 20;
-            t1_1.y = 30;
-            t1_1.z = 40;
+            t1_1.latitude = 20;
+            t1_1.longitude = 30;
+            t1_1.altitude = 40;
             //add the plot to the track
             t1.plots.Add(t1_1);
 
@@ -220,9 +223,9 @@ namespace ATMS_Server
             Plot t1_2 = new Plot();
             t1_2.timestamp = DateTime.Now.AddSeconds(4);
             t1_2.speed = 500;
-            t1_2.x = 25;
-            t1_2.y = 35;
-            t1_2.z = 35;
+            t1_2.latitude = 25;
+            t1_2.longitude = 35;
+            t1_2.altitude = 35;
             //add the plot to the track
             t1.plots.Add(t1_2);
 
@@ -231,9 +234,9 @@ namespace ATMS_Server
             Plot t1_3 = new Plot();
             t1_3.timestamp = DateTime.Now.AddSeconds(8);
             t1_3.speed = 500;
-            t1_3.x = 30;
-            t1_3.y = 40;
-            t1_3.z = 30;
+            t1_3.latitude = 30;
+            t1_3.longitude = 40;
+            t1_3.altitude = 30;
             //add the plot to the track
             t1.plots.Add(t1_3);
 
@@ -252,9 +255,9 @@ namespace ATMS_Server
             Plot t2_1 = new Plot();
             t2_1.timestamp = DateTime.Now;
             t2_1.speed = 450;
-            t2_1.x = 120;
-            t2_1.y = 130;
-            t2_1.z = 140;
+            t2_1.latitude = 120;
+            t2_1.longitude = 130;
+            t2_1.altitude = 140;
             //add the plot to the track
             t2.plots.Add(t2_1);
 
@@ -262,9 +265,9 @@ namespace ATMS_Server
             Plot t2_2 = new Plot();
             t2_2.timestamp = DateTime.Now.AddSeconds(4);
             t2_2.speed = 500;
-            t2_2.x = 125;
-            t2_2.y = 135;
-            t2_2.z = 135;
+            t2_2.latitude = 125;
+            t2_2.longitude = 135;
+            t2_2.altitude = 135;
             //add the plot to the track
             t2.plots.Add(t2_2);
 
@@ -272,9 +275,9 @@ namespace ATMS_Server
             Plot t2_3 = new Plot();
             t2_3.timestamp = DateTime.Now.AddSeconds(8);
             t2_3.speed = 200;
-            t2_3.x = 130;
-            t2_3.y = 140;
-            t2_3.z = 130;
+            t2_3.latitude = 130;
+            t2_3.longitude = 140;
+            t2_3.altitude = 130;
             //add the plot to the track
             t2.plots.Add(t2_3);
 
@@ -291,9 +294,9 @@ namespace ATMS_Server
             Plot t3_1 = new Plot();
             t3_1.timestamp = DateTime.Now;
             t3_1.speed = 333;
-            t3_1.x = 220;
-            t3_1.y = 230;
-            t3_1.z = 240;
+            t3_1.latitude = 220;
+            t3_1.longitude = 230;
+            t3_1.altitude = 240;
             //add the plot to the track
             t2.plots.Add(t3_1);
 
@@ -301,9 +304,9 @@ namespace ATMS_Server
             Plot t3_2 = new Plot();
             t3_2.timestamp = DateTime.Now.AddSeconds(4);
             t3_2.speed = 500;
-            t3_2.x = 225;
-            t3_2.y = 225;
-            t3_2.z = 235;
+            t3_2.latitude = 225;
+            t3_2.longitude = 225;
+            t3_2.altitude = 235;
             //add the plot to the track
             t2.plots.Add(t3_2);
 
@@ -311,9 +314,9 @@ namespace ATMS_Server
             Plot t3_3 = new Plot();
             t3_3.timestamp = DateTime.Now.AddSeconds(8);
             t3_3.speed = 200;
-            t3_3.x = 230;
-            t3_3.y = 240;
-            t3_3.z = 230;
+            t3_3.latitude = 230;
+            t3_3.longitude = 240;
+            t3_3.altitude = 230;
             //add the plot to the track
             t2.plots.Add(t3_3);
             #endregion track3

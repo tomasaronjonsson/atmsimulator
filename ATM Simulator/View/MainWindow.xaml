@@ -3,15 +3,21 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:dxm="http://schemas.devexpress.com/winfx/2008/xaml/map"
         
-        xmlns:vm="clr-namespace:ViewModel;assembly=ViewModel" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" x:Class="View.MainWindow" 
+        xmlns:vm="clr-namespace:ViewModel;assembly=ViewModel" 
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d" 
+    x:Class="View.MainWindow" 
         Title="View test panel"  WindowStartupLocation="CenterScreen">
 
+
+    
     <Window.DataContext>
         <vm:SimulationViewModel />
+        
     </Window.DataContext>
 
   
-
 
 
 
@@ -22,20 +28,30 @@
                 <Button Content="Create Scenario" Command="{Binding CreateScenario}"/>
                 <Button Content="Play" Command="{Binding PlaySimulation}"/>
             </StackPanel>
-            
-            
-            <dxm:MapControl ZoomLevel="13" CenterPoint=" 55.850223, 9.829360" FlowDirection="LeftToRight" MinWidth="900" MinHeight="800"  x:Name="map1">
-                <dxm:ImageTilesLayer Bounds="29.127,-111.059 29.177,-110.999 29.149,-110.946 29.093,-110.912 29.037,-110.914 29.021,-110.901 28.994,-110.915 28.989,-110.938 28.997,-110.949 29.073,-111.041">
+
+
+            <dxm:MapControl ZoomLevel="6" CenterPoint=" 55.850223, 9.829360" FlowDirection="LeftToRight" MinWidth="900" MinHeight="800"  x:Name="map1">
+                <dxm:ImageTilesLayer>
                     <dxm:ImageTilesLayer.DataProvider>
                         <dxm:OpenStreetMapDataProvider/>
                     </dxm:ImageTilesLayer.DataProvider>
                 </dxm:ImageTilesLayer>
-
-
-               
+                <dxm:VectorLayer ItemsSource="{Binding planes}" >
+                    <dxm:VectorLayer.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Width="12" Height="12">
+                                <Ellipse Fill="#FF333333"/>
+                                <Ellipse Margin="3" Fill="White"/>
+                                <Grid.RenderTransform>
+                                    <TranslateTransform X="-6" Y="-6"/>
+                                </Grid.RenderTransform>
+                            </Grid>
+                        </DataTemplate>
+                    </dxm:VectorLayer.ItemTemplate>
+                </dxm:VectorLayer>
             </dxm:MapControl>
-           
-            
+
+
             <ListBox ItemsSource="{Binding plots}" MinWidth="390">
                 <ListBox.ItemTemplate>
                     <DataTemplate>

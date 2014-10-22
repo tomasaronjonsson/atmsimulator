@@ -10,10 +10,14 @@ namespace ATMS_Model
     [Serializable]
     public class Plot
     {
+
         public DateTime timestamp;
-        public double x; //position 
-        public double y; //position 
-        public double z; //altitude
+        public double latitude; 
+
+        public double longitude; 
+
+        public double altitude; 
+
         public double speed;
 
         public bool takeOver;
@@ -25,7 +29,7 @@ namespace ATMS_Model
 
         public override string ToString()
         {
-            return String.Format("{0} - X: {1} y: {2} z: {3} ", timestamp, x, y, z);
+            return String.Format("{0} - latitude: {1} longitude: {2} altitude: {3} ", timestamp, latitude, longitude, altitude);
         }
     }
 }
