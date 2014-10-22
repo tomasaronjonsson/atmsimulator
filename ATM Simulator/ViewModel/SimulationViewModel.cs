@@ -12,6 +12,8 @@ using System.Threading.Tasks;
 using DevExpress.Xpf.Map;
 using DevExpress.Map;
 using System.Windows.Controls;
+using System.Windows.Ink;
+using System.Windows.Media;
 
 
 namespace ViewModel
@@ -32,6 +34,7 @@ namespace ViewModel
             serverIsPlaying = false;
 
             planes = null;
+            historyPlanes = null;
 
 
 
@@ -72,7 +75,21 @@ namespace ViewModel
                 }
             }
         }
-        
+
+        private List<MapDot> _historyPlanes;
+        public List<MapDot> historyPlanes
+        {
+            get { return _historyPlanes; }
+            set
+            {
+                if (value != _historyPlanes)
+                {
+                    _historyPlanes = value;
+                    RaisePropertyChanged("historyPlanes");
+                }
+            }
+        }
+
 
 
         private bool _serverIsPlaying;
@@ -120,7 +137,7 @@ namespace ViewModel
                 {
                     _plots = value;
                     RaisePropertyChanged("plots");
-                    
+
                 }
             }
         }
@@ -184,6 +201,7 @@ namespace ViewModel
             viewModelCurrentTime = currentServertime;
 
             plots = model.mainScenario.getNow(viewModelCurrentTime);
+            //todo
             populatePLanes();
 
         }
@@ -193,7 +211,7 @@ namespace ViewModel
         {
             //create a temporary list to work on
             plots = obj.getNow(viewModelCurrentTime);
-
+            //todo
             populatePLanes();
         }
 
@@ -212,8 +230,10 @@ namespace ViewModel
         private void populatePLanes()
         {
             List<MapDot> tempPlaneList = new List<MapDot>();
+            List<MapDot> tempHistoryPLaneList = new List<MapDot>();
 
-            foreach (Plot p in plots) {
+            foreach (Plot p in plots)
+            {
                 MapDot temp = new MapDot();
                 GeoPoint geo = new GeoPoint();
                 //todo fix
@@ -221,14 +241,42 @@ namespace ViewModel
                 geo.Latitude = p.latitude;
                 geo.Longitude = p.longitude;
 
-                
+
                 temp.Location = geo;
                 tempPlaneList.Add(temp);
 
             }
 
+            for (int i = 0; i < BuisnessLogicValues.numberOfHistoryPlots; i++)
+            {
+
+                int time = viewModelCurrentTime - ((i + 1) * BuisnessLogicValues.radarInterval);
+
+                List<Plot> temp = null;
+                if (model != null)
+                    if (model.mainScenario != null)
+                        temp = model.mainScenario.getNow(time);
+                if (temp != null)
+                    foreach (Plot t in temp.Where(x => x != null))
+                    {
+                        MapDot tempDot = new MapDot();
+                        tempDot.Size = 10;
+                   
+                        GeoPoint tempGeo = new GeoPoint();
+                        tempGeo.Latitude = t.latitude;
+                        tempGeo.Longitude = t.longitude;
+
+                        tempDot.Location = tempGeo;
+
+                        tempHistoryPLaneList.Add(tempDot);
+                    }
+
+
+
+            }
+            historyPlanes = tempHistoryPLaneList;
             planes = tempPlaneList;
-           
+
         }
     }
 }

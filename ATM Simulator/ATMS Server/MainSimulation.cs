@@ -172,7 +172,7 @@ namespace ATMS_Server
         #region test methods
         private void populateScenarioBigger(Scenario sc)
         {
-            int tracks = 5;
+            int tracks = 100;
             int plots = 1000;
    
             double baseLatitude = 55.850223;
@@ -188,13 +188,13 @@ namespace ATMS_Server
                     Plot plot = new Plot();
                     plot.timestamp = DateTime.Now.AddSeconds(a * BuisnessLogicValues.radarInterval);
                     plot.speed = a;
-                    double l =  ((i + a) * 0.1);
+                    double l =  ((i + a) * 0.001);
                     if (i % 2 == 0)
                     {
                         l *= -1;
                     }
 
-                    double la = ((i + a) * 0.1);
+                    double la = ((i + a) * 0.001);
                     if (i % 2 == 1)
                     {
                         la *= -1;

@@ -30,6 +30,8 @@
                 </dxm:ImageTilesLayer>
                 <!-- Plotslist-->
                 <dxm:VectorLayer ItemsSource="{Binding planes}" />
+                <!-- History -->
+                <dxm:VectorLayer ItemsSource="{Binding historyPlanes}" />
 
             </dxm:MapControl>
             
