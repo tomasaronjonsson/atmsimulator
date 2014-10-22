@@ -1,6 +1,7 @@
 ﻿<Window x:Class="View.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:dxm="http://schemas.devexpress.com/winfx/2008/xaml/map" 
         Title="View test panel" MinHeight="363" MinWidth="500" WindowStartupLocation="CenterScreen"
         Height="363" Width="500"
         xmlns:vm="clr-namespace:ViewModel;assembly=ViewModel">
@@ -15,6 +16,7 @@
                 <Button Content="Create Scenario" Command="{Binding CreateScenario}"/>
                 <Button Content="Play" Command="{Binding PlaySimulation}"/>
             </StackPanel>
+            <dxm:MapControl Name="map1"/><dxm:MapControl />
             <ListBox ItemsSource="{Binding plots}" MinWidth="390">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
