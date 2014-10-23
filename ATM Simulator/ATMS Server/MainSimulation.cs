@@ -178,6 +178,8 @@ namespace ATMS_Server
             double baseLatitude = 55.850223;
             double baseLongitude = 9.829360;
 
+            Random randGen = new Random();
+
             for (int i = 0; i < tracks; i++)
             {
                 Track track = new Track();
@@ -188,17 +190,10 @@ namespace ATMS_Server
                     Plot plot = new Plot();
                     plot.timestamp = DateTime.Now.AddSeconds(a * BuisnessLogicValues.radarInterval);
                     plot.speed = a;
-                    double l =  ((i + a) * 0.001);
-                    if (i % 2 == 0)
-                    {
-                        l *= -1;
-                    }
-
-                    double la = ((i + a) * 0.001);
-                    if (i % 2 == 1)
-                    {
-                        la *= -1;
-                    }
+                    double l = randGen.NextDouble() * 0.01;
+                 
+                    double la = randGen.NextDouble() * 0.01;
+                    
 
                     plot.latitude = baseLatitude + l;
                     plot.longitude = baseLongitude + la;
