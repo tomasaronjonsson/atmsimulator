@@ -8,20 +8,30 @@
         mc:Ignorable="d"
         x:Class="View.MainWindow" 
         Title="View test panel"
-        WindowStartupLocation="CenterScreen">
+        WindowStartupLocation="CenterScreen"
+        Width="1350">
 
     <Window.DataContext>
         <vm:SimulationViewModel/>
     </Window.DataContext>
-    
-    <StackPanel  Margin="0,0,-252,-138">
-        <StackPanel Orientation="Horizontal">
-            <StackPanel Width="100" HorizontalAlignment="Left">
+
+    <StackPanel>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="680" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100" />
+                <ColumnDefinition Width="900" />
+                <ColumnDefinition Width="350" />
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Grid.Row="0" Grid.Column="0">
                 <Button Content="Create Scenario" Command="{Binding CreateScenario}"/>
                 <Button Content="Play" Command="{Binding PlaySimulation}"/>
             </StackPanel>
 
-            <dxm:MapControl ZoomLevel="8"  CenterPoint="55.85,9.82" FlowDirection="LeftToRight" Width="900" Height="800">
+            <dxm:MapControl Grid.Row="0" Grid.Column="1" ZoomLevel="8"  CenterPoint="55.85,9.82">
                 <!-- The map itself from oepnstreet -->
                 <dxm:ImageTilesLayer>
                     <dxm:ImageTilesLayer.DataProvider>
@@ -32,20 +42,18 @@
                 <dxm:VectorLayer ItemsSource="{Binding planes}" />
                 <!-- History -->
                 <dxm:VectorLayer ItemsSource="{Binding historyPlanes}" />
-
             </dxm:MapControl>
-            
-            <!-- <ListBox ItemsSource="{Binding plots}" MinWidth="390">
+
+            <ListBox Grid.Row="0" Grid.Column="2" ItemsSource="{Binding plots}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding ''}"/>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-            -->
-            
-        </StackPanel>
+        </Grid>
         <Label Content="{Binding plots.Count}"/>
     </StackPanel>
+
 </Window>
 

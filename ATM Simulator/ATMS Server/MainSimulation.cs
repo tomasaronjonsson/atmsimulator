@@ -170,14 +170,17 @@ namespace ATMS_Server
             }
         }
         #region test methods
+
         private void populateScenarioBigger(Scenario sc)
         {
-            int tracks = 100;
-            int plots = 1000;
-   
+            int tracks = 150;
+            int plots = 300;
+
+            //starting point for the test flights
             double baseLatitude = 55.850223;
             double baseLongitude = 9.829360;
 
+            //random number object to randomly simulate a track (testing purposes)
             Random randGen = new Random();
 
             for (int i = 0; i < tracks; i++)
@@ -191,9 +194,9 @@ namespace ATMS_Server
                     plot.timestamp = DateTime.Now.AddSeconds(a * BuisnessLogicValues.radarInterval);
                     plot.speed = a;
                     double l = randGen.NextDouble() * 0.01;
-                 
+
                     double la = randGen.NextDouble() * 0.01;
-                    
+
 
                     plot.latitude = baseLatitude + l;
                     plot.longitude = baseLongitude + la;
