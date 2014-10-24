@@ -192,14 +192,13 @@ namespace ATMS_Server
                 {
                     Plot plot = new Plot();
                     plot.timestamp = DateTime.Now.AddSeconds(a * BuisnessLogicValues.radarInterval);
-                    plot.speed = a;
-                    double l = randGen.NextDouble() * 0.01;
 
-                    double la = randGen.NextDouble() * 0.01;
+                    double lon = randGen.NextDouble() * 0.01;
+                    double lat = randGen.NextDouble() * 0.01;
 
+                    plot.latitude = baseLatitude + lat;
+                    plot.longitude = baseLongitude + lon;
 
-                    plot.latitude = baseLatitude + l;
-                    plot.longitude = baseLongitude + la;
                     //todo
                     plot.altitude = a * 4;
 

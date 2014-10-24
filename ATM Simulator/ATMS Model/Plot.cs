@@ -29,7 +29,7 @@ namespace ATMS_Model
 
         public override string ToString()
         {
-            return String.Format("{0} - LAT: {1} LON: {2} ALT: {3} ", timestamp.ToString("hh:mm:ss"), latitude.ToString("#.00000000"), longitude.ToString("#.00000000"), altitude);
+            return String.Format("{0}     LAT: {1}     LON: {2}     ALT: {3}", timestamp.ToString("hh:mm:ss"), latitude.ToString("#.00000000"), longitude.ToString("#.00000000"), altitude);
         }
     }
 }
