@@ -25,7 +25,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "View", "View\View.csproj", 
 		{5C34C8BB-7DF3-461F-8D1B-034F75932822} = {5C34C8BB-7DF3-461F-8D1B-034F75932822}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AsterixLib", "..\..\ConsoleApplication1\AsterixLib.csproj", "{F25735B1-105B-40BC-9B17-CA5C6B30A5AA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AsterixLib", "AsterixLib\AsterixLib.csproj", "{F25735B1-105B-40BC-9B17-CA5C6B30A5AA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -247,6 +247,8 @@ namespace ViewModel
 
             }
 
+
+
             for (int i = 0; i < BuisnessLogicValues.numberOfHistoryPlots; i++)
             {
 
