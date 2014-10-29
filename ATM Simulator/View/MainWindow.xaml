@@ -32,12 +32,18 @@
                 <Button Content="Play" Command="{Binding PlaySimulation}"/>
             </StackPanel>
 
-            <dxm:MapControl Grid.Row="0" Grid.Column="1" ZoomLevel="8"  CenterPoint="55.85,9.82">
+            <Canvas Name="mapcanvas">
+                
+            </Canvas>
+
+                <dxm:MapControl Grid.Row="0" Grid.Column="1" ZoomLevel="8"  CenterPoint="55.85,9.82">
                 <!-- The map itself from oepnstreet -->
-                <dxm:ImageTilesLayer>
-                    <dxm:ImageTilesLayer.DataProvider>
+                <dxm:ImageTilesLayer Name="mapContainer">
+                    
+                    
+                    <!--<dxm:ImageTilesLayer.DataProvider>
                         <dxm:OpenStreetMapDataProvider/>
-                    </dxm:ImageTilesLayer.DataProvider>
+                    </dxm:ImageTilesLayer.DataProvider>-->
                 </dxm:ImageTilesLayer>
                 <!-- Plotslist-->
                 <dxm:VectorLayer ItemsSource="{Binding planes}" />
