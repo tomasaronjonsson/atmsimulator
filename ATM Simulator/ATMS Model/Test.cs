@@ -15,7 +15,7 @@ namespace ATMS_Model
         {
 
             Scenario sc = new Scenario();
-            int tracks = 150;
+            int tracks = 2;
             int plots = 300;
 
             //starting point for the test flights
@@ -35,11 +35,18 @@ namespace ATMS_Model
                     Plot plot = new Plot();
                     plot.timestamp = DateTime.Now.AddSeconds(a * BuisnessLogicValues.radarInterval);
 
-                    double lon = randGen.NextDouble() * 0.01;
-                    double lat = randGen.NextDouble() * 0.01;
+                    if (i % 2 == 0)
+                    {
+                        plot.latitude = baseLatitude + (i * 0.01) + (a * 0.01);
+                        plot.longitude = baseLongitude + (i * 0.01) + (a * 0.01);
+                    }
+                    else
+                    {
+                        plot.latitude = baseLatitude - (i * 0.01) - (a * 0.01);
+                        plot.longitude = baseLongitude - (i * 0.01) -(a * 0.01);
+                    }
 
-                    plot.latitude = baseLatitude + lat;
-                    plot.longitude = baseLongitude + lon;
+               
 
                     //todo
                     plot.altitude = a * 4;

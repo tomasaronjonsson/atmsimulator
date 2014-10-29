@@ -24,5 +24,13 @@ namespace View
         {
             InitializeComponent();
         }
+
+        private void Slider_Drop(object sender, DragEventArgs e)
+        {
+
+        }
+
+
+ 
     }
 }

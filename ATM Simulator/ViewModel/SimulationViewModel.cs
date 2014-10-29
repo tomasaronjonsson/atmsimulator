@@ -23,7 +23,9 @@ namespace ViewModel
         SimulationModel model;
 
         //storing the global time in seconds
-        public int viewModelCurrentTime;
+
+       
+        
 
         public SimulationViewModel()
         {
@@ -32,6 +34,8 @@ namespace ViewModel
             viewModelCurrentTime = 0;
             serverIsAvailable = false;
             serverIsPlaying = false;
+            syncTimeWithServer = true;
+
 
             planes = null;
             historyPlanes = null;
@@ -57,11 +61,61 @@ namespace ViewModel
             model.startUp();
         }
 
-
+      
 
 
         #region properties
 
+        private int _viewModelCurrentTime;
+        public int viewModelCurrentTime
+        {
+            get { return _viewModelCurrentTime; }
+            set
+            {
+                if (value != _viewModelCurrentTime)
+                {
+                    _viewModelCurrentTime = value;
+                    if (viewModelCurrentTime != serverCurrentTime )
+                        syncTimeWithServer = false;
+                    plots = model.mainScenario.getNow(viewModelCurrentTime);
+                    populatePLanes();
+
+                    RaisePropertyChanged("viewModelCurrentTime");
+                }
+            }
+        }
+
+
+        private bool _syncTimeWithServer;
+        public bool syncTimeWithServer
+        {
+            get { return _syncTimeWithServer; }
+            set
+            {
+                if (value != _syncTimeWithServer)
+                {
+                    _syncTimeWithServer = value;
+                    RaisePropertyChanged("syncTimeWithServer");
+                }
+            }
+        }
+        
+        
+
+        private int _serverCurrentTime;
+        public int serverCurrentTime
+        {
+            get { return _serverCurrentTime; }
+            set
+            {
+                if (value != _serverCurrentTime)
+                {
+                    _serverCurrentTime = value;
+                    RaisePropertyChanged("serverCurrentTime");
+                }
+            }
+        }
+        
         private List<MapDot> _planes;
         public List<MapDot> planes
         {
@@ -198,11 +252,16 @@ namespace ViewModel
         //listens to the scenario time update
         private void handleServerTimeUpdate(int currentServertime)
         {
-            viewModelCurrentTime = currentServertime;
+            serverCurrentTime = currentServertime;
+            if (syncTimeWithServer)
+            {
+                viewModelCurrentTime = currentServertime;      
+            }
 
-            plots = model.mainScenario.getNow(viewModelCurrentTime);
-            //todo
-            populatePLanes();
+           
+
+           
+            
 
         }
 

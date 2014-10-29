@@ -9,7 +9,7 @@
         x:Class="View.MainWindow" 
         Title="View test panel"
         WindowStartupLocation="CenterScreen"
-        Width="1350">
+        >
 
     <Window.DataContext>
         <vm:SimulationViewModel/>
@@ -18,12 +18,13 @@
     <StackPanel>
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="680" />
+                <RowDefinition Height="800"/>
+                <RowDefinition Height="50"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="100" />
-                <ColumnDefinition Width="900" />
-                <ColumnDefinition Width="350" />
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="200"/>
             </Grid.ColumnDefinitions>
 
             <StackPanel Grid.Row="0" Grid.Column="0">
@@ -51,8 +52,21 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
+
+            <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center">
+                <Slider  Width="400" Value="{Binding viewModelCurrentTime , Mode=TwoWay}" Orientation="Horizontal" HorizontalAlignment="Left" 
+                        IsSnapToTickEnabled="True" Maximum="{Binding serverCurrentTime}" TickPlacement="BottomRight" 
+                        AutoToolTipPlacement="BottomRight" TickFrequency="4"
+                        AutoToolTipPrecision="2" IsDirectionReversed="False"
+                        IsMoveToPointEnabled="False" />
+
+                <CheckBox Content="Sync" IsChecked="{Binding syncTimeWithServer,Mode=TwoWay}" />
+                
+            </StackPanel>
         </Grid>
         <Label Content="{Binding plots.Count}"/>
+        
+
     </StackPanel>
 
 </Window>
