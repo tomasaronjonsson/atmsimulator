@@ -27,5 +27,14 @@ namespace Model
             model.currentServerTime = currentServerTime;
             model.serverIsPlaying = true;
         }
+
+        public void notifyNewTrack(Track t)
+        {
+            model.notifyNewTrack(t);
+
+        }
+
+
+
     }
 }

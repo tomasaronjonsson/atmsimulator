@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="ec1dc9ff-dced-4bf4-80c8-384e4b326d00" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="4498f0fd-e73a-421e-967a-f09c70553f7c" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
   <ClientOptions>
     <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
     <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
@@ -19,14 +19,14 @@
     <ServiceContractMappings />
   </ClientOptions>
   <MetadataSources>
-    <MetadataSource Address="http://localhost:8888/ATMS_Server/ATMS/mex" Protocol="mex" SourceId="1" />
+    <MetadataSource Address="net.tcp://localhost:8888/ATMS_Server/ATMS/mex" Protocol="mex" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="ATMS_Server.wsdl" MetadataType="Wsdl" ID="720d03ed-ebc6-44b5-8238-d89407b9a220" SourceId="1" SourceUrl="http://localhost:8888/ATMS_Server/ATMS/mex" />
-    <MetadataFile FileName="service.wsdl" MetadataType="Wsdl" ID="d010ad4f-d52c-4bd8-a388-042862b0251a" SourceId="1" SourceUrl="http://localhost:8888/ATMS_Server/ATMS/mex" />
-    <MetadataFile FileName="ATMS_Server.xsd" MetadataType="Schema" ID="3f769c31-eace-4b1d-a7fa-7c00ba1a5821" SourceId="1" SourceUrl="http://localhost:8888/ATMS_Server/ATMS/mex" />
-    <MetadataFile FileName="service.xsd" MetadataType="Schema" ID="0e568eb0-0c41-4259-8f06-d9d87ba1d96c" SourceId="1" SourceUrl="http://localhost:8888/ATMS_Server/ATMS/mex" />
-    <MetadataFile FileName="ATMS_Model.xsd" MetadataType="Schema" ID="aeb62636-ed7a-459d-83e5-34da3be57463" SourceId="1" SourceUrl="http://localhost:8888/ATMS_Server/ATMS/mex" />
+    <MetadataFile FileName="ATMS_Server.wsdl" MetadataType="Wsdl" ID="903cc741-6aea-42dc-ba85-b42d8d98ade6" SourceId="1" SourceUrl="net.tcp://localhost:8888/ATMS_Server/ATMS/mex" />
+    <MetadataFile FileName="service.wsdl" MetadataType="Wsdl" ID="a1bbfa0e-3365-4eba-a894-5265f030b87e" SourceId="1" SourceUrl="net.tcp://localhost:8888/ATMS_Server/ATMS/mex" />
+    <MetadataFile FileName="ATMS_Server.xsd" MetadataType="Schema" ID="9dca22ac-85c9-44e4-a5bb-ee9cdce51d60" SourceId="1" SourceUrl="net.tcp://localhost:8888/ATMS_Server/ATMS/mex" />
+    <MetadataFile FileName="service.xsd" MetadataType="Schema" ID="ee2a3058-6d21-40fb-a041-7b460f65f5eb" SourceId="1" SourceUrl="net.tcp://localhost:8888/ATMS_Server/ATMS/mex" />
+    <MetadataFile FileName="ATMS_Model.xsd" MetadataType="Schema" ID="2e007700-1668-4711-af40-d82f6d6a5acf" SourceId="1" SourceUrl="net.tcp://localhost:8888/ATMS_Server/ATMS/mex" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

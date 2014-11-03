@@ -13,8 +13,6 @@ namespace ATMS_Model
         //to store the list of tracks witihin the scenario
         public List<Track> tracks { get; set; }
 
-
-
         //to imlpement basetime datetimestamp + seconds > 
         private DateTime basetime;
 
@@ -24,9 +22,9 @@ namespace ATMS_Model
         {
             tracks = new List<Track>();
             basetime = DateTime.MinValue;
-
         }
 
+    
 
         //returns a list of plots at the current time in seconds
         public List<Plot> getNow(int seconds)

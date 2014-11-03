@@ -31,6 +31,18 @@
       <xs:sequence />
     </xs:complexType>
   </xs:element>
+  <xs:element name="createNewTrack">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/ATMS_Model" minOccurs="0" name="t" nillable="true" type="q1:Track" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="createNewTrackResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
   <xs:element name="notifyTimeUpdate">
     <xs:complexType>
       <xs:sequence>
@@ -41,7 +53,14 @@
   <xs:element name="notifyNewScenario">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/ATMS_Model" minOccurs="0" name="data" nillable="true" type="q1:Scenario" />
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/ATMS_Model" minOccurs="0" name="data" nillable="true" type="q2:Scenario" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="notifyNewTrack">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/ATMS_Model" minOccurs="0" name="t" nillable="true" type="q3:Track" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

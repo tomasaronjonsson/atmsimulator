@@ -29,7 +29,11 @@
 
             <StackPanel Grid.Row="0" Grid.Column="0">
                 <Button Content="Create Scenario" Command="{Binding CreateScenario}"/>
-                <Button Content="Play" Command="{Binding PlaySimulation}"/>
+                <Button Content="Play Simulation" Command="{Binding PlaySimulation}"/>
+
+                <Label Content="Track:" HorizontalAlignment="Left"/>
+                <Button Content="Create new track" Command="{Binding CreateNewTrack}"/>
+                
             </StackPanel>
 
             <Canvas Name="mapcanvas">
@@ -41,9 +45,9 @@
                 <dxm:ImageTilesLayer Name="mapContainer">
                     
                     
-                    <!--<dxm:ImageTilesLayer.DataProvider>
+                    <dxm:ImageTilesLayer.DataProvider>
                         <dxm:OpenStreetMapDataProvider/>
-                    </dxm:ImageTilesLayer.DataProvider>-->
+                    </dxm:ImageTilesLayer.DataProvider>
                 </dxm:ImageTilesLayer>
                 <!-- Plotslist-->
                 <dxm:VectorLayer ItemsSource="{Binding planes}" />
@@ -51,7 +55,16 @@
                 <dxm:VectorLayer ItemsSource="{Binding historyPlanes}" />
             </dxm:MapControl>
 
+           <!--
+            DEBUG List of plots
             <ListBox Grid.Row="0" Grid.Column="2" ItemsSource="{Binding plots}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding ''}"/>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>-->
+            <ListBox Grid.Row="0" Grid.Column="2" ItemsSource="{Binding tracks}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding ''}"/>
@@ -69,6 +82,7 @@
                 <CheckBox Content="Sync" IsChecked="{Binding syncTimeWithServer,Mode=TwoWay}" />
                 
             </StackPanel>
+            
         </Grid>
         <Label Content="{Binding plots.Count}"/>
         

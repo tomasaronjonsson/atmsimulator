@@ -25,11 +25,20 @@
   <wsdl:message name="IServerInterface_playSimulation_OutputMessage">
     <wsdl:part name="parameters" element="tns:playSimulationResponse" />
   </wsdl:message>
+  <wsdl:message name="IServerInterface_createNewTrack_InputMessage">
+    <wsdl:part name="parameters" element="tns:createNewTrack" />
+  </wsdl:message>
+  <wsdl:message name="IServerInterface_createNewTrack_OutputMessage">
+    <wsdl:part name="parameters" element="tns:createNewTrackResponse" />
+  </wsdl:message>
   <wsdl:message name="IServerInterface_notifyTimeUpdate_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:notifyTimeUpdate" />
   </wsdl:message>
   <wsdl:message name="IServerInterface_notifyNewScenario_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:notifyNewScenario" />
+  </wsdl:message>
+  <wsdl:message name="IServerInterface_notifyNewTrack_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:notifyNewTrack" />
   </wsdl:message>
   <wsdl:portType name="IServerInterface">
     <wsdl:operation name="populateClient">
@@ -44,11 +53,18 @@
       <wsdl:input wsaw:Action="ATMS_Server/IServerInterface/playSimulation" message="tns:IServerInterface_playSimulation_InputMessage" />
       <wsdl:output wsaw:Action="ATMS_Server/IServerInterface/playSimulationResponse" message="tns:IServerInterface_playSimulation_OutputMessage" />
     </wsdl:operation>
+    <wsdl:operation name="createNewTrack">
+      <wsdl:input wsaw:Action="ATMS_Server/IServerInterface/createNewTrack" message="tns:IServerInterface_createNewTrack_InputMessage" />
+      <wsdl:output wsaw:Action="ATMS_Server/IServerInterface/createNewTrackResponse" message="tns:IServerInterface_createNewTrack_OutputMessage" />
+    </wsdl:operation>
     <wsdl:operation name="notifyTimeUpdate">
       <wsdl:output wsaw:Action="ATMS_Server/IServerInterface/notifyTimeUpdate" message="tns:IServerInterface_notifyTimeUpdate_OutputCallbackMessage" />
     </wsdl:operation>
     <wsdl:operation name="notifyNewScenario">
       <wsdl:output wsaw:Action="ATMS_Server/IServerInterface/notifyNewScenario" message="tns:IServerInterface_notifyNewScenario_OutputCallbackMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="notifyNewTrack">
+      <wsdl:output wsaw:Action="ATMS_Server/IServerInterface/notifyNewTrack" message="tns:IServerInterface_notifyNewTrack_OutputCallbackMessage" />
     </wsdl:operation>
   </wsdl:portType>
 </wsdl:definitions>

@@ -18,5 +18,10 @@ namespace ATMS_Model
         {
             plots = new List<Plot>();
         }
+
+        public override string ToString()
+        {
+            return "Track ID: " + trackID;
+        }
     }
 }

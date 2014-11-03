@@ -27,6 +27,8 @@ namespace ATMS_Server
         //current server time in seconds
         int currentServerTime;
 
+        //store the next avilable track ID
+        int avilableTrackID;
         //the thread for incrementing time (current server time)
         Thread timeThread;
 
@@ -38,6 +40,7 @@ namespace ATMS_Server
             layeredScenarios = new Dictionary<int, Scenario>();
             currentServerTime = 0;
             mainScenario = new Scenario();
+            avilableTrackID = 0;
             #endregion
         }
 
@@ -89,7 +92,9 @@ namespace ATMS_Server
                 mainScenario = new Scenario();
 
                 mainScenario = Test.populateScenarioBigger();
-              
+
+                avilableTrackID = mainScenario.tracks.Count;
+
                 //sending the new scenario to the clients
                 ThreadPool.QueueUserWorkItem(a => sendNewScenario());
 
@@ -101,6 +106,40 @@ namespace ATMS_Server
             };
         }
 
+
+
+        /**
+         *  
+         * the IServerInterface implementation of createnewtask
+         * */
+        public void createNewTrack(Track t)
+        {
+
+            //check if the value incoming is Null
+            if (t == null)
+            {
+                t = new Track();
+            }
+
+            //set an avilable track id to it
+
+            t.trackID = avilableTrackID;
+
+            //increment the track id
+            avilableTrackID++;
+
+            //adding the track to the mainscenario
+            mainScenario.tracks.Add(t);
+
+            //notify the clients of the newly added track
+
+            notifyCreateNewTrack(t);
+        }
+
+        /**
+         * 
+         * Helper function to check if the callback client is allready in our list of clients
+         * */
         public void checkIfRegistered()
         {
             IClientCallbackInterface callback = OperationContext.Current.GetCallbackChannel<IClientCallbackInterface>();
@@ -139,6 +178,31 @@ namespace ATMS_Server
                 }
             }
         }
+        /**
+         * TODO: review
+         * 
+         * notify the clients of the new track
+         * */
+
+        public void notifyCreateNewTrack(Track t)
+        {
+
+            foreach (IClientCallbackInterface entry in clients)
+            {
+                try
+                {
+                    //Handle the client callbacks, 1st argument is the function, 2nd is the client
+                    ThreadPool.QueueUserWorkItem(work => handleClientCallback(() => { entry.notifyNewTrack(t); }, entry));
+                }
+                catch (Exception e)
+                {
+                    //handle that the scenario is to big and can't be sent like this 
+                    debugMessage(e);
+
+                }
+            }
+
+        }
 
         #endregion
 
@@ -171,12 +235,15 @@ namespace ATMS_Server
                 debugMessage(e);
             }
         }
-       
+
 
         public void debugMessage(Exception e)
         {
             Debug.WriteLine("Excpetion" + e);
             Debug.WriteLine("Stacktrace:" + e.StackTrace);
         }
+
+
+
     }
 }

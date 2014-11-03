@@ -20,6 +20,11 @@ namespace ATMS_Server
 
         [OperationContract]
         void playSimulation();
+
+        [OperationContract]
+        void createNewTrack(Track t);
+
+       
     }
 
     public interface IClientCallbackInterface
@@ -31,5 +36,11 @@ namespace ATMS_Server
         //notifies all clients of all the changes
         [OperationContract(IsOneWay = true)]
         void notifyNewScenario(Scenario data);
+
+        //notifies all clients of all the changes
+        [OperationContract(IsOneWay = true)]
+        void notifyNewTrack(Track t);
+
+
     }
 }

@@ -32,6 +32,12 @@ namespace Model.ServiceReference1 {
         
         [System.ServiceModel.OperationContractAttribute(Action="ATMS_Server/IServerInterface/playSimulation", ReplyAction="ATMS_Server/IServerInterface/playSimulationResponse")]
         System.Threading.Tasks.Task playSimulationAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="ATMS_Server/IServerInterface/createNewTrack", ReplyAction="ATMS_Server/IServerInterface/createNewTrackResponse")]
+        void createNewTrack(ATMS_Model.Track t);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="ATMS_Server/IServerInterface/createNewTrack", ReplyAction="ATMS_Server/IServerInterface/createNewTrackResponse")]
+        System.Threading.Tasks.Task createNewTrackAsync(ATMS_Model.Track t);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -42,6 +48,9 @@ namespace Model.ServiceReference1 {
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="ATMS_Server/IServerInterface/notifyNewScenario")]
         void notifyNewScenario(ATMS_Model.Scenario data);
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="ATMS_Server/IServerInterface/notifyNewTrack")]
+        void notifyNewTrack(ATMS_Model.Track t);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -94,6 +103,14 @@ namespace Model.ServiceReference1 {
         
         public System.Threading.Tasks.Task playSimulationAsync() {
             return base.Channel.playSimulationAsync();
+        }
+        
+        public void createNewTrack(ATMS_Model.Track t) {
+            base.Channel.createNewTrack(t);
+        }
+        
+        public System.Threading.Tasks.Task createNewTrackAsync(ATMS_Model.Track t) {
+            return base.Channel.createNewTrackAsync(t);
         }
     }
 }

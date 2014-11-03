@@ -152,5 +152,22 @@ namespace Model
         {
             Debug.WriteLine("Client" + stackTrace);
         }
+
+        internal void notifyNewTrack(Track t)
+        {
+            //adding the new track to our local scenario
+            mainScenario.tracks.Add(t);
+            //sending a messeng out that the main scenario has been changed triggering the update process on the view
+            Messenger.Default.Send(t);
+        }
+
+        public async Task createNewTrack()
+        {
+            Track t = new Track();
+            handleServerConnection();
+            await server.createNewTrackAsync(t);
+            serverIsAvailable = true;
+
+        }
     }
 }

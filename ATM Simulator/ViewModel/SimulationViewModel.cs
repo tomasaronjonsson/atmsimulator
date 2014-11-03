@@ -31,16 +31,17 @@ namespace ViewModel
         {
 
             // initilization of the viewmodel 
-            viewModelCurrentTime = 0;
-            serverIsAvailable = false;
-            serverIsPlaying = false;
-            syncTimeWithServer = true;
+            _viewModelCurrentTime = 0;
+            _serverIsAvailable = false;
+            _serverIsPlaying = false;
+            _syncTimeWithServer = true;
 
 
             planes = null;
             historyPlanes = null;
 
-
+            //creating a new model
+            model = new SimulationModel();
 
             //This listens to the brodcasted messages sent by the Messenger
             Messenger.Default.Register<Scenario>(this, handleScenarioUpdate);
@@ -50,13 +51,16 @@ namespace ViewModel
             //This listens to the brodcasted messages sent by the Messenger
             Messenger.Default.Register<bool>(this, handleBoolChanges);
 
+
+            //This listens to the brodcasted messages sent by the Messenger
+            Messenger.Default.Register<Track>(this, handleTrackChanges);
+
             //initialize the plots list
             _plots = new List<Plot>();
+            //ininitlize the tracks list
+            _tracks = new List<Track>();
 
             //end of initilization of the viewmodel
-
-            model = new SimulationModel();
-
 
             model.startUp();
         }
@@ -196,6 +200,21 @@ namespace ViewModel
             }
         }
 
+
+        private List<Track> _tracks;
+        public List<Track> tracks
+        {
+            get { return _tracks; }
+            set
+            {
+                if (value != _tracks)
+                {
+                    _tracks = value;
+                    RaisePropertyChanged("tracks");
+                }
+            }
+        }
+        
         #region RelayCommands
         //this is the create scenario command that calls the create scenario method from the model
         private RelayCommand _CreateScenario;
@@ -243,6 +262,27 @@ namespace ViewModel
             }
         }
 
+        private RelayCommand _CreateNewTrack;
+        public RelayCommand CreateNewTrack
+        {
+            get
+            {
+                if (_CreateNewTrack == null)
+                {
+                    _CreateNewTrack = new RelayCommand(
+                       async () =>
+                       {
+                           await model.createNewTrack();
+                       },
+                       () =>
+                       {
+                           return serverIsAvailable;
+                       });
+                }
+                return _CreateNewTrack;
+            }
+        }
+
 
         #endregion
 
@@ -270,6 +310,9 @@ namespace ViewModel
         {
             //create a temporary list to work on
             plots = obj.getNow(viewModelCurrentTime);
+
+            //update the track list
+            //tracks = model.mainScenario.tracks;
             //todo
             populatePLanes();
         }
@@ -283,6 +326,12 @@ namespace ViewModel
             }
 
         }
+
+        private void handleTrackChanges(Track t)
+        {
+            tracks = model.mainScenario.tracks;
+
+        }
         #endregion
 
 
@@ -290,6 +339,9 @@ namespace ViewModel
         {
             List<MapDot> tempPlaneList = new List<MapDot>();
             List<MapDot> tempHistoryPLaneList = new List<MapDot>();
+
+            
+
 
             foreach (Plot p in plots)
             {
@@ -337,7 +389,8 @@ namespace ViewModel
             }
             historyPlanes = tempHistoryPLaneList;
             planes = tempPlaneList;
-
+           
         }
+
     }
 }

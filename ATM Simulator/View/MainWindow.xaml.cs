@@ -24,12 +24,15 @@ namespace View
         public MainWindow()
         {
             InitializeComponent();
+            
+            /*
+             *  Testing map
             string s = "ATB COL=255,255,255 STYLE=SOLID SIZE=1 FILLSTYLE=NULLC (#57.5031667 10.2193889 C )#57.5038611 10.2393333";
 
-            foreach (Dse.MapFile.Shape item in MapFileParser.Parse(s).Shapes)
+            foreach (Dse.MapFile.Shape item in MapFileParser.Parse(s).Shapes) 
             {
                 mapcanvas.Children.Add(item);  // see HERE - this is not OAK :))
-            }
+            }*/
         }
 
         private void Slider_Drop(object sender, DragEventArgs e)
