@@ -306,7 +306,11 @@ namespace ViewModel
             //todo
             populatePLanes();
         }
-
+        /**
+         * 
+         * 
+         * Purpose handle messenges send from the 
+         * */
         private void handleBoolChanges(bool obj)
         {
             if (model != null)

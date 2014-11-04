@@ -31,13 +31,16 @@ namespace ATMS_Model
          * */
         public override bool Equals(object obj)
         {
-            if (obj == null) return false;
+            if (obj == null) 
+                return false;
 
             Track objAsTrack = obj as Track;
 
-            if (objAsTrack == null) return false;
+            if (objAsTrack == null) 
+                return false;
 
-            if (objAsTrack.trackID == this.trackID) return true;
+            if (objAsTrack.trackID == this.trackID) 
+                return true;
 
             return false;
         }
