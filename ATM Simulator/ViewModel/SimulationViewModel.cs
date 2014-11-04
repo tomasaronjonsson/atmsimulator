@@ -205,6 +205,7 @@ namespace ViewModel
             {
                 if (value != _tracks)
                 {
+                    //we have to copy the list else, the binding will not update 
                     _tracks = value.Select(x => x).ToList() ;
                     RaisePropertyChanged("tracks");
                 }
@@ -279,6 +280,29 @@ namespace ViewModel
             }
         }
 
+        private RelayCommand _RemoveTrack;
+        public RelayCommand RemoveTrack
+        {
+            get { return _RemoveTrack; }
+            set
+            {
+                if (_RemoveTrack == null)
+                {
+                    _RemoveTrack = new RelayCommand(
+                       async () =>
+                       {                           
+                           //todo
+                           await model.createNewTrack();
+                       },
+                       () =>
+                       {
+                           return serverIsAvailable;
+                       });
+                }
+                return _RemoveTrack;
+            }
+        }
+        
 
         #endregion
 
@@ -323,7 +347,6 @@ namespace ViewModel
         }
 
         /**
-        * 
         * 
         * Purpose handle messenges sent from the Model when changes are made to a track on the model
         * */

@@ -171,6 +171,11 @@ namespace Model
             Messenger.Default.Send(t);
         }
 
-        
+
+
+        public Task removeTrack(int p)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
