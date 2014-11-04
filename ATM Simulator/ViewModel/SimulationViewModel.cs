@@ -205,7 +205,7 @@ namespace ViewModel
             {
                 if (value != _tracks)
                 {
-                    _tracks = value;
+                    _tracks = value.Select(x => x).ToList() ;
                     RaisePropertyChanged("tracks");
                 }
             }
@@ -309,19 +309,28 @@ namespace ViewModel
         /**
          * 
          * 
-         * Purpose handle messenges send from the 
+         * Purpose handle messenges sent from the Model when changes are made to a bool on the model and updating all boolean values of interest
          * */
         private void handleBoolChanges(bool obj)
         {
+            //check if the model is null before doing anything
             if (model != null)
             {
+                //the boolean values of interest
                 serverIsPlaying = model.serverIsPlaying;
                 serverIsAvailable = model.serverIsAvailable;
             }
         }
 
+        /**
+        * 
+        * 
+        * Purpose handle messenges sent from the Model when changes are made to a track on the model
+        * */
+
         private void handleTrackChanges(Track t)
         {
+            
             tracks =  model.mainScenario.tracks;
 
         }
