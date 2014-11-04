@@ -114,7 +114,7 @@ namespace ATMS_Server
          * */
         public void createNewTrack(Track t)
         {
-
+            checkIfRegistered();
             //check if the value incoming is Null
             if (t == null)
             {

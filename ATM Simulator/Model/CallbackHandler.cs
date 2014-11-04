@@ -31,7 +31,6 @@ namespace Model
         public void notifyNewTrack(Track t)
         {
             model.notifyNewTrack(t);
-
         }
 
 

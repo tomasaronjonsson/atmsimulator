@@ -14,6 +14,7 @@ using DevExpress.Map;
 using System.Windows.Controls;
 using System.Windows.Ink;
 using System.Windows.Media;
+using System.Threading;
 
 
 namespace ViewModel
@@ -24,8 +25,8 @@ namespace ViewModel
 
         //storing the global time in seconds
 
-       
-        
+
+
 
         public SimulationViewModel()
         {
@@ -43,16 +44,11 @@ namespace ViewModel
             //creating a new model
             model = new SimulationModel();
 
-            //This listens to the brodcasted messages sent by the Messenger
+            //These listen to the brodcasted messages sent by the Messenger
             Messenger.Default.Register<Scenario>(this, handleScenarioUpdate);
-            //This listens to the brodcasted messages sent by the Messenger
             Messenger.Default.Register<int>(this, handleServerTimeUpdate);
-
-            //This listens to the brodcasted messages sent by the Messenger
             Messenger.Default.Register<bool>(this, handleBoolChanges);
 
-
-            //This listens to the brodcasted messages sent by the Messenger
             Messenger.Default.Register<Track>(this, handleTrackChanges);
 
             //initialize the plots list
@@ -65,7 +61,7 @@ namespace ViewModel
             model.startUp();
         }
 
-      
+
 
 
         #region properties
@@ -79,7 +75,7 @@ namespace ViewModel
                 if (value != _viewModelCurrentTime)
                 {
                     _viewModelCurrentTime = value;
-                    if (viewModelCurrentTime != serverCurrentTime )
+                    if (viewModelCurrentTime != serverCurrentTime)
                         syncTimeWithServer = false;
                     plots = model.mainScenario.getNow(viewModelCurrentTime);
                     populatePLanes();
@@ -103,8 +99,8 @@ namespace ViewModel
                 }
             }
         }
-        
-        
+
+
 
         private int _serverCurrentTime;
         public int serverCurrentTime
@@ -119,7 +115,7 @@ namespace ViewModel
                 }
             }
         }
-        
+
         private List<MapDot> _planes;
         public List<MapDot> planes
         {
@@ -200,7 +196,7 @@ namespace ViewModel
             }
         }
 
-
+        //these hold the list of tracks
         private List<Track> _tracks;
         public List<Track> tracks
         {
@@ -214,7 +210,7 @@ namespace ViewModel
                 }
             }
         }
-        
+
         #region RelayCommands
         //this is the create scenario command that calls the create scenario method from the model
         private RelayCommand _CreateScenario;
@@ -287,6 +283,7 @@ namespace ViewModel
         #endregion
 
         #endregion
+
         #region Listening methods for the messenger
 
         //listens to the scenario time update
@@ -295,14 +292,8 @@ namespace ViewModel
             serverCurrentTime = currentServertime;
             if (syncTimeWithServer)
             {
-                viewModelCurrentTime = currentServertime;      
+                viewModelCurrentTime = currentServertime;
             }
-
-           
-
-           
-            
-
         }
 
         //listens to the scenario update
@@ -310,9 +301,8 @@ namespace ViewModel
         {
             //create a temporary list to work on
             plots = obj.getNow(viewModelCurrentTime);
-
             //update the track list
-            //tracks = model.mainScenario.tracks;
+            tracks = model.mainScenario.tracks;
             //todo
             populatePLanes();
         }
@@ -324,13 +314,11 @@ namespace ViewModel
                 serverIsPlaying = model.serverIsPlaying;
                 serverIsAvailable = model.serverIsAvailable;
             }
-
         }
 
         private void handleTrackChanges(Track t)
         {
             tracks = model.mainScenario.tracks;
-
         }
         #endregion
 
@@ -340,7 +328,7 @@ namespace ViewModel
             List<MapDot> tempPlaneList = new List<MapDot>();
             List<MapDot> tempHistoryPLaneList = new List<MapDot>();
 
-            
+
 
 
             foreach (Plot p in plots)
@@ -374,7 +362,7 @@ namespace ViewModel
                     {
                         MapDot tempDot = new MapDot();
                         tempDot.Size = 10;
-                   
+
                         GeoPoint tempGeo = new GeoPoint();
                         tempGeo.Latitude = t.latitude;
                         tempGeo.Longitude = t.longitude;
@@ -389,7 +377,7 @@ namespace ViewModel
             }
             historyPlanes = tempHistoryPLaneList;
             planes = tempPlaneList;
-           
+
         }
 
     }
