@@ -114,7 +114,6 @@ namespace ATMS_Server
          * */
         public void createNewTrack(Track t)
         {
-            //lets check if the client is registered
             checkIfRegistered();
             //check if the value incoming is Null
             if (t == null)
@@ -123,6 +122,7 @@ namespace ATMS_Server
             }
 
             //set an avilable track id to it
+
             t.trackID = avilableTrackID;
 
             //increment the track id
@@ -135,82 +135,6 @@ namespace ATMS_Server
 
             notifyCreateNewTrack(t);
         }
-        /**
-         * todo review, should we use a int trackid instead of track t? if we are removing a track with a huge list of plots what then ?
-         * we can also just send an empty track with the right track id and use this for the protocol
-         * sprint 6
-         * */
-        public void removeTrack(Track t)
-        {
-            //lets check if the client is registered
-            checkIfRegistered();
-            //check if null else we skip
-            if (t != null)
-            {
-                //removing the track from our scenario, how we are sure we identify the same track is through our implementation of equals 
-                mainScenario.tracks.Remove(t);
-
-                //notify all the clients 
-                foreach (IClientCallbackInterface entry in clients)
-                {
-                    try
-                    {
-                        //Handle the client callbacks, 1st argument is the function, 2nd is the client
-                        ThreadPool.QueueUserWorkItem(work => handleClientCallback(() => { entry.notifyRemoveTrack(t); }, entry));
-                    }
-                    catch (Exception e)
-                    {
-                        //handle that the scenario is to big and can't be sent like this 
-                        debugMessage(e);
-
-                    }
-                }
-
-            }
-
-        }
-
-        /**
-         * todo review, should we use a int trackid instead of track t? if we are removing a track with a huge list of plots what then ?
-         * we can also just send an empty track with the right track id and use this for the protocol
-         * sprint 6
-         * */
-        public void editTrack(Track t)
-        {
-            //lets check if the client is registered
-            checkIfRegistered();
-            //check if null else we skip
-            if (t != null)
-            {
-                //finding the track to be changed
-                Track trackToBeChanged = mainScenario.tracks.First(x => x.Equals(t));
-
-                //edit it what we found
-                trackToBeChanged.edit(t);
-
-
-                //notify all the clients 
-                foreach (IClientCallbackInterface entry in clients)
-                {
-                    try
-                    {
-                        //Handle the client callbacks, 1st argument is the function, 2nd is the client
-                        ThreadPool.QueueUserWorkItem(work => handleClientCallback(() => { entry.notifyRemoveTrack(t); }, entry));
-                    }
-                    catch (Exception e)
-                    {
-                        //handle that the scenario is to big and can't be sent like this 
-                        debugMessage(e);
-
-                    }
-                }
-
-            }
-        }
-
-
-
-
 
         /**
          * 
@@ -280,11 +204,7 @@ namespace ATMS_Server
 
         }
 
-
-
         #endregion
-
-
 
         /*
          *  Implementation of the time incrementer and the notification of the clients
@@ -322,8 +242,6 @@ namespace ATMS_Server
             Debug.WriteLine("Excpetion" + e);
             Debug.WriteLine("Stacktrace:" + e.StackTrace);
         }
-
-
 
 
 

@@ -83,6 +83,7 @@ namespace Model
         }
 
         #endregion
+
         public SimulationModel()
         {
 
@@ -141,6 +142,14 @@ namespace Model
             await server.playSimulationAsync();
             serverIsAvailable = true;
         }
+        public async Task createNewTrack()
+        {
+            Track t = new Track();
+            handleServerConnection();
+            await server.createNewTrackAsync(t);
+            serverIsAvailable = true;
+        }
+
         #endregion
 
         public void notifyNewScenario(Scenario data)
@@ -161,13 +170,6 @@ namespace Model
             Messenger.Default.Send(t);
         }
 
-        public async Task createNewTrack()
-        {
-            Track t = new Track();
-            handleServerConnection();
-            await server.createNewTrackAsync(t);
-            serverIsAvailable = true;
-
-        }
+        
     }
 }

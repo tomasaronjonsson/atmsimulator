@@ -16,8 +16,6 @@ namespace ATMS_Model
         //to imlpement basetime datetimestamp + seconds > 
         private DateTime basetime;
 
-
-
         public Scenario()
         {
             tracks = new List<Track>();
