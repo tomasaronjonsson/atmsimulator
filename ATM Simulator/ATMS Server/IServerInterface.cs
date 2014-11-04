@@ -21,8 +21,20 @@ namespace ATMS_Server
         [OperationContract]
         void playSimulation();
 
+        /**
+         *  todo: review
+         *  sprint 6
+         * 
+         * */
+
         [OperationContract]
         void createNewTrack(Track t);
+
+        [OperationContract]
+        void removeTrack(Track t);
+
+        [OperationContract]
+        void editTrack(Track t);
 
        
     }
@@ -37,9 +49,23 @@ namespace ATMS_Server
         [OperationContract(IsOneWay = true)]
         void notifyNewScenario(Scenario data);
 
+        /**
+         *  todo: review
+         *   Sprint 6
+         * */
+
         //notifies all clients of all the changes
         [OperationContract(IsOneWay = true)]
         void notifyNewTrack(Track t);
+
+        //notifies the clients that a track has been removed
+        [OperationContract(IsOneWay = true)]
+        void  notifyRemoveTrack(Track t);
+
+        //notifies that a track as been edited
+        [OperationContract(IsOneWay = true)]
+        void notifyEditedTrack(Track t);
+
 
 
     }

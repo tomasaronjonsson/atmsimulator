@@ -23,5 +23,36 @@ namespace ATMS_Model
         {
             return "Track ID: " + trackID;
         }
+        /*
+         * todo review 
+         * we have to implement our own equals method to determin be sure we are talkinga lways about the same track
+         * 
+         * sprint 6
+         * */
+        public override bool Equals(object obj)
+        {
+            if (obj == null) return false;
+
+            Track objAsTrack = obj as Track;
+
+            if (objAsTrack == null) return false;
+
+            if (objAsTrack.trackID == this.trackID) return true;
+
+            return false;
+        }
+
+        /**
+         * todo review
+         * 
+         * to edit the track basically copy the information between the tracks when we pass it another track
+         * sprint 6
+         * */
+        
+        public void edit(Track t)
+        {
+            //todo implement nothing to be able to CHANGe we don't store anything interesting 
+
+        }
     }
 }
