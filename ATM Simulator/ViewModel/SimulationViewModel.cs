@@ -207,6 +207,24 @@ namespace ViewModel
             }
         }
 
+        //property to store information about the selected plane og track
+        private Track _selectedTrack;
+        public Track selectedTrack
+        {
+            get { return _selectedTrack; }
+            set
+            {
+                if (value != _selectedTrack)
+                {
+                    _selectedTrack = value;
+                    RaisePropertyChanged("selectedTrack");
+                }
+            }
+        }
+
+
+
+
         #region RelayCommands
         //this is the create scenario command that calls the create scenario method from the model
         private RelayCommand _CreateScenario;
@@ -286,7 +304,7 @@ namespace ViewModel
                     _RemoveTrack = new RelayCommand(
                        async () =>
                        {
-                           await model.removeTrack(trackToBeDeleted);
+                           await model.removeTrack(selectedTrack);
                        },
                        () =>
                        {
@@ -362,10 +380,13 @@ namespace ViewModel
             //currently we only support add so here's add
             tracks.Add(new ViewModelTrack(t));
             RaisePropertyChanged("tracks");
+        }
 
         private void handleRemoveTrack(Track t)
         {
-            tracks = model.mainScenario.tracks;
+            tracks.Remove(new ViewModelTrack(t));
+
+
         }
 
         #endregion

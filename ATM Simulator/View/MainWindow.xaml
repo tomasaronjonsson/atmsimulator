@@ -105,14 +105,14 @@
 
                 <Label Content="Track:" HorizontalAlignment="Left"/>
                 <Button Content="Create new track" Command="{Binding CreateNewTrack}"/>
+                <Button Content="Remove track" Click="Track_RemoveWindow"/>
+                <Button Content="Edit track" Click="Track_EditWindow"/>
 
 
                 <Label  Content="VM Time:"/>
                 <Label  Content="{Binding viewModelCurrentTime}"/>
                 <Label  Content="Server Time:"/>
                 <Label  Content="{Binding serverCurrentTime}"/>
-                <Button Content="Remove track" Click="Track_RemoveWindow"/>
-                <Button Content="Edit track" Click="Track_EditWindow"/>
             </StackPanel>
 
             <dxm:MapControl Grid.Row="0" Grid.Column="1" Grid.RowSpan="2"   ZoomLevel="8"  CenterPoint="55.85,9.82">
