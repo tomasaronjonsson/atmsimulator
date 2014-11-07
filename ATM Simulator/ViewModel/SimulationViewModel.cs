@@ -21,9 +21,9 @@ namespace ViewModel
 {
     public class SimulationViewModel : ViewModelBase
     {
+        //storing a instance of the Simulation model
         SimulationModel model;
 
-        //storing the global time in seconds
 
 
 
@@ -48,13 +48,12 @@ namespace ViewModel
             Messenger.Default.Register<Scenario>(this, handleScenarioUpdate);
             Messenger.Default.Register<int>(this, handleServerTimeUpdate);
             Messenger.Default.Register<bool>(this, handleBoolChanges);
-
             Messenger.Default.Register<Track>(this, handleTrackChanges);
 
             //initialize the plots list
             _plots = new List<Plot>();
             //ininitlize the tracks list
-            _tracks = new List<Track>();
+            _tracks = new List<ViewModelTrack>();
 
             //end of initilization of the viewmodel
 
@@ -75,16 +74,20 @@ namespace ViewModel
                 if (value != _viewModelCurrentTime)
                 {
                     _viewModelCurrentTime = value;
+                    //in the case it's not the same (we are adjusting the slider or something we disable the sync with the server
                     if (viewModelCurrentTime != serverCurrentTime)
                         syncTimeWithServer = false;
-                    plots = model.mainScenario.getNow(viewModelCurrentTime);
-                    populatePLanes();
 
+                    //update the currentTime on each track
+                    foreach (ViewModelTrack track in tracks)
+                    {
+                        track.currentTime = value;
+                    }
                     RaisePropertyChanged("viewModelCurrentTime");
+                    RaisePropertyChanged("tracks");
                 }
             }
         }
-
 
         private bool _syncTimeWithServer;
         public bool syncTimeWithServer
@@ -197,8 +200,8 @@ namespace ViewModel
         }
 
         //these hold the list of tracks
-        private List<Track> _tracks;
-        public List<Track> tracks
+        private List<ViewModelTrack> _tracks;
+        public List<ViewModelTrack> tracks
         {
             get { return _tracks; }
             set
@@ -206,11 +209,29 @@ namespace ViewModel
                 if (value != _tracks)
                 {
                     //we have to copy the list else, the binding will not update 
-                    _tracks = value.Select(x => x).ToList() ;
+                    _tracks = value.Select(x => x).ToList();
                     RaisePropertyChanged("tracks");
                 }
             }
         }
+
+        //property to store information about the selected plane og track
+        private Track _selectedTrack;
+        public Track selectedTrack
+        {
+            get { return _selectedTrack; }
+            set
+            {
+                if (value != _selectedTrack)
+                {
+                    _selectedTrack = value;
+                    RaisePropertyChanged("selectedTrack");
+                }
+            }
+        }
+
+
+
 
         #region RelayCommands
         //this is the create scenario command that calls the create scenario method from the model
@@ -280,29 +301,9 @@ namespace ViewModel
             }
         }
 
-        private RelayCommand _RemoveTrack;
-        public RelayCommand RemoveTrack
-        {
-            get { return _RemoveTrack; }
-            set
-            {
-                if (_RemoveTrack == null)
-                {
-                    _RemoveTrack = new RelayCommand(
-                       async () =>
-                       {                           
-                           //todo
-                           await model.createNewTrack();
-                       },
-                       () =>
-                       {
-                           return serverIsAvailable;
-                       });
-                }
-                return _RemoveTrack;
-            }
-        }
-        
+
+
+
 
         #endregion
 
@@ -323,12 +324,22 @@ namespace ViewModel
         //listens to the scenario update
         private void handleScenarioUpdate(Scenario obj)
         {
-            //create a temporary list to work on
-            plots = obj.getNow(viewModelCurrentTime);
-            //update the track list
-            tracks = model.mainScenario.tracks;
-            //todo
-            populatePLanes();
+
+            //check if the scenario is null
+            if (obj != null)
+            {
+                //make a temp to store the new track list
+                List<ViewModelTrack> temp = new List<ViewModelTrack>();
+                //populate the track list
+                foreach (Track t in obj.tracks)
+                {
+                    //converitng the base object to the derived version
+                    temp.Add(new ViewModelTrack(t));
+                }
+                //storing the new list
+                tracks = temp;
+            }
+           
         }
         /**
          * 
@@ -353,8 +364,11 @@ namespace ViewModel
 
         private void handleTrackChanges(Track t)
         {
-            
-            tracks =  model.mainScenario.tracks;
+            /*todo broken or something
+             * */
+            //currently we only support add so here's add
+            tracks.Add(new ViewModelTrack(t));
+            RaisePropertyChanged("tracks");
 
         }
         #endregion

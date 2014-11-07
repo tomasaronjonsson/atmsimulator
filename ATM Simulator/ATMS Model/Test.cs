@@ -29,11 +29,12 @@ namespace ATMS_Model
             {
                 Track track = new Track();
                 track.trackID = i;
+                track.callsign = "ISS" + i;
 
                 for (int a = 0; a < plots; a++)
                 {
                     Plot plot = new Plot();
-                    plot.timestamp = DateTime.Now.AddSeconds(a * BuisnessLogicValues.radarInterval);
+                    plot.time = a * BuisnessLogicValues.radarInterval;
 
                     if (i % 2 == 0)
                     {
@@ -70,7 +71,7 @@ namespace ATMS_Model
 
             //first plot within the first track
             Plot t1_1 = new Plot();
-            t1_1.timestamp = DateTime.Now;
+            t1_1.time = 0;
             t1_1.speed = 500;
             t1_1.latitude = 20;
             t1_1.longitude = 30;
@@ -80,7 +81,7 @@ namespace ATMS_Model
 
             //second plot within the first track after 4 seonds
             Plot t1_2 = new Plot();
-            t1_2.timestamp = DateTime.Now.AddSeconds(4);
+            t1_2.time = 4;
             t1_2.speed = 500;
             t1_2.latitude = 25;
             t1_2.longitude = 35;
@@ -91,7 +92,7 @@ namespace ATMS_Model
 
             //third plot within the first track after 8 seonds
             Plot t1_3 = new Plot();
-            t1_3.timestamp = DateTime.Now.AddSeconds(8);
+            t1_3.time = 8;
             t1_3.speed = 500;
             t1_3.latitude = 30;
             t1_3.longitude = 40;
@@ -112,7 +113,7 @@ namespace ATMS_Model
 
             //first plot within the second track
             Plot t2_1 = new Plot();
-            t2_1.timestamp = DateTime.Now;
+            t2_1.time = 0;
             t2_1.speed = 450;
             t2_1.latitude = 120;
             t2_1.longitude = 130;
@@ -122,7 +123,7 @@ namespace ATMS_Model
 
             //second plot within the second track after 4 seonds
             Plot t2_2 = new Plot();
-            t2_2.timestamp = DateTime.Now.AddSeconds(4);
+            t2_2.time = 4;
             t2_2.speed = 500;
             t2_2.latitude = 125;
             t2_2.longitude = 135;
@@ -132,7 +133,7 @@ namespace ATMS_Model
 
             //third plot within the second track after 8 seonds
             Plot t2_3 = new Plot();
-            t2_3.timestamp = DateTime.Now.AddSeconds(8);
+            t2_3.time = 8;
             t2_3.speed = 200;
             t2_3.latitude = 130;
             t2_3.longitude = 140;
@@ -151,7 +152,7 @@ namespace ATMS_Model
 
             //first plot within the third track
             Plot t3_1 = new Plot();
-            t3_1.timestamp = DateTime.Now;
+            t3_1.time = 0;
             t3_1.speed = 333;
             t3_1.latitude = 220;
             t3_1.longitude = 230;
@@ -161,7 +162,7 @@ namespace ATMS_Model
 
             //second plot within the third track after 4 seonds
             Plot t3_2 = new Plot();
-            t3_2.timestamp = DateTime.Now.AddSeconds(4);
+            t3_2.time = 4;
             t3_2.speed = 500;
             t3_2.latitude = 225;
             t3_2.longitude = 225;
@@ -171,7 +172,7 @@ namespace ATMS_Model
 
             //third plot within the third track after 8 seonds
             Plot t3_3 = new Plot();
-            t3_3.timestamp = DateTime.Now.AddSeconds(8);
+            t3_3.time = 8;
             t3_3.speed = 200;
             t3_3.latitude = 230;
             t3_3.longitude = 240;

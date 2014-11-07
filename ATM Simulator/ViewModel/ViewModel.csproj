@@ -76,6 +76,7 @@
   <ItemGroup>
     <Compile Include="SimulationViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModelTrack.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

@@ -14,6 +14,13 @@ namespace ATMS_Model
         //to store the list of plots
         public List<Plot> plots;
 
+        //to store the calsign
+        public string callsign;
+
+
+        //public location
+       // public GeoPoint location;
+        
         public Track()
         {
             plots = new List<Plot>();

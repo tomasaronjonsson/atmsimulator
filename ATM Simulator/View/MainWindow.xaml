@@ -17,8 +17,80 @@
 
     <StackPanel>
         <Grid>
+            <Grid.Resources>
+
+                <DataTemplate x:Key="planeTemplate">
+                    <Grid Background="Transparent">
+                        <Grid.ColumnDefinitions> 
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Rectangle Grid.Row="1" Grid.Column="1" Width="30" Height="30" Fill="Transparent" Stroke="Gray"/>
+
+                        <Grid Grid.Row="0" Grid.Column="2">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <TextBlock Grid.Row="0" Grid.Column="0">id:</TextBlock>
+                            <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding trackid}"></TextBlock>
+
+                            <TextBlock Grid.Row="1" Grid.Column="0">sign:</TextBlock>
+                            <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding callsign}"></TextBlock>
+                        </Grid>
+
+
+
+
+                        <Grid.RenderTransform>
+                            <TransformGroup>
+                                <RotateTransform Angle="{Binding currentCourse}" CenterX="20" CenterY="20"/>
+                                <TranslateTransform X="-20" Y="-20"/>
+                            </TransformGroup>
+                        </Grid.RenderTransform>
+
+                    </Grid>
+                 
+
+
+                </DataTemplate>
+                <ControlTemplate x:Key="test">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        
+                        
+                        
+                        
+                        
+                    </Grid>
+                   
+                </ControlTemplate>
+            </Grid.Resources>
+
             <Grid.RowDefinitions>
-                <RowDefinition Height="800"/>
+
+                <RowDefinition Height="400"/>
+                <RowDefinition Height="400"/>
                 <RowDefinition Height="50"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
@@ -26,36 +98,49 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="200"/>
             </Grid.ColumnDefinitions>
-
+            <!-- Stackpanel to the left with all the buttons and etc.-->
             <StackPanel Grid.Row="0" Grid.Column="0">
                 <Button Content="Create Scenario" Command="{Binding CreateScenario}"/>
                 <Button Content="Play Simulation" Command="{Binding PlaySimulation}"/>
 
                 <Label Content="Track:" HorizontalAlignment="Left"/>
                 <Button Content="Create new track" Command="{Binding CreateNewTrack}"/>
-                
+
+
+                <Label  Content="VM Time:"/>
+                <Label  Content="{Binding viewModelCurrentTime}"/>
+                <Label  Content="Server Time:"/>
+                <Label  Content="{Binding serverCurrentTime}"/>
             </StackPanel>
 
-            <Canvas Name="mapcanvas">
-                
-            </Canvas>
-
-                <dxm:MapControl Grid.Row="0" Grid.Column="1" ZoomLevel="8"  CenterPoint="55.85,9.82">
-                <!-- The map itself from oepnstreet -->
+            <dxm:MapControl Grid.Row="0" Grid.Column="1" Grid.RowSpan="2"   ZoomLevel="8"  CenterPoint="55.85,9.82">
+                <!-- The map itself from openstreet -->
                 <dxm:ImageTilesLayer Name="mapContainer">
-                    
-                    
                     <dxm:ImageTilesLayer.DataProvider>
                         <dxm:OpenStreetMapDataProvider/>
                     </dxm:ImageTilesLayer.DataProvider>
                 </dxm:ImageTilesLayer>
+
+                <!-- layer to show the tracks on the map-->
+                <dxm:VectorLayer ItemsSource="{Binding tracks }" SelectedItem="{Binding selectedTrack, Mode=TwoWay}"
+                                 LatitudeDataMember="currentLocation.Latitude"
+                                 LongitudeDataMember="currentLocation.Longitude"
+                                 ItemTemplate="{StaticResource planeTemplate}">
+
+                </dxm:VectorLayer>
+
+
+
+                <!-- old stuff -->
                 <!-- Plotslist-->
-                <dxm:VectorLayer ItemsSource="{Binding planes}" />
+                <!--<dxm:VectorLayer ItemsSource="{Binding planes}"/>          -->
                 <!-- History -->
-                <dxm:VectorLayer ItemsSource="{Binding historyPlanes}" />
+                <!--<dxm:VectorLayer ItemsSource="{Binding historyPlanes}" />  -->
+
+
             </dxm:MapControl>
 
-           <!--
+            <!--
             DEBUG List of plots
             <ListBox Grid.Row="0" Grid.Column="2" ItemsSource="{Binding plots}">
                 <ListBox.ItemTemplate>
@@ -64,7 +149,14 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>-->
-            <ListBox Grid.Row="0" Grid.Column="2" ItemsSource="{Binding tracks}">
+
+
+
+
+            <Label Grid.Row="0" Grid.Column="2" Content="{Binding selectedTrack}"/>
+
+
+            <ListBox Grid.Row="1" Grid.Column="2" ItemsSource="{Binding tracks}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding ''}"/>
@@ -72,7 +164,8 @@
                 </ListBox.ItemTemplate>
             </ListBox>
 
-            <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center">
+
+            <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center">
                 <Slider  Width="400" Value="{Binding viewModelCurrentTime , Mode=TwoWay}" Orientation="Horizontal" HorizontalAlignment="Left" 
                         IsSnapToTickEnabled="True" Maximum="{Binding serverCurrentTime}" TickPlacement="BottomRight" 
                         AutoToolTipPlacement="BottomRight" TickFrequency="4"
@@ -80,12 +173,14 @@
                         IsMoveToPointEnabled="False" />
 
                 <CheckBox Content="Sync" IsChecked="{Binding syncTimeWithServer,Mode=TwoWay}" />
-                
+
             </StackPanel>
-            
+
+
+
         </Grid>
         <Label Content="{Binding plots.Count}"/>
-        
+
 
     </StackPanel>
 
