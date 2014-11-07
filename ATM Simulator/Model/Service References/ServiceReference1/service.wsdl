@@ -117,12 +117,6 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="notifyEditedTrack">
-      <soap12:operation soapAction="ATMS_Server/IServerInterface/notifyEditedTrack" style="document" />
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
   </wsdl:binding>
   <wsdl:service name="MainSimulation">
     <wsdl:port name="NetTcpBinding_IServerInterface" binding="tns:NetTcpBinding_IServerInterface">

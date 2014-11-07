@@ -95,11 +95,4 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="notifyEditedTrack">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/ATMS_Model" minOccurs="0" name="t" nillable="true" type="q7:Track" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
 </xs:schema>

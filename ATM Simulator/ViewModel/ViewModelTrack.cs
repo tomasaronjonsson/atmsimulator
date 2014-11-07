@@ -13,11 +13,12 @@ namespace Model
 {
     public class ViewModelTrack : Track, INotifyPropertyChanged
     {
-        
+
 
 
         //make a consrtuctor that can take the base class inn to change it to the derivedd version
-        public ViewModelTrack(Track track) {
+        public ViewModelTrack(Track track)
+        {
             base.plots = track.plots;
             trackid = track.trackID;
             callsign = track.callsign;
@@ -60,10 +61,24 @@ namespace Model
                 }
             }
         }
-        
-        
+
+
 
         //we want a property storing the current location
+        private Plot _currentPlot;
+        public Plot currentPlot
+        {
+            get { return _currentPlot; }
+            set
+            {
+                if (value != _currentPlot)
+                {
+                    _currentPlot = value;
+                    RaisePropertyChanged("currentPlot");
+                }
+            }
+        }
+
         private GeoPoint _currentLocation;
         public GeoPoint currentLocation
         {
@@ -73,26 +88,14 @@ namespace Model
                 if (value != _currentLocation)
                 {
                     _currentLocation = value;
-                    
                     RaisePropertyChanged("currentLocation");
                 }
             }
         }
-
-        private double _currentCourse;
-        public double currentCourse
-        {
-            get { return _currentCourse; }
-            set
-            {
-                if (value != _currentCourse)
-                {
-                    _currentCourse = value;
-                    RaisePropertyChanged("currentCourse");
-                }
-            }
-        }
         
+
+
+
         private MapDot _mapObject;
         public MapDot mapObject
         {
@@ -106,7 +109,7 @@ namespace Model
                 }
             }
         }
-        
+
         /*
          * we want the scenario to update the current time on the track and the track will then update its location 
          * and update the currentlocation property, iof the current property is the saem as before, example . the track has no location, the map doesn't 
@@ -153,8 +156,8 @@ namespace Model
                 }
             }
         }
-        
-        
+
+
 
 
         /*
@@ -164,29 +167,23 @@ namespace Model
          * */
         public void UpdateTick()
         {
-          //find the plot for the timeframe
-            var currentPlot = plots.First(x => x.time == currentTime);
+            //find the plot for the timeframe
+            var tempCurrentPlot = plots.First(x => x.time == currentTime);
             //check if we found anything
-            if (currentPlot != null)
+            if (tempCurrentPlot != null)
             {
 
-                //update the location 
+                //update the current plot
+                currentPlot = tempCurrentPlot;
 
-                //let's create a new geo point for the new location
-                GeoPoint geo = new GeoPoint();
-                geo.Latitude = currentPlot.latitude;
-                geo.Longitude = currentPlot.longitude;
-                //lets safe the new location this should notifiy then the gui
-                currentLocation = geo;
-
-                currentCourse = currentPlot.course;
+                currentLocation = new GeoPoint(currentPlot.latitude, currentPlot.longitude);
             }
-            
-            
+
+
 
 
         }
-        
+
 
 
         // implementing the intofiyproerty change interface
@@ -201,13 +198,32 @@ namespace Model
                 handler(this, new PropertyChangedEventArgs(name));
             }
         }
+        /*
+         * Properties for the plot variables 
+         * 
+         *
+         */
+
+
+
+
+
+        public double altitude { get { return currentPlot.altitude; } set { } }
 
         public override string ToString()
         {
-            return "Trackid: " + trackid +
-                   "callsign: " + callsign +
-                    "\nCourse: " + currentCourse +
-                    "\nNumber of plots: " + plots.Count;
+            string tempString = "Trackid: " + trackid +
+                   "\nCallsign: " + callsign;
+
+            if (currentPlot != null)
+            {
+
+                tempString += "\nCourse: " + currentPlot.course +
+                    "\nAltitude: " + currentPlot.altitude;
+            }
+            tempString += "\nNumber of plots: " + plots.Count;
+            return tempString;
         }
+
     }
 }

@@ -15,6 +15,7 @@ using System.Windows.Controls;
 using System.Windows.Ink;
 using System.Windows.Media;
 using System.Threading;
+using System.ComponentModel;
 namespace ViewModel
 {
     public class SimulationViewModel : ViewModelBase
@@ -52,7 +53,7 @@ namespace ViewModel
             //initialize the plots list
             _plots = new List<Plot>();
             //ininitlize the tracks list
-            _tracks = new List<ViewModelTrack>();
+            _tracks = new BindingList<ViewModelTrack>();
 
             //end of initilization of the viewmodel
 
@@ -81,7 +82,6 @@ namespace ViewModel
                         track.currentTime = value;
                     }
                     RaisePropertyChanged("viewModelCurrentTime");
-                    RaisePropertyChanged("tracks");
                 }
             }
         }
@@ -192,8 +192,8 @@ namespace ViewModel
         }
 
         //these hold the list of tracks
-        private List<ViewModelTrack> _tracks;
-        public List<ViewModelTrack> tracks
+        private BindingList<ViewModelTrack> _tracks;
+        public BindingList<ViewModelTrack> tracks
         {
             get { return _tracks; }
             set
@@ -201,15 +201,15 @@ namespace ViewModel
                 if (value != _tracks)
                 {
                     //we have to copy the list else, the binding will not update 
-                    _tracks = value.Select(x => x).ToList();
+                    _tracks = value;
                     RaisePropertyChanged("tracks");
                 }
             }
         }
 
         //property to store information about the selected plane og track
-        private Track _selectedTrack;
-        public Track selectedTrack
+        private ViewModelTrack _selectedTrack;
+        public ViewModelTrack selectedTrack
         {
             get { return _selectedTrack; }
             set
@@ -340,7 +340,7 @@ namespace ViewModel
             if (obj != null)
             {
                 //make a temp to store the new track list
-                List<ViewModelTrack> temp = new List<ViewModelTrack>();
+                BindingList<ViewModelTrack> temp = new BindingList<ViewModelTrack>();
                 //populate the track list
                 foreach (Track t in obj.tracks)
                 {
