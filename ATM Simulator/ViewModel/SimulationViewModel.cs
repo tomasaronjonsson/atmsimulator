@@ -15,16 +15,12 @@ using System.Windows.Controls;
 using System.Windows.Ink;
 using System.Windows.Media;
 using System.Threading;
-
-
 namespace ViewModel
 {
     public class SimulationViewModel : ViewModelBase
     {
         //storing a instance of the Simulation model
         SimulationModel model;
-
-
 
 
 
@@ -48,6 +44,9 @@ namespace ViewModel
             Messenger.Default.Register<Scenario>(this, handleScenarioUpdate);
             Messenger.Default.Register<int>(this, handleServerTimeUpdate);
             Messenger.Default.Register<bool>(this, handleBoolChanges);
+            Messenger.Default.Register<Track>(this, "createTrack", handleTrackChanges);
+            Messenger.Default.Register<Track>(this, "removeTrack", handleRemoveTrack);
+
             Messenger.Default.Register<Track>(this, handleTrackChanges);
 
             //initialize the plots list
@@ -59,8 +58,6 @@ namespace ViewModel
 
             model.startUp();
         }
-
-
 
 
         #region properties
@@ -103,8 +100,6 @@ namespace ViewModel
             }
         }
 
-
-
         private int _serverCurrentTime;
         public int serverCurrentTime
         {
@@ -146,8 +141,6 @@ namespace ViewModel
                 }
             }
         }
-
-
 
         private bool _serverIsPlaying;
         public bool serverIsPlaying
@@ -194,7 +187,6 @@ namespace ViewModel
                 {
                     _plots = value;
                     RaisePropertyChanged("plots");
-
                 }
             }
         }
@@ -214,24 +206,6 @@ namespace ViewModel
                 }
             }
         }
-
-        //property to store information about the selected plane og track
-        private Track _selectedTrack;
-        public Track selectedTrack
-        {
-            get { return _selectedTrack; }
-            set
-            {
-                if (value != _selectedTrack)
-                {
-                    _selectedTrack = value;
-                    RaisePropertyChanged("selectedTrack");
-                }
-            }
-        }
-
-
-
 
         #region RelayCommands
         //this is the create scenario command that calls the create scenario method from the model
@@ -302,8 +276,27 @@ namespace ViewModel
         }
 
 
-
-
+        private RelayCommand _RemoveTrack;
+        public RelayCommand RemoveTrack
+        {
+            get
+            {
+                if (_RemoveTrack == null)
+                {
+                    _RemoveTrack = new RelayCommand(
+                       async () =>
+                       {
+                           await model.removeTrack(trackToBeDeleted);
+                       },
+                       () =>
+                       {
+                           return serverIsAvailable;
+                       });
+                }
+                return _RemoveTrack;
+            }
+        }
+        
 
         #endregion
 
@@ -370,7 +363,11 @@ namespace ViewModel
             tracks.Add(new ViewModelTrack(t));
             RaisePropertyChanged("tracks");
 
+        private void handleRemoveTrack(Track t)
+        {
+            tracks = model.mainScenario.tracks;
         }
+
         #endregion
 
 

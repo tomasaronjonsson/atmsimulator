@@ -31,6 +31,18 @@
   <wsdl:message name="IServerInterface_createNewTrack_OutputMessage">
     <wsdl:part name="parameters" element="tns:createNewTrackResponse" />
   </wsdl:message>
+  <wsdl:message name="IServerInterface_removeTrack_InputMessage">
+    <wsdl:part name="parameters" element="tns:removeTrack" />
+  </wsdl:message>
+  <wsdl:message name="IServerInterface_removeTrack_OutputMessage">
+    <wsdl:part name="parameters" element="tns:removeTrackResponse" />
+  </wsdl:message>
+  <wsdl:message name="IServerInterface_editTrack_InputMessage">
+    <wsdl:part name="parameters" element="tns:editTrack" />
+  </wsdl:message>
+  <wsdl:message name="IServerInterface_editTrack_OutputMessage">
+    <wsdl:part name="parameters" element="tns:editTrackResponse" />
+  </wsdl:message>
   <wsdl:message name="IServerInterface_notifyTimeUpdate_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:notifyTimeUpdate" />
   </wsdl:message>
@@ -39,6 +51,12 @@
   </wsdl:message>
   <wsdl:message name="IServerInterface_notifyNewTrack_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:notifyNewTrack" />
+  </wsdl:message>
+  <wsdl:message name="IServerInterface_notifyRemoveTrack_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:notifyRemoveTrack" />
+  </wsdl:message>
+  <wsdl:message name="IServerInterface_notifyEditedTrack_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:notifyEditedTrack" />
   </wsdl:message>
   <wsdl:portType name="IServerInterface">
     <wsdl:operation name="populateClient">
@@ -57,6 +75,14 @@
       <wsdl:input wsaw:Action="ATMS_Server/IServerInterface/createNewTrack" message="tns:IServerInterface_createNewTrack_InputMessage" />
       <wsdl:output wsaw:Action="ATMS_Server/IServerInterface/createNewTrackResponse" message="tns:IServerInterface_createNewTrack_OutputMessage" />
     </wsdl:operation>
+    <wsdl:operation name="removeTrack">
+      <wsdl:input wsaw:Action="ATMS_Server/IServerInterface/removeTrack" message="tns:IServerInterface_removeTrack_InputMessage" />
+      <wsdl:output wsaw:Action="ATMS_Server/IServerInterface/removeTrackResponse" message="tns:IServerInterface_removeTrack_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="editTrack">
+      <wsdl:input wsaw:Action="ATMS_Server/IServerInterface/editTrack" message="tns:IServerInterface_editTrack_InputMessage" />
+      <wsdl:output wsaw:Action="ATMS_Server/IServerInterface/editTrackResponse" message="tns:IServerInterface_editTrack_OutputMessage" />
+    </wsdl:operation>
     <wsdl:operation name="notifyTimeUpdate">
       <wsdl:output wsaw:Action="ATMS_Server/IServerInterface/notifyTimeUpdate" message="tns:IServerInterface_notifyTimeUpdate_OutputCallbackMessage" />
     </wsdl:operation>
@@ -65,6 +91,12 @@
     </wsdl:operation>
     <wsdl:operation name="notifyNewTrack">
       <wsdl:output wsaw:Action="ATMS_Server/IServerInterface/notifyNewTrack" message="tns:IServerInterface_notifyNewTrack_OutputCallbackMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="notifyRemoveTrack">
+      <wsdl:output wsaw:Action="ATMS_Server/IServerInterface/notifyRemoveTrack" message="tns:IServerInterface_notifyRemoveTrack_OutputCallbackMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="notifyEditedTrack">
+      <wsdl:output wsaw:Action="ATMS_Server/IServerInterface/notifyEditedTrack" message="tns:IServerInterface_notifyEditedTrack_OutputCallbackMessage" />
     </wsdl:operation>
   </wsdl:portType>
 </wsdl:definitions>

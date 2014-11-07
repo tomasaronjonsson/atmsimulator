@@ -75,6 +75,24 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="removeTrack">
+      <soap12:operation soapAction="ATMS_Server/IServerInterface/removeTrack" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="editTrack">
+      <soap12:operation soapAction="ATMS_Server/IServerInterface/editTrack" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="notifyTimeUpdate">
       <soap12:operation soapAction="ATMS_Server/IServerInterface/notifyTimeUpdate" style="document" />
       <wsdl:output>
@@ -89,6 +107,18 @@
     </wsdl:operation>
     <wsdl:operation name="notifyNewTrack">
       <soap12:operation soapAction="ATMS_Server/IServerInterface/notifyNewTrack" style="document" />
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="notifyRemoveTrack">
+      <soap12:operation soapAction="ATMS_Server/IServerInterface/notifyRemoveTrack" style="document" />
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="notifyEditedTrack">
+      <soap12:operation soapAction="ATMS_Server/IServerInterface/notifyEditedTrack" style="document" />
       <wsdl:output>
         <soap12:body use="literal" />
       </wsdl:output>

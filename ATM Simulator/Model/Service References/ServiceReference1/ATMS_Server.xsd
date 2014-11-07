@@ -43,6 +43,30 @@
       <xs:sequence />
     </xs:complexType>
   </xs:element>
+  <xs:element name="removeTrack">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/ATMS_Model" minOccurs="0" name="t" nillable="true" type="q2:Track" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="removeTrackResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="editTrack">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/ATMS_Model" minOccurs="0" name="t" nillable="true" type="q3:Track" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="editTrackResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
   <xs:element name="notifyTimeUpdate">
     <xs:complexType>
       <xs:sequence>
@@ -53,14 +77,28 @@
   <xs:element name="notifyNewScenario">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/ATMS_Model" minOccurs="0" name="data" nillable="true" type="q2:Scenario" />
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/ATMS_Model" minOccurs="0" name="data" nillable="true" type="q4:Scenario" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="notifyNewTrack">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/ATMS_Model" minOccurs="0" name="t" nillable="true" type="q3:Track" />
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/ATMS_Model" minOccurs="0" name="t" nillable="true" type="q5:Track" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="notifyRemoveTrack">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/ATMS_Model" minOccurs="0" name="t" nillable="true" type="q6:Track" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="notifyEditedTrack">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/ATMS_Model" minOccurs="0" name="t" nillable="true" type="q7:Track" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

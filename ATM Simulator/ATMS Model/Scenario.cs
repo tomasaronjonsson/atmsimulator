@@ -19,8 +19,6 @@ namespace ATMS_Model
             tracks = new List<Track>();
         }
 
-    
-
         //returns a list of plots at the current time in seconds
         public List<Plot> getNow(int seconds)
         {

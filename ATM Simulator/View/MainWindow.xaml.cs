@@ -24,7 +24,7 @@ namespace View
         public MainWindow()
         {
             InitializeComponent();
-            
+
             /*
              *  Testing map
             string s = "ATB COL=255,255,255 STYLE=SOLID SIZE=1 FILLSTYLE=NULLC (#57.5031667 10.2193889 C )#57.5038611 10.2393333";
@@ -40,7 +40,18 @@ namespace View
 
         }
 
+        //The Remove track Window
+        private void Track_RemoveWindow(object sender, RoutedEventArgs e)
+        {
+            Track_RemoveWindow d = new Track_RemoveWindow();
+            d.Show();
+        }
 
- 
+        //The Edit track Window
+        private void Track_EditWindow(object sender, RoutedEventArgs e)
+        {
+            Track_EditWindow d = new Track_EditWindow();
+            d.Show();
+        }
     }
 }

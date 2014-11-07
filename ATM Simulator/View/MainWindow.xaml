@@ -72,7 +72,7 @@
                             <ColumnDefinition/>
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
+            <Grid.RowDefinitions>
                             <RowDefinition/>
                             <RowDefinition/>
                             <RowDefinition/>
@@ -111,6 +111,8 @@
                 <Label  Content="{Binding viewModelCurrentTime}"/>
                 <Label  Content="Server Time:"/>
                 <Label  Content="{Binding serverCurrentTime}"/>
+                <Button Content="Remove track" Click="Track_RemoveWindow"/>
+                <Button Content="Edit track" Click="Track_EditWindow"/>
             </StackPanel>
 
             <dxm:MapControl Grid.Row="0" Grid.Column="1" Grid.RowSpan="2"   ZoomLevel="8"  CenterPoint="55.85,9.82">
@@ -140,7 +142,7 @@
 
             </dxm:MapControl>
 
-            <!--
+           <!--
             DEBUG List of plots
             <ListBox Grid.Row="0" Grid.Column="2" ItemsSource="{Binding plots}">
                 <ListBox.ItemTemplate>
@@ -173,14 +175,14 @@
                         IsMoveToPointEnabled="False" />
 
                 <CheckBox Content="Sync" IsChecked="{Binding syncTimeWithServer,Mode=TwoWay}" />
-
+                
             </StackPanel>
-
+            
 
 
         </Grid>
         <Label Content="{Binding plots.Count}"/>
-
+        
 
     </StackPanel>
 
