@@ -24,6 +24,8 @@ namespace ATMS_Model
         public Track()
         {
             plots = new List<Plot>();
+            trackID = 0;
+            callsign = "n/a";
         }
 
         public override string ToString()
@@ -64,5 +66,7 @@ namespace ATMS_Model
             //todo implement nothing to be able to CHANGe we don't store anything interesting 
 
         }
+
+
     }
 }

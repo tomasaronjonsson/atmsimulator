@@ -15,7 +15,7 @@ namespace ATMS_Model
         {
 
             Scenario sc = new Scenario();
-            int tracks = 2;
+            int tracks = 5;
             int plots = 300;
 
             //starting point for the test flights

@@ -16,6 +16,8 @@ using System.Windows.Ink;
 using System.Windows.Media;
 using System.Threading;
 using System.ComponentModel;
+using System.Windows;
+
 namespace ViewModel
 {
     public class SimulationViewModel : ViewModelBase
@@ -45,10 +47,9 @@ namespace ViewModel
             Messenger.Default.Register<Scenario>(this, handleScenarioUpdate);
             Messenger.Default.Register<int>(this, handleServerTimeUpdate);
             Messenger.Default.Register<bool>(this, handleBoolChanges);
-            Messenger.Default.Register<Track>(this, "createTrack", handleTrackChanges);
+            Messenger.Default.Register<Track>(this, "createTrack", handleCreateTrack);
             Messenger.Default.Register<Track>(this, "removeTrack", handleRemoveTrack);
-
-            Messenger.Default.Register<Track>(this, handleTrackChanges);
+            Messenger.Default.Register<Track>(this, "editTrack", handleEditTrack);
 
             //initialize the plots list
             _plots = new List<Plot>();
@@ -222,7 +223,7 @@ namespace ViewModel
             }
         }
 
-
+        #endregion
 
 
         #region RelayCommands
@@ -304,22 +305,45 @@ namespace ViewModel
                     _RemoveTrack = new RelayCommand(
                        async () =>
                        {
-                           await model.removeTrack(selectedTrack);
+                           MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show("Are you sure you wanna remove track with callsign " + selectedTrack.callsign + "?", "Remove track Confirmation", System.Windows.MessageBoxButton.YesNo);
+                           if (messageBoxResult == MessageBoxResult.Yes)
+                               await model.removeTrack(selectedTrack.toTrack());
+
                        },
                        () =>
                        {
-                           return serverIsAvailable;
+                           return serverIsAvailable && (selectedTrack != null);
                        });
                 }
                 return _RemoveTrack;
             }
         }
-        
+
+
+        private RelayCommand _EditTrack;
+        public RelayCommand EditTrack
+        {
+            get
+            {
+                if (_EditTrack == null)
+                {
+                    _EditTrack = new RelayCommand(
+                       async () =>
+                       {
+                           
+                          //         await model.edit(selectedTrack.toTrack());
+
+                       },
+                       () =>
+                       {
+                           return serverIsAvailable && (selectedTrack != null);
+                       });
+                }
+                return _EditTrack;
+            }
+        }
 
         #endregion
-
-        #endregion
-
         #region Listening methods for the messenger
 
         //listens to the scenario time update
@@ -350,7 +374,7 @@ namespace ViewModel
                 //storing the new list
                 tracks = temp;
             }
-           
+
         }
         /**
          * 
@@ -370,24 +394,30 @@ namespace ViewModel
 
         /**
         * 
-        * Purpose handle messenges sent from the Model when changes are made to a track on the model
+        * Purpose handle messenges sent from the Model when we add a track
         * */
 
-        private void handleTrackChanges(Track t)
+        private void handleCreateTrack(Track t)
         {
-            /*todo broken or something
-             * */
-            //currently we only support add so here's add
             tracks.Add(new ViewModelTrack(t));
-            RaisePropertyChanged("tracks");
+            t.callsign = "test";
         }
 
         private void handleRemoveTrack(Track t)
         {
-            tracks.Remove(new ViewModelTrack(t));
-
-
+            foreach (ViewModelTrack track in tracks)
+                if (track.trackID == t.trackID)
+                    tracks.Remove(track);
         }
+
+
+        private void handleEditTrack(Track t)
+        {
+            foreach (ViewModelTrack track in tracks)
+                if (track.trackID == track.trackID)
+                    track.edit(t);
+        }
+
 
         #endregion
 

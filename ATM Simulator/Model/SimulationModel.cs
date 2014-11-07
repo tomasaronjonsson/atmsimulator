@@ -153,7 +153,17 @@ namespace Model
         public async Task removeTrack(Track t)
         {
             handleServerConnection();
-            await server.removeTrackAsync(t);
+            try
+            {
+                await server.removeTrackAsync(t);
+            }
+            catch (Exception e)
+            {
+                debugMessage("ATMS/Model-0003: Failed to remove track.");
+                debugMessage(e.StackTrace);
+                //throw new Exception("ATMS/Model-0003: Failed to remove track.");
+                handleServerConnection();
+            }
             serverIsAvailable = true;
         }
 

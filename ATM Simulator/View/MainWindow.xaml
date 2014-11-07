@@ -21,7 +21,7 @@
 
                 <DataTemplate x:Key="planeTemplate">
                     <Grid Background="Transparent">
-                        <Grid.ColumnDefinitions> 
+                        <Grid.ColumnDefinitions>
                             <ColumnDefinition/>
                             <ColumnDefinition/>
                             <ColumnDefinition/>
@@ -33,7 +33,9 @@
                         </Grid.RowDefinitions>
                         <Rectangle Grid.Row="1" Grid.Column="1" Width="30" Height="30" Fill="Transparent" Stroke="Gray"/>
 
-                        <Grid Grid.Row="0" Grid.Column="2">
+
+                        <!-- The grid for the track information on the mat if you check the below grid and column value you will move the inffomration around the track icon-->
+                        <Grid Grid.Row="{Binding row}" Grid.Column="{Binding column}">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition/>
                                 <ColumnDefinition/>
@@ -44,52 +46,21 @@
                                 <RowDefinition/>
                                 <RowDefinition/>
                             </Grid.RowDefinitions>
-                            <TextBlock Grid.Row="0" Grid.Column="0">id:</TextBlock>
-                            <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding trackid}"></TextBlock>
+                            <TextBlock Grid.Row="0" Grid.Column="0" TextAlignment="Right">id:</TextBlock>
+                            <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding trackID}"></TextBlock>
 
-                            <TextBlock Grid.Row="1" Grid.Column="0">sign:</TextBlock>
+                            <TextBlock Grid.Row="1" Grid.Column="0" TextAlignment="Right">sign:</TextBlock>
                             <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding callsign}"></TextBlock>
 
-                            <TextBlock Grid.Row="2" Grid.Column="0">alt:</TextBlock>
+                            <TextBlock Grid.Row="2" Grid.Column="0" TextAlignment="Right">alt:</TextBlock>
                             <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding altitude}"></TextBlock>
                         </Grid>
-
-
-
-
-                        <Grid.RenderTransform>
-                            <TransformGroup>
-                                <RotateTransform Angle="{Binding currentCourse}" CenterX="20" CenterY="20"/>
-                                <TranslateTransform X="-20" Y="-20"/>
-                            </TransformGroup>
-                        </Grid.RenderTransform>
-
                     </Grid>
-                 
+
 
 
                 </DataTemplate>
-                <ControlTemplate x:Key="test">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
 
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                        </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                            <RowDefinition/>
-                            <RowDefinition/>
-                            <RowDefinition/>
-                        </Grid.RowDefinitions>
-                        
-                        
-                        
-                        
-                        
-                    </Grid>
-                   
-                </ControlTemplate>
             </Grid.Resources>
 
             <Grid.RowDefinitions>
@@ -110,8 +81,8 @@
 
                 <Label Content="Track:" HorizontalAlignment="Left"/>
                 <Button Content="Create new track" Command="{Binding CreateNewTrack}"/>
-                <Button Content="Remove track" Click="Track_RemoveWindow"/>
-                <Button Content="Edit track" Click="Track_EditWindow"/>
+                <Button Content="Remove track" Command="{Binding RemoveTrack}"/>
+                <Button Content="Edit track" Command="{Binding EditTrack}"/>
 
 
                 <Label  Content="VM Time:"/>
@@ -129,44 +100,60 @@
                 </dxm:ImageTilesLayer>
 
                 <!-- layer to show the tracks on the map-->
-                <dxm:VectorLayer ItemsSource="{Binding tracks }" SelectedItem="{Binding selectedTrack, Mode=TwoWay}"
+                <dxm:VectorLayer ItemsSource="{Binding tracks }" 
+                                 SelectedItem="{Binding selectedTrack, Mode=TwoWay}"
                                  LatitudeDataMember="currentLocation.Latitude"
                                  LongitudeDataMember="currentLocation.Longitude"
                                  ItemTemplate="{StaticResource planeTemplate}">
 
                 </dxm:VectorLayer>
-
-
-
-                <!-- old stuff -->
-                <!-- Plotslist-->
-                <!--<dxm:VectorLayer ItemsSource="{Binding planes}"/>          -->
-                <!-- History -->
-                <!--<dxm:VectorLayer ItemsSource="{Binding historyPlanes}" />  -->
-
-
             </dxm:MapControl>
 
-           <!--
-            DEBUG List of plots
-            <ListBox Grid.Row="0" Grid.Column="2" ItemsSource="{Binding plots}">
+
+
+            <!--  Selected track in the top right corner  -->
+            <Grid  Grid.Row="0" Grid.Column="2">
+
+                <StackPanel Orientation="Vertical">
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="Icon:"></Label>
+                        <Rectangle Width="20" Height="20" Fill="Transparent" Stroke="Gray"/>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="TrackID:"></Label>
+                        <Label Content="{Binding selectedTrack.trackID}"/>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="sign:"></Label>
+                        <Label Content="{Binding selectedTrack.callsign}"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="alt:"></Label>
+                        <Label Content="{Binding selectedTrack.altitude}"/>
+
+                    </StackPanel>
+
+                </StackPanel>
+
+
+
+            </Grid>
+
+
+            <!-- List of all the tracks avilable -->
+            <ListBox Grid.Row="1" Grid.Column="2" ItemsSource="{Binding tracks}" SelectedItem="{Binding selectedTrack }">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <TextBlock Text="{Binding ''}"/>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>-->
+                        <StackPanel Orientation="Horizontal">
+                            <Rectangle Width="20" Height="20" Fill="Transparent" Stroke="Gray"/>
+                            <Label Content="sign:"></Label>
+                            <Label Content="{Binding callsign}"/>
+                            <Label Content="alt:"></Label>
+                            <Label Content="{Binding altitude}"/>
 
-
-
-
-            <Label Grid.Row="0" Grid.Column="2" Content="{Binding selectedTrack}"/>
-
-
-            <ListBox Grid.Row="1" Grid.Column="2" ItemsSource="{Binding tracks}" SelectedItem="{Binding selectedTrack}">
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock Text="{Binding ''}"/>
+                        </StackPanel>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
@@ -180,14 +167,14 @@
                         IsMoveToPointEnabled="False" />
 
                 <CheckBox Content="Sync" IsChecked="{Binding syncTimeWithServer,Mode=TwoWay}" />
-                
+
             </StackPanel>
-            
+
 
 
         </Grid>
         <Label Content="{Binding plots.Count}"/>
-        
+
 
     </StackPanel>
 

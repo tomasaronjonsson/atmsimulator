@@ -77,8 +77,7 @@ namespace ATMS_Server
             }
             catch (Exception e)
             {
-                debugMessage(e);
-                throw new Exception("ATMS-MainSimulation-0001: Failed to register client");
+                debugMessage("Failed to register client",e);
 
             }
         }
@@ -102,7 +101,7 @@ namespace ATMS_Server
             }
             catch (Exception e)
             {
-                debugMessage(e);
+                debugMessage("failed to create and send a scenario",e);
                 throw new Exception("ATMS-MainSimulation-0001: Failed to create a new scenario");
             };
         }
@@ -159,7 +158,7 @@ namespace ATMS_Server
                     catch (Exception e)
                     {
                         //handle that the scenario is to big and can't be sent like this 
-                        debugMessage(e);
+                        debugMessage("failed to remove a track",e);
                     }
                 }
             }
@@ -192,7 +191,7 @@ namespace ATMS_Server
                     catch (Exception e)
                     {
                         //handle that the scenario is to big and can't be sent like this 
-                        debugMessage(e);
+                        debugMessage("failed to edit track",e);
                     }
                 }
             }
@@ -236,7 +235,7 @@ namespace ATMS_Server
                 catch (Exception e)
                 {
                     //handle that the scenario is to big and can't be sent like this 
-                    debugMessage(e);
+                    debugMessage("Failed to send new scenario",e);
 
                 }
             }
@@ -260,7 +259,7 @@ namespace ATMS_Server
                 catch (Exception e)
                 {
                     //handle that the scenario is to big and can't be sent like this 
-                    debugMessage(e);
+                    debugMessage("Failed to notify Create New Track.", e);
 
                 }
             }
@@ -299,16 +298,18 @@ namespace ATMS_Server
             catch (Exception e)
             {
                 clients.Remove(client);
-                debugMessage(e);
+                debugMessage("Failed to remove track.",e);
             }
         }
 
 
-        public void debugMessage(Exception e)
+        public void debugMessage(string explanation,Exception e)
         {
+            Debug.WriteLine("ATMS/" + this.GetType().Name + "- " + explanation);
             Debug.WriteLine("Excpetion" + e);
             Debug.WriteLine("Stacktrace:" + e.StackTrace);
         }
+
 
 
 
