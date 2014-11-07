@@ -15,8 +15,6 @@ using System.Windows.Controls;
 using System.Windows.Ink;
 using System.Windows.Media;
 using System.Threading;
-
-
 namespace ViewModel
 {
     public class SimulationViewModel : ViewModelBase
@@ -24,8 +22,6 @@ namespace ViewModel
         SimulationModel model;
 
         //storing the global time in seconds
-
-
 
 
         public SimulationViewModel()
@@ -48,8 +44,8 @@ namespace ViewModel
             Messenger.Default.Register<Scenario>(this, handleScenarioUpdate);
             Messenger.Default.Register<int>(this, handleServerTimeUpdate);
             Messenger.Default.Register<bool>(this, handleBoolChanges);
-
-            Messenger.Default.Register<Track>(this, handleTrackChanges);
+            Messenger.Default.Register<Track>(this, "createTrack", handleTrackChanges);
+            Messenger.Default.Register<Track>(this, "removeTrack", handleRemoveTrack);
 
             //initialize the plots list
             _plots = new List<Plot>();
@@ -60,8 +56,6 @@ namespace ViewModel
 
             model.startUp();
         }
-
-
 
 
         #region properties
@@ -85,7 +79,6 @@ namespace ViewModel
             }
         }
 
-
         private bool _syncTimeWithServer;
         public bool syncTimeWithServer
         {
@@ -99,8 +92,6 @@ namespace ViewModel
                 }
             }
         }
-
-
 
         private int _serverCurrentTime;
         public int serverCurrentTime
@@ -143,8 +134,6 @@ namespace ViewModel
                 }
             }
         }
-
-
 
         private bool _serverIsPlaying;
         public bool serverIsPlaying
@@ -191,7 +180,6 @@ namespace ViewModel
                 {
                     _plots = value;
                     RaisePropertyChanged("plots");
-
                 }
             }
         }
@@ -206,8 +194,23 @@ namespace ViewModel
                 if (value != _tracks)
                 {
                     //we have to copy the list else, the binding will not update 
-                    _tracks = value.Select(x => x).ToList() ;
+                    _tracks = value.Select(x => x).ToList();
                     RaisePropertyChanged("tracks");
+                }
+            }
+        }
+
+        //This holds the ID of the track that is about to be removed
+        private Track _trackToBeDeleted;
+        public Track trackToBeDeleted
+        {
+            get { return _trackToBeDeleted; }
+            set
+            {
+                if (value != _trackToBeDeleted)
+                {
+                    _trackToBeDeleted = value;
+                    RaisePropertyChanged("trackToBeDeleted");
                 }
             }
         }
@@ -280,19 +283,18 @@ namespace ViewModel
             }
         }
 
+
         private RelayCommand _RemoveTrack;
         public RelayCommand RemoveTrack
         {
-            get { return _RemoveTrack; }
-            set
+            get
             {
                 if (_RemoveTrack == null)
                 {
                     _RemoveTrack = new RelayCommand(
                        async () =>
-                       {                           
-                           //todo
-                           await model.createNewTrack();
+                       {
+                           await model.removeTrack(trackToBeDeleted);
                        },
                        () =>
                        {
@@ -302,7 +304,7 @@ namespace ViewModel
                 return _RemoveTrack;
             }
         }
-        
+
 
         #endregion
 
@@ -353,10 +355,14 @@ namespace ViewModel
 
         private void handleTrackChanges(Track t)
         {
-            
-            tracks =  model.mainScenario.tracks;
-
+            tracks = model.mainScenario.tracks;
         }
+
+        private void handleRemoveTrack(Track t)
+        {
+            tracks = model.mainScenario.tracks;
+        }
+
         #endregion
 
 

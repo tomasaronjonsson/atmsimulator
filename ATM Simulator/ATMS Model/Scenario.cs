@@ -22,12 +22,9 @@ namespace ATMS_Model
             basetime = DateTime.MinValue;
         }
 
-    
-
         //returns a list of plots at the current time in seconds
         public List<Plot> getNow(int seconds)
         {
-
             if (basetime == DateTime.MinValue)
             {
                 //if basetime is not set, find the basetime for the scenario, it only needs to do this once
@@ -49,8 +46,5 @@ namespace ATMS_Model
 
             return gettingAllPlots.ToList();
         }
-
-
-
     }
 }

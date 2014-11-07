@@ -33,9 +33,15 @@ namespace Model
             model.notifyNewTrack(t);
         }
 
+        public void notifyRemoveTrack(Track t)
+        {
+            model.notifyRemoveTrack(t);
+        }
 
 
-
-
+        public void notifyEditedTrack(Track t)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

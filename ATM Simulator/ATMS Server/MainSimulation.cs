@@ -29,6 +29,7 @@ namespace ATMS_Server
 
         //store the next avilable track ID
         int avilableTrackID;
+
         //the thread for incrementing time (current server time)
         Thread timeThread;
 
@@ -106,15 +107,14 @@ namespace ATMS_Server
             };
         }
 
-
-
         /**
          *  
          * the IServerInterface implementation of createnewtask
          * */
         public void createNewTrack(Track t)
         {
-
+            //lets check if the client is registered
+            checkIfRegistered();
             //check if the value incoming is Null
             if (t == null)
             {
@@ -134,9 +134,8 @@ namespace ATMS_Server
 
             notifyCreateNewTrack(t);
         }
+
         /**
-         * todo review, should we use a int trackid instead of track t? if we are removing a track with a huge list of plots what then ?
-         * we can also just send an empty track with the right track id and use this for the protocol
          * sprint 6
          * */
         public void removeTrack(Track t)
@@ -161,17 +160,12 @@ namespace ATMS_Server
                     {
                         //handle that the scenario is to big and can't be sent like this 
                         debugMessage(e);
-
                     }
                 }
-
             }
-
         }
 
         /**
-         * todo review, should we use a int trackid instead of track t? if we are removing a track with a huge list of plots what then ?
-         * we can also just send an empty track with the right track id and use this for the protocol
          * sprint 6
          * */
         public void editTrack(Track t)
@@ -184,9 +178,8 @@ namespace ATMS_Server
                 //finding the track to be changed
                 Track trackToBeChanged = mainScenario.tracks.First(x => x.Equals(t));
 
-                //edit it what we found
+                //edit what we found
                 trackToBeChanged.edit(t);
-
 
                 //notify all the clients 
                 foreach (IClientCallbackInterface entry in clients)
@@ -200,15 +193,10 @@ namespace ATMS_Server
                     {
                         //handle that the scenario is to big and can't be sent like this 
                         debugMessage(e);
-
                     }
                 }
-
             }
         }
-
-
-
 
 
         /**
@@ -253,12 +241,12 @@ namespace ATMS_Server
                 }
             }
         }
+
         /**
          * TODO: review
          * 
          * notify the clients of the new track
          * */
-
         public void notifyCreateNewTrack(Track t)
         {
 

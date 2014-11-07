@@ -38,6 +38,18 @@ namespace Model.ServiceReference1 {
         
         [System.ServiceModel.OperationContractAttribute(Action="ATMS_Server/IServerInterface/createNewTrack", ReplyAction="ATMS_Server/IServerInterface/createNewTrackResponse")]
         System.Threading.Tasks.Task createNewTrackAsync(ATMS_Model.Track t);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="ATMS_Server/IServerInterface/removeTrack", ReplyAction="ATMS_Server/IServerInterface/removeTrackResponse")]
+        void removeTrack(ATMS_Model.Track t);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="ATMS_Server/IServerInterface/removeTrack", ReplyAction="ATMS_Server/IServerInterface/removeTrackResponse")]
+        System.Threading.Tasks.Task removeTrackAsync(ATMS_Model.Track t);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="ATMS_Server/IServerInterface/editTrack", ReplyAction="ATMS_Server/IServerInterface/editTrackResponse")]
+        void editTrack(ATMS_Model.Track t);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="ATMS_Server/IServerInterface/editTrack", ReplyAction="ATMS_Server/IServerInterface/editTrackResponse")]
+        System.Threading.Tasks.Task editTrackAsync(ATMS_Model.Track t);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -51,6 +63,12 @@ namespace Model.ServiceReference1 {
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="ATMS_Server/IServerInterface/notifyNewTrack")]
         void notifyNewTrack(ATMS_Model.Track t);
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="ATMS_Server/IServerInterface/notifyRemoveTrack")]
+        void notifyRemoveTrack(ATMS_Model.Track t);
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="ATMS_Server/IServerInterface/notifyEditedTrack")]
+        void notifyEditedTrack(ATMS_Model.Track t);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -111,6 +129,22 @@ namespace Model.ServiceReference1 {
         
         public System.Threading.Tasks.Task createNewTrackAsync(ATMS_Model.Track t) {
             return base.Channel.createNewTrackAsync(t);
+        }
+        
+        public void removeTrack(ATMS_Model.Track t) {
+            base.Channel.removeTrack(t);
+        }
+        
+        public System.Threading.Tasks.Task removeTrackAsync(ATMS_Model.Track t) {
+            return base.Channel.removeTrackAsync(t);
+        }
+        
+        public void editTrack(ATMS_Model.Track t) {
+            base.Channel.editTrack(t);
+        }
+        
+        public System.Threading.Tasks.Task editTrackAsync(ATMS_Model.Track t) {
+            return base.Channel.editTrackAsync(t);
         }
     }
 }

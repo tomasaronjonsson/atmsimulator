@@ -33,18 +33,19 @@
 
                 <Label Content="Track:" HorizontalAlignment="Left"/>
                 <Button Content="Create new track" Command="{Binding CreateNewTrack}"/>
-                
+                <Button Content="Remove track" Click="Track_RemoveWindow"/>
+                <Button Content="Edit track" Click="Track_EditWindow"/>
             </StackPanel>
 
             <Canvas Name="mapcanvas">
-                
+
             </Canvas>
 
-                <dxm:MapControl Grid.Row="0" Grid.Column="1" ZoomLevel="8"  CenterPoint="55.85,9.82">
+            <dxm:MapControl Grid.Row="0" Grid.Column="1" ZoomLevel="8"  CenterPoint="55.85,9.82">
                 <!-- The map itself from oepnstreet -->
                 <dxm:ImageTilesLayer Name="mapContainer">
-                    
-                    
+
+
                     <dxm:ImageTilesLayer.DataProvider>
                         <dxm:OpenStreetMapDataProvider/>
                     </dxm:ImageTilesLayer.DataProvider>
@@ -55,7 +56,7 @@
                 <dxm:VectorLayer ItemsSource="{Binding historyPlanes}" />
             </dxm:MapControl>
 
-           <!--
+            <!--
             DEBUG List of plots
             <ListBox Grid.Row="0" Grid.Column="2" ItemsSource="{Binding plots}">
                 <ListBox.ItemTemplate>
@@ -80,12 +81,12 @@
                         IsMoveToPointEnabled="False" />
 
                 <CheckBox Content="Sync" IsChecked="{Binding syncTimeWithServer,Mode=TwoWay}" />
-                
+
             </StackPanel>
-            
+
         </Grid>
         <Label Content="{Binding plots.Count}"/>
-        
+
 
     </StackPanel>
 

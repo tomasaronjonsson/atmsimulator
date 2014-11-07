@@ -52,7 +52,7 @@ namespace Model
                 }
             }
         }
-         
+
 
         private Scenario _mainScenario;
         public Scenario mainScenario
@@ -150,6 +150,13 @@ namespace Model
             serverIsAvailable = true;
         }
 
+        public async Task removeTrack(Track t)
+        {
+            handleServerConnection();
+            await server.removeTrackAsync(t);
+            serverIsAvailable = true;
+        }
+
         #endregion
 
         public void notifyNewScenario(Scenario data)
@@ -166,16 +173,18 @@ namespace Model
         {
             //adding the new track to our local scenario
             mainScenario.tracks.Add(t);
-
+            //token string
+            string s = "createTrack";
             //sending a messeng out that the main scenario has been changed triggering the update process on the view
-            Messenger.Default.Send(t);
+            Messenger.Default.Send(t, s);
         }
 
-
-
-        public Task removeTrack(int p)
+        public void notifyRemoveTrack(Track t)
         {
-            throw new NotImplementedException();
+            mainScenario.tracks.Remove(t);
+            //token string
+            string s = "removeTrack";
+            Messenger.Default.Send<Track>(t, s);
         }
     }
 }
