@@ -330,7 +330,7 @@ namespace ViewModel
                     _EditTrack = new RelayCommand(
                        async () =>
                        {
-                          //         await model.edit(selectedTrack.toTrack());
+                           //         await model.edit(selectedTrack.toTrack());
                        },
                        () =>
                        {
@@ -401,11 +401,19 @@ namespace ViewModel
             tracks.Add(new ViewModelTrack(t));
         }
 
+        /*
+             * review Tomas - It looks like a simple solution to the fix. 
+             **/
         private void handleRemoveTrack(Track t)
         {
-            foreach (ViewModelTrack track in tracks)
-                if (track.trackID == t.trackID)
-                    tracks.Remove(track);
+            // List size -1 because we use RemoveAt(index)
+            for (int i = tracks.Count - 1; i >= 0; i--)
+            {
+                if (tracks[i].trackID == t.trackID)
+                {
+                    tracks.RemoveAt(i);
+                }
+            }
         }
 
         private void handleEditTrack(Track t)

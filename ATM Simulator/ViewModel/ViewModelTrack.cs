@@ -185,6 +185,7 @@ namespace Model
         
 
         /*
+         * review - Tomas - changed the First() method to FirstOrDefault()
          * 
          * Everytime the currentime is updated this method is called
          * 
@@ -192,7 +193,7 @@ namespace Model
         public void UpdateTick()
         {
             //find the plot for the timeframe
-            var tempCurrentPlot = plots.First(x => x.time == currentTime);
+            var tempCurrentPlot = plots.FirstOrDefault(x => x.time == currentTime);
             //check if we found anything
             if (tempCurrentPlot != null)
             {
