@@ -145,7 +145,9 @@ namespace ATMS_Server
             if (t != null)
             {
                 //removing the track from our scenario, how we are sure we identify the same track is through our implementation of equals 
-                mainScenario.tracks.Remove(t);
+                foreach(Track track in mainScenario.tracks)
+                    if (track.trackID == t.trackID)
+                        mainScenario.tracks.Remove(track);
 
                 //notify all the clients 
                 foreach (IClientCallbackInterface entry in clients)
@@ -153,10 +155,16 @@ namespace ATMS_Server
                     try
                     {
                         //Handle the client callbacks, 1st argument is the function, 2nd is the client
-                        ThreadPool.QueueUserWorkItem(work => handleClientCallback(() => { entry.notifyRemoveTrack(t); }, entry));
+                        //ThreadPool.QueueUserWorkItem(work => handleClientCallback(() => { entry.notifyRemoveTrack(t); }, entry));
+
+                       // handleClientCallback(() => { entry.notifyRemoveTrack(t); }, entry);
+                        entry.notifyRemoveTrack(t);
+
                     }
                     catch (Exception e)
                     {
+                        clients.Remove(entry);
+
                         //handle that the scenario is to big and can't be sent like this 
                         debugMessage("failed to remove a track",e);
                     }
@@ -286,6 +294,8 @@ namespace ATMS_Server
                 ThreadPool.QueueUserWorkItem(work => handleClientCallback(() => { entry.notifyTimeUpdate(currentServerTime); }, entry));
 
             }
+
+
         }
 
         public void handleClientCallback(Action action, IClientCallbackInterface client)
@@ -298,7 +308,7 @@ namespace ATMS_Server
             catch (Exception e)
             {
                 clients.Remove(client);
-                debugMessage("Failed to remove track.",e);
+                debugMessage("Failed to handleClientCallback track.", e);
             }
         }
 

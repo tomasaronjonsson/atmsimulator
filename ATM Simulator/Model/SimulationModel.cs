@@ -191,7 +191,10 @@ namespace Model
 
         public void notifyRemoveTrack(Track t)
         {
-            mainScenario.tracks.Remove(t);
+            foreach (Track track in mainScenario.tracks)
+                if (track.trackID == t.trackID)
+                        mainScenario.tracks.Remove(track);
+
             //token string
             string s = "removeTrack";
             Messenger.Default.Send<Track>(t, s);
