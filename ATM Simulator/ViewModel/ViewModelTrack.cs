@@ -14,12 +14,7 @@ namespace Model
     public class ViewModelTrack : INotifyPropertyChanged
     {
 
-
-       
-
-
-        /* todo review alex
-        * 
+        /* 
         * make a consrtuctor that can take a track object in and initlize everything from that track
         * */
         public ViewModelTrack(Track track)
@@ -37,7 +32,7 @@ namespace Model
 
             UpdateTick();
         }
-        /* todo review alex
+        /* >READ the IDEA on the diary
          * 
          * for later use, this can be used by the gui to determin where the user want his information for the track to appear in a 3x3 matrix
          * */
@@ -55,7 +50,7 @@ namespace Model
             }
         }
         /*
-        * todo review alex
+        * ->READ the IDEA in the diary
          * 
         * for later use, this can be used by the gui to determin where the user want his information for the track to appear in a 3x3 matrix
         * */
@@ -75,7 +70,6 @@ namespace Model
 
 
         /*
-         * todo review alex
          * 
          * we want a property storing the current plot
          */
@@ -93,7 +87,6 @@ namespace Model
             }
         }
         /*
-         * todo review alex
          * 
          * we want a property storing the current location we can later implement geopoint into our plots and then we don't need this
          */
@@ -114,7 +107,6 @@ namespace Model
 
 
         /*
-         * todo review alex
          * 
          * we want a property storing our trackid
          */
@@ -133,12 +125,10 @@ namespace Model
         }
 
        
-
         /*
-         * todo review Alex
          * 
          * we want the scenario to update the current time on the track and the track will then update its location 
-         * and update the currentlocation property, iof the current property is the saem as before, example . the track has no location, the map doesn't 
+         * and update the currentlocation property, if the current property is the same as before, example . the track has no location, the map doesn't 
          * need to update that track, less load
         */
         private int _currentTime;
@@ -156,7 +146,6 @@ namespace Model
             }
         }
         /*
-         * todo review alex
          * 
          * we want a property storing the callsign
          */
@@ -177,7 +166,6 @@ namespace Model
       
 
         /*
-        * todo review alex
         * 
         * store our plots has a property and a binding list for binding purposes
         */
@@ -197,7 +185,6 @@ namespace Model
         
 
         /*
-         * todo review alex
          * 
          * Everytime the currentime is updated this method is called
          * 
@@ -222,7 +209,6 @@ namespace Model
 
 
         /*
-         * todo review alex
          * 
          * return a track objet we can use to send to the server if we need have edited something or want to remove this track from the system
          */
@@ -238,7 +224,6 @@ namespace Model
 
       
         /*
-         * todo review alex
          * 
          * override the equals method for the remove command and etc.
          */
@@ -266,7 +251,6 @@ namespace Model
         }
 
         /*
-         * todo alex review 
          * 
          * to store the current altitude, should be currentAltitude?
          * 
@@ -287,7 +271,6 @@ namespace Model
 
 
         /*
-         *  todo review alex
          * 
          * we accept and track object we want to use to edit the information in this object
 
@@ -300,7 +283,6 @@ namespace Model
         }
 
         /*
-         * todo review alex 
          * 
          *  overridiing the default tostring method
          */
@@ -320,13 +302,11 @@ namespace Model
         }
 
         /*
-        * todo review alex 
         * 
         *  implementing the intofiyproerty change interface
         */
         public event PropertyChangedEventHandler PropertyChanged;
         /*
-        * todo review alex 
         * 
         *  Create the RaisePropertyChanged method to raise the event 
         */

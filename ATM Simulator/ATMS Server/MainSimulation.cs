@@ -302,18 +302,11 @@ namespace ATMS_Server
             }
         }
 
-
         public void debugMessage(string explanation,Exception e)
         {
             Debug.WriteLine("ATMS/" + this.GetType().Name + "- " + explanation);
             Debug.WriteLine("Excpetion" + e);
             Debug.WriteLine("Stacktrace:" + e.StackTrace);
         }
-
-
-
-
-
-
     }
 }
