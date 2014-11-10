@@ -406,6 +406,10 @@ namespace ViewModel
              **/
         private void handleRemoveTrack(Track t)
         {
+
+            
+            
+
             // List size -1 because we use RemoveAt(index)
             for (int i = tracks.Count - 1; i >= 0; i--)
             {

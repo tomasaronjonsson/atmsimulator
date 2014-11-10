@@ -145,9 +145,7 @@ namespace ATMS_Server
             if (t != null)
             {
                 //removing the track from our scenario, how we are sure we identify the same track is through our implementation of equals 
-                foreach(Track track in mainScenario.tracks)
-                    if (track.trackID == t.trackID)
-                        mainScenario.tracks.Remove(track);
+                mainScenario.tracks.Remove(t);
 
                 //notify all the clients 
                 foreach (IClientCallbackInterface entry in clients)
@@ -155,10 +153,8 @@ namespace ATMS_Server
                     try
                     {
                         //Handle the client callbacks, 1st argument is the function, 2nd is the client
-                        //ThreadPool.QueueUserWorkItem(work => handleClientCallback(() => { entry.notifyRemoveTrack(t); }, entry));
+                        ThreadPool.QueueUserWorkItem(work => handleClientCallback(() => { entry.notifyRemoveTrack(t); }, entry));
 
-                       // handleClientCallback(() => { entry.notifyRemoveTrack(t); }, entry);
-                        entry.notifyRemoveTrack(t);
 
                     }
                     catch (Exception e)
@@ -308,7 +304,7 @@ namespace ATMS_Server
             catch (Exception e)
             {
                 clients.Remove(client);
-                debugMessage("Failed to handleClientCallback track.", e);
+                debugMessage("Failed to handleClientCallback.", e);
             }
         }
 
