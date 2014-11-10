@@ -330,9 +330,7 @@ namespace ViewModel
                     _EditTrack = new RelayCommand(
                        async () =>
                        {
-                           
                           //         await model.edit(selectedTrack.toTrack());
-
                        },
                        () =>
                        {
@@ -399,8 +397,8 @@ namespace ViewModel
 
         private void handleCreateTrack(Track t)
         {
-            tracks.Add(new ViewModelTrack(t));
             t.callsign = "test";
+            tracks.Add(new ViewModelTrack(t));
         }
 
         private void handleRemoveTrack(Track t)
@@ -410,14 +408,12 @@ namespace ViewModel
                     tracks.Remove(track);
         }
 
-
         private void handleEditTrack(Track t)
         {
             foreach (ViewModelTrack track in tracks)
                 if (track.trackID == track.trackID)
                     track.edit(t);
         }
-
 
         #endregion
 
