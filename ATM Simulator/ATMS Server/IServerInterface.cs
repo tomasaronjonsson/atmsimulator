@@ -59,9 +59,9 @@ namespace ATMS_Server
         [OperationContract(IsOneWay = true)]
         void notifyRemoveTrack(Track t);
 
-        /*
+        
         //notifies that a track as been edited
         [OperationContract(IsOneWay = true)]
-        void notifyEditedTrack(Track t);*/
+        void notifyEditedTrack(Track t);
     }
 }

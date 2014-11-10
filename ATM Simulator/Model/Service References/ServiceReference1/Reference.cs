@@ -66,6 +66,9 @@ namespace Model.ServiceReference1 {
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="ATMS_Server/IServerInterface/notifyRemoveTrack")]
         void notifyRemoveTrack(ATMS_Model.Track t);
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="ATMS_Server/IServerInterface/notifyEditedTrack")]
+        void notifyEditedTrack(ATMS_Model.Track t);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]

@@ -10,6 +10,7 @@ using ATMS_Model;
 
 //for debugging
 using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace ATMS_Server
 {
@@ -72,12 +73,12 @@ namespace ATMS_Server
                 IClientCallbackInterface callback = OperationContext.Current.GetCallbackChannel<IClientCallbackInterface>();
 
                 //send the data 
-                ThreadPool.QueueUserWorkItem(work => handleClientCallback(() => { callback.notifyNewScenario(mainScenario); }, callback));
+                callback.notifyNewScenario(mainScenario);
 
             }
             catch (Exception e)
             {
-                debugMessage("Failed to register client",e);
+                debugMessage("Failed to populateClient", e);
 
             }
         }
@@ -91,17 +92,25 @@ namespace ATMS_Server
 
                 mainScenario = new Scenario();
 
+                //for testing pruposes only
                 mainScenario = Test.populateScenarioBigger();
 
                 avilableTrackID = mainScenario.tracks.Count;
 
                 //sending the new scenario to the clients
-                ThreadPool.QueueUserWorkItem(a => sendNewScenario());
+                 //notify the other clients
+                    clients.ForEach(
+                 delegate(IClientCallbackInterface callback)
+                 {
+                     callback.notifyNewScenario(mainScenario);
+
+                 });
+                
 
             }
             catch (Exception e)
             {
-                debugMessage("failed to create and send a scenario",e);
+                debugMessage("failed to create and send a scenario", e);
                 throw new Exception("ATMS-MainSimulation-0001: Failed to create a new scenario");
             };
         }
@@ -130,8 +139,13 @@ namespace ATMS_Server
             mainScenario.tracks.Add(t);
 
             //notify the clients of the newly added track
+            clients.ForEach(
+                delegate(IClientCallbackInterface callback)
+                {
+                    callback.notifyNewTrack(t);
 
-            notifyCreateNewTrack(t);
+                });
+
         }
 
         /**
@@ -141,6 +155,7 @@ namespace ATMS_Server
         {
             //lets check if the client is registered
             checkIfRegistered();
+
             //check if null else we skip
             if (t != null)
             {
@@ -148,23 +163,12 @@ namespace ATMS_Server
                 mainScenario.tracks.Remove(t);
 
                 //notify all the clients 
-                foreach (IClientCallbackInterface entry in clients)
-                {
-                    try
-                    {
-                        //Handle the client callbacks, 1st argument is the function, 2nd is the client
-                        ThreadPool.QueueUserWorkItem(work => handleClientCallback(() => { entry.notifyRemoveTrack(t); }, entry));
+                clients.ForEach(
+                 delegate(IClientCallbackInterface callback)
+                 {
+                     callback.notifyRemoveTrack(t);
 
-
-                    }
-                    catch (Exception e)
-                    {
-                        clients.Remove(entry);
-
-                        //handle that the scenario is to big and can't be sent like this 
-                        debugMessage("failed to remove a track",e);
-                    }
-                }
+                 });
             }
         }
 
@@ -173,6 +177,7 @@ namespace ATMS_Server
          * */
         public void editTrack(Track t)
         {
+
             //lets check if the client is registered
             checkIfRegistered();
             //check if null else we skip
@@ -181,23 +186,24 @@ namespace ATMS_Server
                 //finding the track to be changed
                 Track trackToBeChanged = mainScenario.tracks.First(x => x.Equals(t));
 
-                //edit what we found
-                trackToBeChanged.edit(t);
-
-                //notify all the clients 
-                foreach (IClientCallbackInterface entry in clients)
+                //check if we found something
+                if (trackToBeChanged != null)
                 {
-                    try
-                    {
-                        //Handle the client callbacks, 1st argument is the function, 2nd is the client
-                        ThreadPool.QueueUserWorkItem(work => handleClientCallback(() => { entry.notifyRemoveTrack(t); }, entry));
-                    }
-                    catch (Exception e)
-                    {
-                        //handle that the scenario is to big and can't be sent like this 
-                        debugMessage("failed to edit track",e);
-                    }
+                    //edit what we found
+                    trackToBeChanged.edit(t);
+
+
+                    //notify the other clients
+                    clients.ForEach(
+                 delegate(IClientCallbackInterface callback)
+                 {
+                     callback.notifyEditedTrack(t);
+
+                 });
                 }
+
+
+
             }
         }
 
@@ -234,41 +240,22 @@ namespace ATMS_Server
                 try
                 {
                     //Handle the client callbacks, 1st argument is the function, 2nd is the client and 3rd is the client list
-                    ThreadPool.QueueUserWorkItem(work => handleClientCallback(() => { entry.notifyNewScenario(mainScenario); }, entry));
+                    clients.ForEach(
+              delegate(IClientCallbackInterface callback)
+              {
+                  callback.notifyNewScenario(mainScenario);
+
+              });
                 }
                 catch (Exception e)
                 {
                     //handle that the scenario is to big and can't be sent like this 
-                    debugMessage("Failed to send new scenario",e);
+                    debugMessage("Failed to send new scenario", e);
 
                 }
             }
         }
 
-        /**
-         * TODO: review
-         * 
-         * notify the clients of the new track
-         * */
-        public void notifyCreateNewTrack(Track t)
-        {
-
-            foreach (IClientCallbackInterface entry in clients)
-            {
-                try
-                {
-                    //Handle the client callbacks, 1st argument is the function, 2nd is the client
-                    ThreadPool.QueueUserWorkItem(work => handleClientCallback(() => { entry.notifyNewTrack(t); }, entry));
-                }
-                catch (Exception e)
-                {
-                    //handle that the scenario is to big and can't be sent like this 
-                    debugMessage("Failed to notify Create New Track.", e);
-
-                }
-            }
-
-        }
 
 
 
@@ -284,12 +271,17 @@ namespace ATMS_Server
             //incrementing the time by the value in the radarinterval
             currentServerTime += ATMS_Model.BuisnessLogicValues.radarInterval;
 
-            //notifying listening clients of the update
-            foreach (IClientCallbackInterface entry in clients)
-            {
-                ThreadPool.QueueUserWorkItem(work => handleClientCallback(() => { entry.notifyTimeUpdate(currentServerTime); }, entry));
 
-            }
+
+
+            //notifying listening clients of the update
+                clients.ForEach(
+              delegate(IClientCallbackInterface callback)
+              {
+                  callback.notifyTimeUpdate(currentServerTime);
+
+              });
+                
 
 
         }
@@ -308,7 +300,8 @@ namespace ATMS_Server
             }
         }
 
-        public void debugMessage(string explanation,Exception e)
+        //handle  debugging message 
+        public void debugMessage(string explanation, Exception e)
         {
             Debug.WriteLine("ATMS/" + this.GetType().Name + "- " + explanation);
             Debug.WriteLine("Excpetion" + e);

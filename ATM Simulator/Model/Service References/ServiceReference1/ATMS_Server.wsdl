@@ -55,6 +55,9 @@
   <wsdl:message name="IServerInterface_notifyRemoveTrack_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:notifyRemoveTrack" />
   </wsdl:message>
+  <wsdl:message name="IServerInterface_notifyEditedTrack_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:notifyEditedTrack" />
+  </wsdl:message>
   <wsdl:portType name="IServerInterface">
     <wsdl:operation name="populateClient">
       <wsdl:input wsaw:Action="ATMS_Server/IServerInterface/populateClient" message="tns:IServerInterface_populateClient_InputMessage" />
@@ -91,6 +94,9 @@
     </wsdl:operation>
     <wsdl:operation name="notifyRemoveTrack">
       <wsdl:output wsaw:Action="ATMS_Server/IServerInterface/notifyRemoveTrack" message="tns:IServerInterface_notifyRemoveTrack_OutputCallbackMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="notifyEditedTrack">
+      <wsdl:output wsaw:Action="ATMS_Server/IServerInterface/notifyEditedTrack" message="tns:IServerInterface_notifyEditedTrack_OutputCallbackMessage" />
     </wsdl:operation>
   </wsdl:portType>
 </wsdl:definitions>

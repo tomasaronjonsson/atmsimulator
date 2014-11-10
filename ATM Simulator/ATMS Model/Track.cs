@@ -63,8 +63,9 @@ namespace ATMS_Model
         
         public void edit(Track t)
         {
-            //todo implement nothing to be able to CHANGe we don't store anything interesting 
-
+            //if the callsign is set on the remote track, we take it
+            if (t.callsign != null)
+                this.callsign = t.callsign;
         }
 
 

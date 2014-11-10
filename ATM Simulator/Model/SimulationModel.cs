@@ -167,6 +167,15 @@ namespace Model
             serverIsAvailable = true;
         }
 
+        public async Task editTrack(Track t)
+        {
+
+            handleServerConnection();
+            await server.editTrackAsync(t);
+            serverIsAvailable = true;
+        }
+
+
         #endregion
 
         public void notifyNewScenario(Scenario data)
@@ -183,21 +192,32 @@ namespace Model
         {
             //adding the new track to our local scenario
             mainScenario.tracks.Add(t);
-            //token string
-            string s = "createTrack";
+
             //sending a messeng out that the main scenario has been changed triggering the update process on the view
-            Messenger.Default.Send(t, s);
+            Messenger.Default.Send(t, "createTrack");
         }
 
         public void notifyRemoveTrack(Track t)
         {
-            foreach (Track track in mainScenario.tracks)
-                if (track.trackID == t.trackID)
-                        mainScenario.tracks.Remove(track);
 
-            //token string
-            string s = "removeTrack";
-            Messenger.Default.Send<Track>(t, s);
+            //remove the track from our model
+            mainScenario.tracks.Remove(t);
+
+            //broadcasting the track with the token "removetrack"
+            Messenger.Default.Send<Track>(t, "removeTrack");
+        }
+        public void notifyEditedTrack(Track t)
+        {
+            //find the track to edit
+            var trackToEdit = mainScenario.tracks.First(x => x.Equals(t));
+
+            if (trackToEdit != null)
+            {
+                trackToEdit.edit(t);
+                //broadcasting the track with the token "editTrack"
+                Messenger.Default.Send<Track>(t, "editTrack");
+            }
+
         }
     }
 }

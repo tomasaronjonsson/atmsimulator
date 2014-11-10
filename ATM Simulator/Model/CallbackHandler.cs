@@ -41,7 +41,7 @@ namespace Model
 
         public void notifyEditedTrack(Track t)
         {
-            throw new NotImplementedException();
+            model.notifyEditedTrack(t);
         }
     }
 }
