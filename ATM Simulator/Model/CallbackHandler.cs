@@ -48,5 +48,15 @@ namespace Model
         {
             model.notifyNewPlot(p);
         }
+
+        public void notifyRemovePlot(Plot p)
+        {
+            model.notifyRemovePlot(p);
+        }
+
+        public void notifyEditedPlot(Plot p)
+        {
+            model.notifyEditedPlot(p);
+        }
     }
 }

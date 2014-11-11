@@ -181,29 +181,28 @@ namespace Model
          * review Tomas - PLOT MANAGEMENT 
          * 
          * */
-        public async Task createNewPlot(int trackId)
+        public async Task createNewPlot(Track t)
         {
             Plot p = new Plot();
-            p.trackID = trackId;
+            p.trackID = t.trackID;
             handleServerConnection();
-            await server.createNewPlot(p);
+            await server.createNewPlotAsync(p);
             serverIsAvailable = true;
         }
 
         public async Task removePlot(Plot p)
         {
             handleServerConnection();
-            //await server.removePlotAsync(p);
+            await server.removePlotAsync(p);
             serverIsAvailable = true;
         }
 
         public async Task editPlot(Plot p)
         {
             handleServerConnection();
-            //await server.editPlotAsync(p);
+            await server.editPlotAsync(p);
             serverIsAvailable = true;
         }
-
 
         #endregion
 
@@ -257,6 +256,21 @@ namespace Model
             trackToBeAddedTo.plots.Add(p);
 
             Messenger.Default.Send(p, "createPlot");
+        }
+
+        public void notifyRemovePlot(Plot p)
+        {
+            //make a reference to the track that we need to add to (the selectedTrack)
+            Track trackToBeRemovedFrom = mainScenario.tracks.First(x => x.trackID == p.trackID);
+            //Add the plot
+            trackToBeRemovedFrom.plots.Remove(p);
+
+            Messenger.Default.Send(p, "removePlot");
+        }
+
+        public void notifyEditedPlot(Plot p)
+        {
+            throw new NotImplementedException();
         }
 
     }

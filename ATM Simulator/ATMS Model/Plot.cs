@@ -28,6 +28,35 @@ namespace ATMS_Model
         public Plot()
         {
         }
+        /*
+         * todo review this
+         * */
+        public override bool Equals(object obj)
+        {
+            if (obj == null)
+                return false;
+
+            Plot objAsPlot = obj as Plot;
+
+            if (objAsPlot == null)
+                return false;
+
+            if (objAsPlot != null)
+                if ((objAsPlot.trackID == this.trackID) && (objAsPlot.time == this.time))
+                    return true;
+
+            return false;
+        }
+
+        public void edit(Plot p)
+        {
+            //if the callsign is set on the remote track, we take it
+            if (p != null)
+            {
+                this.latitude = p.latitude;
+                this.longitude = p.longitude;
+            }
+        }
 
         public override string ToString()
         {

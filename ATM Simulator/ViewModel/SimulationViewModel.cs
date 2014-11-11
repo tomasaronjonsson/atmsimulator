@@ -51,6 +51,8 @@ namespace ViewModel
             Messenger.Default.Register<Track>(this, "removeTrack", handleRemoveTrack);
             Messenger.Default.Register<Track>(this, "editTrack", handleEditTrack);
             Messenger.Default.Register<Plot>(this, "createPlot", handleCreatePlot);
+            Messenger.Default.Register<Plot>(this, "removePlot", handleRemovePlot);
+            Messenger.Default.Register<Plot>(this, "editPlot", handleEditPlot);
 
             //initialize the plots list
             _plots = new BindingList<ViewModelPlot>();
@@ -386,7 +388,7 @@ namespace ViewModel
                        {
                            if (serverIsAvailable && selectedTrack != null)
                            {
-                               await model.createNewPlot(selectedPlot.trackID);
+                               await model.createNewPlot(selectedTrack.toTrack());
                            }
                        },
                        () =>
@@ -502,30 +504,46 @@ namespace ViewModel
             tracks.Add(new ViewModelTrack(t));
         }
 
-        /*
-        *  handle the removetrack message 
-        **/
         private void handleRemoveTrack(Track t)
         {
-            //create a viewmodeltrack we can use to remove
-            ViewModelTrack removeTrack = new ViewModelTrack(t);
-            //remove the track
-            tracks.Remove(removeTrack);
-
+            tracks.Remove(new ViewModelTrack(t));
         }
 
         private void handleEditTrack(Track t)
         {
-            //find the track to edit
             var trackToEdit = tracks.First(x => x.Equals(t));
 
             if (trackToEdit != null)
                 trackToEdit.edit(t);
         }
 
+        /*
+         * todo review
+         * */
+
         private void handleCreatePlot(Plot p)
         {
             plots.Add(new ViewModelPlot(p));
+        }
+
+        private void handleRemovePlot(Plot p)
+        {
+            plots.Remove(new ViewModelPlot(p));
+        }
+
+        private void handleEditPlot(Plot p)
+        {
+            //finding the track to be changed
+            ViewModelTrack trackToLookInto = tracks.First(x => x.trackID == p.trackID);
+
+            //check if we found something
+            if (trackToLookInto != null)
+            {
+                //edit what we found
+                ViewModelPlot plotToBeChanged = trackToLookInto.plots.First(x => x.trackID == p.trackID);
+
+                plotToBeChanged.edit(p);
+            }
         }
 
         #endregion
@@ -536,25 +554,20 @@ namespace ViewModel
             List<MapDot> tempPlaneList = new List<MapDot>();
             List<MapDot> tempHistoryPLaneList = new List<MapDot>();
 
-
-
-
-            foreach (Plot p in plots)
+            foreach (ViewModelPlot p in plots)
             {
                 MapDot temp = new MapDot();
                 GeoPoint geo = new GeoPoint();
                 //todo fix
                 temp.Size = 20;
-                geo.Latitude = p.latitude;
-                geo.Longitude = p.longitude;
+                geo.Latitude = p.location.Latitude;
+                geo.Longitude = p.location.Longitude;
 
 
                 temp.Location = geo;
                 tempPlaneList.Add(temp);
 
             }
-
-
 
             for (int i = 0; i < BuisnessLogicValues.numberOfHistoryPlots; i++)
             {
@@ -579,14 +592,9 @@ namespace ViewModel
 
                         tempHistoryPLaneList.Add(tempDot);
                     }
-
-
-
             }
             historyPlanes = tempHistoryPLaneList;
             planes = tempPlaneList;
-
         }
-
     }
 }

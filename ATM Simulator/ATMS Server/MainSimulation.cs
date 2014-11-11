@@ -98,14 +98,14 @@ namespace ATMS_Server
                 avilableTrackID = mainScenario.tracks.Count;
 
                 //sending the new scenario to the clients
-                 //notify the other clients
-                    clients.ForEach(
-                 delegate(IClientCallbackInterface callback)
-                 {
-                     callback.notifyNewScenario(mainScenario);
+                //notify the other clients
+                clients.ForEach(
+             delegate(IClientCallbackInterface callback)
+             {
+                 callback.notifyNewScenario(mainScenario);
 
-                 });
-                
+             });
+
 
             }
             catch (Exception e)
@@ -208,32 +208,64 @@ namespace ATMS_Server
             //lets check if the client is registered
             checkIfRegistered();
             //check if the value incoming is Null
-            if (p == null)
+            if (p != null)
             {
-                p = new Plot();
-            }
-            
-            //make a reference to the track that we need to add to (the selectedTrack)
-            Track trackToBeAddedTo = mainScenario.tracks.First(x => x.trackID == p.trackID);
-            //Add the plot
-            trackToBeAddedTo.plots.Add(p);
+                //make a reference to the track that we need to add to (the selectedTrack)
+                Track trackToBeAddedTo = mainScenario.tracks.First(x => x.trackID == p.trackID);
+                //Add the plot
+                trackToBeAddedTo.plots.Add(p);
 
-            //notify the clients of the newly added track
-            clients.ForEach(
-                delegate(IClientCallbackInterface callback)
-                {
-                    callback.notifyNewPlot(p);
-                });
+                //notify the clients of the newly added track
+                clients.ForEach(
+                    delegate(IClientCallbackInterface callback)
+                    {
+                        callback.notifyNewPlot(p);
+                    });
+            }
         }
 
         public void removePlot(Plot p)
         {
-            throw new NotImplementedException();
+            checkIfRegistered();
+            if (p != null)
+            {
+                Track trackToBeRemovedFrom = mainScenario.tracks.First(x => x.trackID == p.trackID);
+                //Add the plot
+                trackToBeRemovedFrom.plots.Remove(p);
+
+                clients.ForEach(
+                 delegate(IClientCallbackInterface callback)
+                 {
+                     callback.notifyRemovePlot(p);
+                 });
+            }
         }
 
         public void editPlot(Plot p)
         {
-            throw new NotImplementedException();
+            checkIfRegistered();
+            if (p != null)
+            {
+                 //finding the track to be changed
+                Track trackToLookInto = mainScenario.tracks.First(x => x.trackID == p.trackID);
+
+                //check if we found something
+                if (trackToLookInto != null)
+                {
+                    //edit what we found
+                    Plot plotToBeChanged = trackToLookInto.plots.First(x => x.trackID == p.trackID);
+
+                    plotToBeChanged = p;
+
+
+                    //notify the other clients
+                    clients.ForEach(
+                 delegate(IClientCallbackInterface callback)
+                 {
+                     callback.notifyEditedPlot(p); // I LEFT HERE
+                 });
+                }
+            }
         }
 
 
@@ -302,13 +334,13 @@ namespace ATMS_Server
             currentServerTime += ATMS_Model.BuisnessLogicValues.radarInterval;
 
             //notifying listening clients of the update
-                clients.ForEach(
-              delegate(IClientCallbackInterface callback)
-              {
-                  callback.notifyTimeUpdate(currentServerTime);
+            clients.ForEach(
+          delegate(IClientCallbackInterface callback)
+          {
+              callback.notifyTimeUpdate(currentServerTime);
 
-              });
-                
+          });
+
 
 
         }
