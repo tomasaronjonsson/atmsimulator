@@ -35,6 +35,8 @@ namespace ATMS_Model
                 {
                     Plot plot = new Plot();
                     plot.time = a * BuisnessLogicValues.radarInterval;
+                    plot.trackID = track.trackID;
+
 
                     if (i % 2 == 0)
                     {

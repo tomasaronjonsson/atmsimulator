@@ -185,19 +185,17 @@
 
                     <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" Grid.Row="4" Grid.ColumnSpan="2">
                         <Label Content="Plot at time"/>
-                        <Label Content="{Binding selectedTrack.currentTime}"/>
+                        <Label Content="{Binding selectedPlot.time}"/>
                     </StackPanel>
 
-                    <!--Add the binding to the plots properties here -->
                     <Label Grid.Row="5" Grid.Column="0" HorizontalAlignment="Left" Content="Latitude:"/>
-                    <TextBox Grid.Row="5" Grid.Column="1" HorizontalAlignment="Left" Text="no binding"/>
+                    <TextBox Grid.Row="5" Grid.Column="1" HorizontalAlignment="Left" Text="{Binding selectedPlot.location.Latitude}"/>
                     <Label Grid.Row="6" Grid.Column="0" HorizontalAlignment="Left" Content="Longitude:"/>
-                    <TextBox Grid.Row="6" Grid.Column="1" HorizontalAlignment="Left" Text="no binding"/>
+                    <TextBox Grid.Row="6" Grid.Column="1" HorizontalAlignment="Left" Text="{Binding selectedPlot.location.Longitude}"/>
                     
-                    <!--Add the previous / next plots command binding here -->
                     <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" Grid.Row="7" Grid.ColumnSpan="2">
-                        <Button Width="100" Content="//Prev. Plot//" Command="{Binding}"/>
-                        <Button Width="100" Content="\\Next Plot\\" Command="{Binding}"/>
+                        <Button Width="100" Content="Prev Plot" Command="{Binding}"/>
+                        <Button Width="100" Content="Next Plot" Command="{Binding}"/>
                     </StackPanel>
 
                     <!--Add the save plots command binding here -->
