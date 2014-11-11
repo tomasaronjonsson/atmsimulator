@@ -130,18 +130,21 @@ namespace Model
         }
 
         #region Calls from the ViewModel
+
         public async Task createScenario()
         {
             handleServerConnection();
             await server.createScenarioAsync();
             serverIsAvailable = true;
         }
+
         public async Task playSimulation()
         {
             handleServerConnection();
             await server.playSimulationAsync();
             serverIsAvailable = true;
         }
+
         public async Task createNewTrack()
         {
             Track t = new Track();
@@ -169,9 +172,35 @@ namespace Model
 
         public async Task editTrack(Track t)
         {
-
             handleServerConnection();
             await server.editTrackAsync(t);
+            serverIsAvailable = true;
+        }
+
+        /*
+         * review Tomas - PLOT MANAGEMENT 
+         * 
+         * */
+        public async Task createNewPlot(int trackId)
+        {
+            Plot p = new Plot();
+            p.trackID = trackId;
+            handleServerConnection();
+            await server.createNewPlot(p);
+            serverIsAvailable = true;
+        }
+
+        public async Task removePlot(Plot p)
+        {
+            handleServerConnection();
+            //await server.removePlotAsync(p);
+            serverIsAvailable = true;
+        }
+
+        public async Task editPlot(Plot p)
+        {
+            handleServerConnection();
+            //await server.editPlotAsync(p);
             serverIsAvailable = true;
         }
 
@@ -219,5 +248,16 @@ namespace Model
             }
 
         }
+
+        public void notifyNewPlot(Plot p)
+        {
+            //make a reference to the track that we need to add to (the selectedTrack)
+            Track trackToBeAddedTo = mainScenario.tracks.First(x => x.trackID == p.trackID);
+            //Add the plot
+            trackToBeAddedTo.plots.Add(p);
+
+            Messenger.Default.Send(p, "createPlot");
+        }
+
     }
 }

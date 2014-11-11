@@ -201,7 +201,7 @@
                     </StackPanel>
 
                     <!--Add the save plots command binding here -->
-                    <Button Grid.Row="8" Grid.ColumnSpan="2" Content="Save plot changes" Command="{Binding}"/>
+                    <Button Grid.Row="8" Grid.ColumnSpan="2" Content="Save plot changes" Command="{Binding EditPlot}"/>
                 </Grid>
             </Grid>
 

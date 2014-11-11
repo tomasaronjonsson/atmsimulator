@@ -43,5 +43,10 @@ namespace Model
         {
             model.notifyEditedTrack(t);
         }
+
+        public void notifyNewPlot(Plot p)
+        {
+            model.notifyNewPlot(p);
+        }
     }
 }

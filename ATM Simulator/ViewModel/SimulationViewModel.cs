@@ -50,9 +50,10 @@ namespace ViewModel
             Messenger.Default.Register<Track>(this, "createTrack", handleCreateTrack);
             Messenger.Default.Register<Track>(this, "removeTrack", handleRemoveTrack);
             Messenger.Default.Register<Track>(this, "editTrack", handleEditTrack);
+            Messenger.Default.Register<Plot>(this, "createPlot", handleCreatePlot);
 
             //initialize the plots list
-            _plots = new List<Plot>();
+            _plots = new BindingList<ViewModelPlot>();
             //ininitlize the tracks list
             _tracks = new BindingList<ViewModelTrack>();
 
@@ -178,8 +179,8 @@ namespace ViewModel
         }
 
         //these hold the list of plots 
-        private List<Plot> _plots;
-        public List<Plot> plots
+        private BindingList<ViewModelPlot> _plots;
+        public BindingList<ViewModelPlot> plots
         {
             get { return _plots; }
             set
@@ -324,10 +325,9 @@ namespace ViewModel
                     _RemoveTrack = new RelayCommand(
                        async () =>
                        {
-                           MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show("Are you sure you wanna remove track with callsign " + selectedTrack.callsign + "?", "Remove track Confirmation", System.Windows.MessageBoxButton.YesNo);
+                           MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show("Are you sure you want remove track with callsign " + selectedTrack.callsign + "?", "Remove track Confirmation", System.Windows.MessageBoxButton.YesNo);
                            if (messageBoxResult == MessageBoxResult.Yes)
                                await model.removeTrack(selectedTrack.toTrack());
-
                        },
                        () =>
                        {
@@ -359,6 +359,80 @@ namespace ViewModel
                 return _EditTrack;
             }
         }
+
+        /*
+         * review Tomas - PLOT MANAGEMENT COMMANDS
+         * 
+         * */
+
+        private RelayCommand _CreateNewPlot;
+        public RelayCommand CreateNewPlot
+        {
+            get
+            {
+                if (_CreateNewPlot == null)
+                {
+                    _CreateNewPlot = new RelayCommand(
+                       async () =>
+                       {
+                           if (serverIsAvailable && selectedTrack != null)
+                           {
+                               await model.createNewPlot(selectedPlot.trackID);
+                           }
+                       },
+                       () =>
+                       {
+                           return serverIsAvailable;
+                       });
+                }
+                return _CreateNewPlot;
+            }
+        }
+
+        private RelayCommand _RemovePlot;
+        public RelayCommand RemovePlot
+        {
+            get
+            {
+                if (_RemovePlot == null)
+                {
+                    _RemovePlot = new RelayCommand(
+                       async () =>
+                       {
+                           MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show("Are you sure you want remove plot at time " + selectedPlot.time + "belonging to track" + selectedPlot.trackID + "?", "Remove plot Confirmation", System.Windows.MessageBoxButton.YesNo);
+                           if (messageBoxResult == MessageBoxResult.Yes)
+                               await model.removePlot(selectedPlot.toPlot());
+                       },
+                       () =>
+                       {
+                           return serverIsAvailable;
+                       });
+                }
+                return _RemovePlot;
+            }
+        }
+
+        private RelayCommand _EditPlot;
+        public RelayCommand EditPlot
+        {
+            get
+            {
+                if (_EditPlot == null)
+                {
+                    _EditPlot = new RelayCommand(
+                       async () =>
+                       {
+                           await model.editPlot(selectedPlot.toPlot());
+                       },
+                       () =>
+                       {
+                           return serverIsAvailable;
+                       });
+                }
+                return _EditPlot;
+            }
+        }
+
 
         #endregion
         #region Listening methods for the messenger
@@ -438,6 +512,11 @@ namespace ViewModel
 
             if (trackToEdit != null)
                 trackToEdit.edit(t);
+        }
+
+        private void handleCreatePlot(Plot p)
+        {
+            plots.Add(new ViewModelPlot(p));
         }
 
         #endregion

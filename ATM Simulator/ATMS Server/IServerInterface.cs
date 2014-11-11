@@ -34,6 +34,15 @@ namespace ATMS_Server
 
         [OperationContract]
         void editTrack(Track t);
+
+        [OperationContract]
+        void createNewPlot(Plot p);
+
+        [OperationContract]
+        void removePlot(Plot p);
+
+        [OperationContract]
+        void editPlot(Plot p);
     }
 
     public interface IClientCallbackInterface

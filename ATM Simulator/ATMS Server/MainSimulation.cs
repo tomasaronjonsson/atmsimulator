@@ -200,11 +200,42 @@ namespace ATMS_Server
 
                  });
                 }
-
-
-
             }
         }
+
+        public void createNewPlot(Plot p)
+        {
+            //lets check if the client is registered
+            checkIfRegistered();
+            //check if the value incoming is Null
+            if (p == null)
+            {
+                p = new Plot();
+            }
+            
+            //make a reference to the track that we need to add to (the selectedTrack)
+            Track trackToBeAddedTo = mainScenario.tracks.First(x => x.trackID == p.trackID);
+            //Add the plot
+            trackToBeAddedTo.plots.Add(p);
+
+            //notify the clients of the newly added track
+            clients.ForEach(
+                delegate(IClientCallbackInterface callback)
+                {
+                    callback.notifyNewPlot(p);
+                });
+        }
+
+        public void removePlot(Plot p)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void editPlot(Plot p)
+        {
+            throw new NotImplementedException();
+        }
+
 
 
         /**
