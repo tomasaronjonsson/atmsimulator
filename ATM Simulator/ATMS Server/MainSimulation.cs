@@ -143,7 +143,6 @@ namespace ATMS_Server
                 delegate(IClientCallbackInterface callback)
                 {
                     callback.notifyNewTrack(t);
-
                 });
 
         }

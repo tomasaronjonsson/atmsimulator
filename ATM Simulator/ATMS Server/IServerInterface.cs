@@ -46,7 +46,6 @@ namespace ATMS_Server
         [OperationContract(IsOneWay = true)]
         void notifyNewScenario(Scenario data);
 
-
         /**
          *  todo: review
          *   Sprint 6
