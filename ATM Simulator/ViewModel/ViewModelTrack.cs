@@ -8,6 +8,7 @@ using DevExpress.Xpf.Map;
 using GalaSoft.MvvmLight;
 using System.ComponentModel;
 using System.Windows;
+using ViewModel;
 
 namespace Model
 {
@@ -21,7 +22,14 @@ namespace Model
         {
 
             //copy the plots to a bindinglist
-            plots = new BindingList<Plot>(track.plots);
+            plots = new BindingList<ViewModelPlot>();
+            //convert them to viewmodel plots
+            track.plots.ForEach(
+                delegate(Plot p)
+              {
+                  plots.Add(new ViewModelPlot(p));
+
+              });
 
             this.trackID = track.trackID;
             this.callsign = track.callsign;
@@ -32,8 +40,7 @@ namespace Model
 
             UpdateTick();
         }
-        /* >READ the IDEA on the diary
-         * 
+        /* 
          * for later use, this can be used by the gui to determin where the user want his information for the track to appear in a 3x3 matrix
          * */
         private int _column;
@@ -50,8 +57,7 @@ namespace Model
             }
         }
         /*
-        * ->READ the IDEA in the diary
-         * 
+        * 
         * for later use, this can be used by the gui to determin where the user want his information for the track to appear in a 3x3 matrix
         * */
         private int _row;
@@ -73,8 +79,8 @@ namespace Model
          * 
          * we want a property storing the current plot
          */
-        private Plot _currentPlot;
-        public Plot currentPlot
+        private ViewModelPlot _currentPlot;
+        public ViewModelPlot currentPlot
         {
             get { return _currentPlot; }
             set
@@ -169,8 +175,8 @@ namespace Model
         * 
         * store our plots has a property and a binding list for binding purposes
         */
-        private BindingList<Plot> _plots;
-        public BindingList<Plot> plots
+        private BindingList<ViewModelPlot> _plots;
+        public BindingList<ViewModelPlot> plots
         {
             get { return _plots; }
             set
@@ -202,8 +208,7 @@ namespace Model
                 currentPlot = tempCurrentPlot;
 
                 //update the current location
-                currentLocation = new GeoPoint(currentPlot.latitude, currentPlot.longitude);
-                //update the current altitude
+               //update the current altitude
                 altitude = currentPlot.altitude;
             }
         }

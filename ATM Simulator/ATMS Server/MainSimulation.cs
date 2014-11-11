@@ -271,9 +271,6 @@ namespace ATMS_Server
             //incrementing the time by the value in the radarinterval
             currentServerTime += ATMS_Model.BuisnessLogicValues.radarInterval;
 
-
-
-
             //notifying listening clients of the update
                 clients.ForEach(
               delegate(IClientCallbackInterface callback)
@@ -286,6 +283,10 @@ namespace ATMS_Server
 
         }
 
+        /*
+         * no longer used needs future review
+         * 
+         * */
         public void handleClientCallback(Action action, IClientCallbackInterface client)
         {
 

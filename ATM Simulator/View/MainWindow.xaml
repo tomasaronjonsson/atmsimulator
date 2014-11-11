@@ -19,8 +19,8 @@
         <Grid>
             <Grid.Resources>
 
-                <DataTemplate x:Key="planeTemplate">
-                    <Grid  Background="white">
+                <DataTemplate x:Key="trackTemplate">
+                    <Grid  Background="Transparent">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition/>
                             <ColumnDefinition/>
@@ -56,9 +56,41 @@
                             <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding altitude}"></TextBlock>
                         </Grid>
                     </Grid>
+                </DataTemplate>
+
+                <DataTemplate x:Key="plotTemplate">
+                    <Grid  Background="Transparent">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Rectangle Margin="0,15,0,0" Grid.Row="0" Grid.Column="0" Width="15" Height="15" Fill="Transparent" Stroke="Gray"/>
 
 
+                        <!-- The grid for the track information on the mat if you check the below grid and column value you will move the inffomration around the track icon-->
+                        <Grid Grid.Row="0" Grid.Column="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <TextBlock Grid.Row="0" Grid.Column="0" TextAlignment="Right">time:</TextBlock>
+                            <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding time}"></TextBlock>
 
+                            <TextBlock Grid.Row="1" Grid.Column="0" TextAlignment="Right">course:</TextBlock>
+                            <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding course}"></TextBlock>
+
+                            <TextBlock Grid.Row="2" Grid.Column="0" TextAlignment="Right">speed:</TextBlock>
+                            <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding speed}"></TextBlock>
+                        </Grid>
+                    </Grid>
                 </DataTemplate>
 
             </Grid.Resources>
@@ -99,14 +131,25 @@
                     </dxm:ImageTilesLayer.DataProvider>
                 </dxm:ImageTilesLayer>
 
+                <!-- layer to show the plots to each track on the map-->
+                <dxm:VectorLayer ItemsSource="{Binding selectedTrack.plots }" 
+                                 SelectedItem="{Binding selectedPlot, Mode=TwoWay}"
+                                 LatitudeDataMember="location.Latitude"
+                                 LongitudeDataMember="location.Longitude"
+                                 ItemTemplate="{StaticResource plotTemplate}">
+
+                </dxm:VectorLayer>
+
                 <!-- layer to show the tracks on the map-->
                 <dxm:VectorLayer ItemsSource="{Binding tracks }" 
                                  SelectedItem="{Binding selectedTrack, Mode=TwoWay}"
-                                 LatitudeDataMember="currentLocation.Latitude"
-                                 LongitudeDataMember="currentLocation.Longitude"
-                                 ItemTemplate="{StaticResource planeTemplate}">
+                                 LatitudeDataMember="currentPlot.location.Latitude"
+                                 LongitudeDataMember="currentPlot.location.Longitude"
+                                 ItemTemplate="{StaticResource trackTemplate}">
 
                 </dxm:VectorLayer>
+
+               
             </dxm:MapControl>
 
 

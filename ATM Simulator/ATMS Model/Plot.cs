@@ -23,11 +23,10 @@ namespace ATMS_Model
 
         public double speed;
 
-        public bool takeOver;
+        public int trackID;
 
         public Plot()
         {
-            this.takeOver = false;
         }
 
         public override string ToString()

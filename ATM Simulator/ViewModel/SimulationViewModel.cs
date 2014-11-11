@@ -222,6 +222,25 @@ namespace ViewModel
                 }
             }
         }
+        /*
+         * 
+         * to store the selected plot
+         * 
+         */
+        private ViewModelPlot _selectedPlot;
+        public ViewModelPlot selectedPlot
+        {
+            get { return _selectedPlot; }
+            set
+            {
+                if (value != _selectedPlot)
+                {
+                    _selectedPlot = value;
+                    RaisePropertyChanged("selectedPlot");
+                }
+            }
+        }
+        
 
         #endregion
 
