@@ -217,8 +217,17 @@ namespace ViewModel
             {
                 if (value != _selectedTrack)
                 {
-                    _selectedTrack = value;
-                    RaisePropertyChanged("selectedTrack");
+
+                    if(value != null)
+                    {
+                       
+                            _selectedTrack = value;
+                            selectedPlot = _selectedTrack.currentPlot;
+                            RaisePropertyChanged("selectedTrack");
+                       
+
+                    }
+
                 }
             }
         }
@@ -240,7 +249,7 @@ namespace ViewModel
                 }
             }
         }
-        
+
 
         #endregion
 
