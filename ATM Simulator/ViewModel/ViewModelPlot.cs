@@ -157,7 +157,7 @@ namespace ViewModel
             p.longitude = this.location.Longitude;
             p.time = this.time;
             p.trackID = this.trackID;
-
+            p.speed = this.speed;
             return p;
         }
 

@@ -55,6 +55,9 @@ namespace ATMS_Model
             {
                 this.latitude = p.latitude;
                 this.longitude = p.longitude;
+                this.speed = p.speed;
+                this.course = p.course;
+                this.altitude = p.altitude;
             }
         }
 

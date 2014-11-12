@@ -221,13 +221,13 @@ namespace ViewModel
                 if (value != _selectedTrack)
                 {
 
-                    if(value != null)
+                    if (value != null)
                     {
-                       
-                            _selectedTrack = value;
-                            selectedPlot = _selectedTrack.currentPlot;
-                            RaisePropertyChanged("selectedTrack");
-                       
+
+                        _selectedTrack = value;
+                        selectedPlot = _selectedTrack.currentPlot;
+                        RaisePropertyChanged("selectedTrack");
+
 
                     }
 
@@ -280,7 +280,10 @@ namespace ViewModel
                 return _CreateScenario;
             }
         }
-
+        /*
+         * play the simulation
+         * 
+         */
         private RelayCommand _PlaySimulation;
         public RelayCommand PlaySimulation
         {
@@ -303,7 +306,10 @@ namespace ViewModel
                 return _PlaySimulation;
             }
         }
-
+        /*
+         * create a new track
+         * 
+         */
         private RelayCommand _CreateNewTrack;
         public RelayCommand CreateNewTrack
         {
@@ -324,7 +330,10 @@ namespace ViewModel
                 return _CreateNewTrack;
             }
         }
-
+        /*
+         * removes the selected track
+         * 
+         */
 
         private RelayCommand _RemoveTrack;
         public RelayCommand RemoveTrack
@@ -348,7 +357,10 @@ namespace ViewModel
                 return _RemoveTrack;
             }
         }
-
+        /*
+         * edits the selected track and sends it to the model
+         * 
+         */
 
         private RelayCommand _EditTrack;
         public RelayCommand EditTrack
@@ -372,10 +384,9 @@ namespace ViewModel
         }
 
         /*
-         * review Tomas - PLOT MANAGEMENT COMMANDS
+         * create a new plot
          * 
-         * */
-
+         */
         private RelayCommand _CreateNewPlot;
         public RelayCommand CreateNewPlot
         {
@@ -386,20 +397,21 @@ namespace ViewModel
                     _CreateNewPlot = new RelayCommand(
                        async () =>
                        {
-                           if (serverIsAvailable && selectedTrack != null)
-                           {
-                               await model.createNewPlot(selectedTrack.toTrack());
-                           }
+
+                           await model.createNewPlot(selectedTrack.toTrack());
                        },
                        () =>
                        {
-                           return serverIsAvailable;
+                           return serverIsAvailable && (selectedTrack != null);
                        });
                 }
                 return _CreateNewPlot;
             }
         }
-
+        /*
+         * remove the selected plot
+         * 
+         */
         private RelayCommand _RemovePlot;
         public RelayCommand RemovePlot
         {
@@ -410,19 +422,22 @@ namespace ViewModel
                     _RemovePlot = new RelayCommand(
                        async () =>
                        {
-                           MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show("Are you sure you want remove plot at time " + selectedPlot.time + "belonging to track" + selectedPlot.trackID + "?", "Remove plot Confirmation", System.Windows.MessageBoxButton.YesNo);
+                           MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show("Are you sure you want remove plot at time " + selectedPlot.time + "belonging to callsign " + selectedTrack.callsign + "?", "Remove plot Confirmation", System.Windows.MessageBoxButton.YesNo);
                            if (messageBoxResult == MessageBoxResult.Yes)
                                await model.removePlot(selectedPlot.toPlot());
                        },
                        () =>
                        {
-                           return serverIsAvailable;
+                           return serverIsAvailable && (selectedPlot != null);
                        });
                 }
                 return _RemovePlot;
             }
         }
-
+        /*
+        * edit the selected plot and 
+        * 
+        */
         private RelayCommand _EditPlot;
         public RelayCommand EditPlot
         {
@@ -437,7 +452,7 @@ namespace ViewModel
                        },
                        () =>
                        {
-                           return serverIsAvailable;
+                           return serverIsAvailable &&(selectedPlot != null);
                        });
                 }
                 return _EditPlot;
@@ -478,8 +493,7 @@ namespace ViewModel
             }
 
         }
-        /**
-         * 
+        /*
          * 
          * Purpose handle messenges sent from the Model when changes are made to a bool on the model and updating all boolean values of interest
          * */
@@ -518,7 +532,7 @@ namespace ViewModel
         }
 
         /*
-         * todo review
+         * handles a new plot beeing send in from the model
          * */
 
         private void handleCreatePlot(Plot p)
@@ -528,7 +542,12 @@ namespace ViewModel
 
         private void handleRemovePlot(Plot p)
         {
-            plots.Remove(new ViewModelPlot(p));
+            //let'sf ind the track the plot belongs to
+            var trackToEdit = tracks.First(x => x.trackID == p.trackID);
+            //check if the track is not null and them remove from the list the plot
+            if (trackToEdit != null)
+                trackToEdit.plots.Remove(new ViewModelPlot(p));
+
         }
 
         private void handleEditPlot(Plot p)
@@ -540,61 +559,15 @@ namespace ViewModel
             if (trackToLookInto != null)
             {
                 //edit what we found
-                ViewModelPlot plotToBeChanged = trackToLookInto.plots.First(x => x.trackID == p.trackID);
-
-                plotToBeChanged.edit(p);
+                ViewModelPlot plotToBeChanged = trackToLookInto.plots.First(x => x.Equals(p));
+                //check if we found something and then edit it
+                if (plotToBeChanged != null)
+                    plotToBeChanged.edit(p);
             }
         }
 
         #endregion
 
 
-        private void populatePLanes()
-        {
-            List<MapDot> tempPlaneList = new List<MapDot>();
-            List<MapDot> tempHistoryPLaneList = new List<MapDot>();
-
-            foreach (ViewModelPlot p in plots)
-            {
-                MapDot temp = new MapDot();
-                GeoPoint geo = new GeoPoint();
-                //todo fix
-                temp.Size = 20;
-                geo.Latitude = p.location.Latitude;
-                geo.Longitude = p.location.Longitude;
-
-
-                temp.Location = geo;
-                tempPlaneList.Add(temp);
-
-            }
-
-            for (int i = 0; i < BuisnessLogicValues.numberOfHistoryPlots; i++)
-            {
-
-                int time = viewModelCurrentTime - ((i + 1) * BuisnessLogicValues.radarInterval);
-
-                List<Plot> temp = null;
-                if (model != null)
-                    if (model.mainScenario != null)
-                        temp = model.mainScenario.getNow(time);
-                if (temp != null)
-                    foreach (Plot t in temp.Where(x => x != null))
-                    {
-                        MapDot tempDot = new MapDot();
-                        tempDot.Size = 10;
-
-                        GeoPoint tempGeo = new GeoPoint();
-                        tempGeo.Latitude = t.latitude;
-                        tempGeo.Longitude = t.longitude;
-
-                        tempDot.Location = tempGeo;
-
-                        tempHistoryPLaneList.Add(tempDot);
-                    }
-            }
-            historyPlanes = tempHistoryPLaneList;
-            planes = tempPlaneList;
-        }
     }
 }

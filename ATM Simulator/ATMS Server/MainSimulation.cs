@@ -255,14 +255,16 @@ namespace ATMS_Server
                     //edit what we found
                     Plot plotToBeChanged = trackToLookInto.plots.First(x => x.trackID == p.trackID);
 
-                    plotToBeChanged = p;
+                    //check if we found something and then edit it
+                    if (plotToBeChanged != null)
+                        plotToBeChanged.edit(p);
 
 
                     //notify the other clients
                     clients.ForEach(
                  delegate(IClientCallbackInterface callback)
                  {
-                     callback.notifyEditedPlot(p); // I LEFT HERE
+                     callback.notifyEditedPlot(p);
                  });
                 }
             }

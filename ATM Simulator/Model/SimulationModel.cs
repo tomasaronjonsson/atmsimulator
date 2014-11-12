@@ -270,7 +270,21 @@ namespace Model
 
         public void notifyEditedPlot(Plot p)
         {
-            throw new NotImplementedException();
+            //finding the track to be changed
+            Track trackToLookInto = mainScenario.tracks.First(x => x.trackID == p.trackID);
+
+            //check if we found something
+            if (trackToLookInto != null)
+            {
+                //search for the correct plot in the list of plots
+                Plot plotToBeChanged = trackToLookInto.plots.First(x => x.Equals(p));
+                //edit what we found
+                if (plotToBeChanged != null)
+                    plotToBeChanged.edit(p);
+
+                Messenger.Default.Send(p, "editPlot");
+            }
+
         }
 
     }
