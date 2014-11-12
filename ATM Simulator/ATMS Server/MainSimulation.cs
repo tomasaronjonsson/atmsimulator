@@ -79,7 +79,6 @@ namespace ATMS_Server
             catch (Exception e)
             {
                 debugMessage("Failed to populateClient", e);
-
             }
         }
 

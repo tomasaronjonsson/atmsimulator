@@ -17,9 +17,9 @@ namespace Model
             this.model = model;
         }
 
-        public void notifyNewScenario(Scenario data)
+        public void notifyNewScenario(Scenario s)
         {
-            model.mainScenario = data;
+            model.notifyNewScenario(s);
         }
 
         public void notifyTimeUpdate(int currentServerTime)

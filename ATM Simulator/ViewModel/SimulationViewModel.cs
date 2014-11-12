@@ -25,8 +25,6 @@ namespace ViewModel
         //storing a instance of the Simulation model
         SimulationModel model;
 
-
-
         public SimulationViewModel()
         {
 
@@ -47,6 +45,8 @@ namespace ViewModel
             Messenger.Default.Register<Scenario>(this, handleScenarioUpdate);
             Messenger.Default.Register<int>(this, handleServerTimeUpdate);
             Messenger.Default.Register<bool>(this, handleBoolChanges);
+
+            Messenger.Default.Register<Scenario>(this, "newScenario", handleNewScenario);
             Messenger.Default.Register<Track>(this, "createTrack", handleCreateTrack);
             Messenger.Default.Register<Track>(this, "removeTrack", handleRemoveTrack);
             Messenger.Default.Register<Track>(this, "editTrack", handleEditTrack);
@@ -461,6 +461,7 @@ namespace ViewModel
 
 
         #endregion
+
         #region Listening methods for the messenger
 
         //listens to the scenario time update
@@ -512,6 +513,14 @@ namespace ViewModel
         * 
         * Purpose handle messenges sent from the Model when we add a track
         * */
+
+        private void handleNewScenario(Scenario s)
+        {
+            foreach (Track item in s.tracks)
+            {
+                tracks.Add(new ViewModelTrack(item));
+            }
+        }
 
         private void handleCreateTrack(Track t)
         {
