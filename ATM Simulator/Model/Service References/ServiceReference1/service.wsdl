@@ -93,6 +93,33 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="createNewPlot">
+      <soap12:operation soapAction="ATMS_Server/IServerInterface/createNewPlot" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="removePlot">
+      <soap12:operation soapAction="ATMS_Server/IServerInterface/removePlot" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="editPlot">
+      <soap12:operation soapAction="ATMS_Server/IServerInterface/editPlot" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="notifyTimeUpdate">
       <soap12:operation soapAction="ATMS_Server/IServerInterface/notifyTimeUpdate" style="document" />
       <wsdl:output>
@@ -119,6 +146,24 @@
     </wsdl:operation>
     <wsdl:operation name="notifyEditedTrack">
       <soap12:operation soapAction="ATMS_Server/IServerInterface/notifyEditedTrack" style="document" />
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="notifyEditedPlot">
+      <soap12:operation soapAction="ATMS_Server/IServerInterface/notifyEditedPlot" style="document" />
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="notifyNewPlot">
+      <soap12:operation soapAction="ATMS_Server/IServerInterface/notifyNewPlot" style="document" />
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="notifyRemovePlot">
+      <soap12:operation soapAction="ATMS_Server/IServerInterface/notifyRemovePlot" style="document" />
       <wsdl:output>
         <soap12:body use="literal" />
       </wsdl:output>

@@ -43,6 +43,24 @@
   <wsdl:message name="IServerInterface_editTrack_OutputMessage">
     <wsdl:part name="parameters" element="tns:editTrackResponse" />
   </wsdl:message>
+  <wsdl:message name="IServerInterface_createNewPlot_InputMessage">
+    <wsdl:part name="parameters" element="tns:createNewPlot" />
+  </wsdl:message>
+  <wsdl:message name="IServerInterface_createNewPlot_OutputMessage">
+    <wsdl:part name="parameters" element="tns:createNewPlotResponse" />
+  </wsdl:message>
+  <wsdl:message name="IServerInterface_removePlot_InputMessage">
+    <wsdl:part name="parameters" element="tns:removePlot" />
+  </wsdl:message>
+  <wsdl:message name="IServerInterface_removePlot_OutputMessage">
+    <wsdl:part name="parameters" element="tns:removePlotResponse" />
+  </wsdl:message>
+  <wsdl:message name="IServerInterface_editPlot_InputMessage">
+    <wsdl:part name="parameters" element="tns:editPlot" />
+  </wsdl:message>
+  <wsdl:message name="IServerInterface_editPlot_OutputMessage">
+    <wsdl:part name="parameters" element="tns:editPlotResponse" />
+  </wsdl:message>
   <wsdl:message name="IServerInterface_notifyTimeUpdate_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:notifyTimeUpdate" />
   </wsdl:message>
@@ -57,6 +75,15 @@
   </wsdl:message>
   <wsdl:message name="IServerInterface_notifyEditedTrack_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:notifyEditedTrack" />
+  </wsdl:message>
+  <wsdl:message name="IServerInterface_notifyEditedPlot_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:notifyEditedPlot" />
+  </wsdl:message>
+  <wsdl:message name="IServerInterface_notifyNewPlot_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:notifyNewPlot" />
+  </wsdl:message>
+  <wsdl:message name="IServerInterface_notifyRemovePlot_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:notifyRemovePlot" />
   </wsdl:message>
   <wsdl:portType name="IServerInterface">
     <wsdl:operation name="populateClient">
@@ -83,6 +110,18 @@
       <wsdl:input wsaw:Action="ATMS_Server/IServerInterface/editTrack" message="tns:IServerInterface_editTrack_InputMessage" />
       <wsdl:output wsaw:Action="ATMS_Server/IServerInterface/editTrackResponse" message="tns:IServerInterface_editTrack_OutputMessage" />
     </wsdl:operation>
+    <wsdl:operation name="createNewPlot">
+      <wsdl:input wsaw:Action="ATMS_Server/IServerInterface/createNewPlot" message="tns:IServerInterface_createNewPlot_InputMessage" />
+      <wsdl:output wsaw:Action="ATMS_Server/IServerInterface/createNewPlotResponse" message="tns:IServerInterface_createNewPlot_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="removePlot">
+      <wsdl:input wsaw:Action="ATMS_Server/IServerInterface/removePlot" message="tns:IServerInterface_removePlot_InputMessage" />
+      <wsdl:output wsaw:Action="ATMS_Server/IServerInterface/removePlotResponse" message="tns:IServerInterface_removePlot_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="editPlot">
+      <wsdl:input wsaw:Action="ATMS_Server/IServerInterface/editPlot" message="tns:IServerInterface_editPlot_InputMessage" />
+      <wsdl:output wsaw:Action="ATMS_Server/IServerInterface/editPlotResponse" message="tns:IServerInterface_editPlot_OutputMessage" />
+    </wsdl:operation>
     <wsdl:operation name="notifyTimeUpdate">
       <wsdl:output wsaw:Action="ATMS_Server/IServerInterface/notifyTimeUpdate" message="tns:IServerInterface_notifyTimeUpdate_OutputCallbackMessage" />
     </wsdl:operation>
@@ -97,6 +136,15 @@
     </wsdl:operation>
     <wsdl:operation name="notifyEditedTrack">
       <wsdl:output wsaw:Action="ATMS_Server/IServerInterface/notifyEditedTrack" message="tns:IServerInterface_notifyEditedTrack_OutputCallbackMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="notifyEditedPlot">
+      <wsdl:output wsaw:Action="ATMS_Server/IServerInterface/notifyEditedPlot" message="tns:IServerInterface_notifyEditedPlot_OutputCallbackMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="notifyNewPlot">
+      <wsdl:output wsaw:Action="ATMS_Server/IServerInterface/notifyNewPlot" message="tns:IServerInterface_notifyNewPlot_OutputCallbackMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="notifyRemovePlot">
+      <wsdl:output wsaw:Action="ATMS_Server/IServerInterface/notifyRemovePlot" message="tns:IServerInterface_notifyRemovePlot_OutputCallbackMessage" />
     </wsdl:operation>
   </wsdl:portType>
 </wsdl:definitions>

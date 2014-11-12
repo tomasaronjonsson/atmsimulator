@@ -56,7 +56,6 @@ namespace ATMS_Server
         void notifyNewScenario(Scenario data);
 
         /**
-         *  todo: review
          *   Sprint 6
          * */
         //notifies all clients of all the changes
@@ -71,5 +70,19 @@ namespace ATMS_Server
         //notifies that a track as been edited
         [OperationContract(IsOneWay = true)]
         void notifyEditedTrack(Track t);
+
+        //notifies that a plot as been edited
+        [OperationContract(IsOneWay = true)]
+        void notifyEditedPlot(Plot t);
+
+        //notifies that a new plot has been create
+        [OperationContract(IsOneWay = true)]
+        void notifyNewPlot(Plot t);
+
+        //notifies that a plot as been removed
+        [OperationContract(IsOneWay = true)]
+        void notifyRemovePlot(Plot t);
+
+
     }
 }

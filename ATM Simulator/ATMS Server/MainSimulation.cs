@@ -230,7 +230,7 @@ namespace ATMS_Server
             if (p != null)
             {
                 Track trackToBeRemovedFrom = mainScenario.tracks.First(x => x.trackID == p.trackID);
-                //Add the plot
+                //remove the plot
                 trackToBeRemovedFrom.plots.Remove(p);
 
                 clients.ForEach(
