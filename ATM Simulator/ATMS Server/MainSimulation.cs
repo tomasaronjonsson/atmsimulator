@@ -7,157 +7,232 @@ using System.ServiceModel.Description;
 using System.Text;
 using System.Threading;
 using ATMS_Model;
-
-//for debugging
 using System.Diagnostics;
 using System.Threading.Tasks;
 
 namespace ATMS_Server
 {
+    /*
+     * This is the Server
+     * 
+     * The server implements the IServerInterface
+     * 
+     * A Service Behaviour must be set with the following arguments
+     * [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single, ConcurrencyMode = ConcurrencyMode.Multiple)]
+     * */
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single, ConcurrencyMode = ConcurrencyMode.Multiple)]
     public class MainSimulation : IServerInterface
     {
+        //This holds the list of clients that are connected to the server
         private static List<IClientCallbackInterface> clients;
 
-        //this is the main scenario
+        //This is the main scenario
         private Scenario mainScenario;
 
-        //declaring a dictionary to store the layered scenarios , the 
-        private Dictionary<int, Scenario> layeredScenarios;
-
-        //current server time in seconds
+        //This is the current server time in seconds
         int currentServerTime;
 
-        //store the next avilable track ID
+        //This is the currently available trackID (for incoming new tracks)
         int avilableTrackID;
 
-        //the thread for incrementing time (current server time)
+        //This is the Thread that runs the system time
         Thread timeThread;
 
 
         public MainSimulation()
         {
-            #region Initilizing variables
+            //Initialize the list of clients
             clients = new List<IClientCallbackInterface>();
-            layeredScenarios = new Dictionary<int, Scenario>();
-            currentServerTime = 0;
+
+            //Initialize the mainScenario
             mainScenario = new Scenario();
+
+            //currentServerTime & availableTrackID are initialized as 0
+            currentServerTime = 0;
             avilableTrackID = 0;
-            #endregion
         }
 
-        /*
-         *  The implementation of the IServerInterface for the duplex contract
-         * */
-        #region IserverInterface
 
-        public void playSimulation()
+        #region Time, connection & debugging methods
+
+        //Increments the currentServerTime using the BusinessLogicValues
+        public void tickTock()
         {
-            //check if the client is in the callback list
-            checkIfRegistered();
+            currentServerTime += ATMS_Model.BuisnessLogicValues.radarInterval;
 
-            if (timeThread == null)
+            //Call back towards the client with the reply
+            clients.ForEach(delegate(IClientCallbackInterface callback)
+                {
+                    callback.notifyTimeUpdate(currentServerTime);
+                }
+            );
+        }
+
+        //Handles debugging message
+        public void debugMessage(string explanation, Exception e)
+        {
+            Debug.WriteLine("ATMS/" + this.GetType().Name + "- " + explanation);
+            Debug.WriteLine("Excpetion" + e);
+            Debug.WriteLine("Stacktrace:" + e.StackTrace);
+        }
+
+        //Check if the client is already on the client list, if not - add it
+        public void checkIfRegistered()
+        {
+            IClientCallbackInterface callback = OperationContext.Current.GetCallbackChannel<IClientCallbackInterface>();
+
+            if (!clients.Contains(callback))
             {
-                //start the timeworker thread who is responsable for calling the incremental time funciton depending on the radarinterval
-                TimeWorker worker = new TimeWorker(this);
-                timeThread = new Thread(worker.DoWork);
-                timeThread.Start();
+                clients.Add(callback);
             }
         }
 
+        #endregion
+
+        /*
+         * The implementation of the IServerInterface
+         * */
+        #region Service contracts implementation
+
+        /*
+         * Populate the newly connected client with any existing data on the Simulation
+         * */
         public void populateClient()
         {
             try
             {
+                //Check the client registration
                 checkIfRegistered();
+
+                //Instantiate the callback using the current channel
                 IClientCallbackInterface callback = OperationContext.Current.GetCallbackChannel<IClientCallbackInterface>();
 
-                //send the data 
+                //Call back towards the client with the reply
                 callback.notifyNewScenario(mainScenario);
-
             }
             catch (Exception e)
             {
-                debugMessage("Failed to populateClient", e);
+                //Catch and report the exception
+                debugMessage("Failed to populate the client", e);
+                throw new Exception("ATMS-MainSimulation-0001: Failed to populate the client.");
             }
         }
 
+        /*
+         * Create the main scenario and notify the connected clients
+         * */
         public void createScenario()
         {
             try
             {
-                //check if the client is in the callback list
+                //Check the client registration
                 checkIfRegistered();
-
+                
+                //Create the new scenario
                 mainScenario = new Scenario();
 
-                //for testing pruposes only
-                mainScenario = Test.populateInitialScenario();
+                //Populate the scenario with the Test data
+                if(mainScenario != null)
+                    mainScenario = Test.populateInitialScenario();
 
+                //Update the available ID
                 avilableTrackID = mainScenario.tracks.Count;
 
-                //sending the new scenario to the clients
-                //notify the other clients
-                clients.ForEach(
-             delegate(IClientCallbackInterface callback)
-             {
-                 callback.notifyNewScenario(mainScenario);
-
-             });
-
-
+                //Call back towards the client with the reply
+                clients.ForEach(delegate(IClientCallbackInterface callback)
+                    {
+                        callback.notifyNewScenario(mainScenario);
+                    }
+                );
             }
             catch (Exception e)
             {
-                debugMessage("failed to create and send a scenario", e);
-                throw new Exception("ATMS-MainSimulation-0001: Failed to create a new scenario");
+                //Catch and report the exception
+                debugMessage("Failed to create and send the scenario", e);
+                throw new Exception("ATMS-MainSimulation-0002: Failed to create a new scenario");
             };
         }
 
-        /**
-         *  
-         * the IServerInterface implementation of createnewtask
+        /*
+         * Play the simulation
          * */
-        public void createNewTrack(Track t)
+        public void playSimulation()
         {
-            //lets check if the client is registered
-            checkIfRegistered();
-            //check if the value incoming is Null
-            if (t == null)
+            try
             {
-                t = new Track();
-            }
+                //Check the client registration
+                checkIfRegistered();
 
-            //set an avilable track id to it
-            t.trackID = avilableTrackID;
-
-            //increment the track id
-            avilableTrackID++;
-
-            //adding the track to the mainscenario
-            mainScenario.tracks.Add(t);
-
-            //notify the clients of the newly added track
-            clients.ForEach(
-                delegate(IClientCallbackInterface callback)
+                //Start the time worker thread which plays the simulation
+                if (timeThread == null)
                 {
-                    callback.notifyNewTrack(t);
-                });
-
+                    //Instantiate the TimeWorker
+                    TimeWorker worker = new TimeWorker(this);
+                    if (worker != null)
+                    {
+                        //Call the DoWork method
+                        timeThread = new Thread(worker.DoWork);
+                        //Start the thread
+                        timeThread.Start();
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                //Catch and report the exception
+                debugMessage("Failed to play the simulation", e);
+                throw new Exception("ATMS-MainSimulation-0003: Failed to play the simulation");
+            }
         }
 
         /**
-         * sprint 6
+         * Create a new track
+         * */
+        public void createNewTrack(Track t)
+        {
+            try
+            {
+                //Check the client registration
+                checkIfRegistered();
+
+                //Validate the input
+                if (t == null)
+                    t = new Track();
+
+                //Assign an available ID and increment the availableTrackID
+                t.trackID = avilableTrackID;
+                avilableTrackID++;
+
+                //Add the track to the main scenario
+                mainScenario.tracks.Add(t);
+
+                //notify the clients of the newly added track
+                clients.ForEach(delegate(IClientCallbackInterface callback)
+                {
+                    callback.notifyNewTrack(t);
+                }
+                );
+            }
+            catch (Exception e)
+            {
+                //Catch and report the exception
+                debugMessage("Failed to create a new track", e);
+                throw new Exception("ATMS-MainSimulation-0004: Failed to create a new track");
+            }            
+        }
+
+        /**
+         * Remove a track
          * */
         public void removeTrack(Track t)
         {
-            //lets check if the client is registered
+            //Check the client registration
             checkIfRegistered();
 
-            //check if null else we skip
+            //Validate the input
             if (t != null)
             {
-                //removing the track from our scenario, how we are sure we identify the same track is through our implementation of equals 
+                //Remove the track 
                 mainScenario.tracks.Remove(t);
 
                 //notify all the clients 
@@ -245,7 +320,7 @@ namespace ATMS_Server
             checkIfRegistered();
             if (p != null)
             {
-                 //finding the track to be changed
+                //finding the track to be changed
                 Track trackToLookInto = mainScenario.tracks.First(x => x.trackID == p.trackID);
 
                 //check if we found something
@@ -271,26 +346,14 @@ namespace ATMS_Server
 
 
 
-        /**
-         * 
-         * Helper function to check if the callback client is allready in our list of clients
-         * */
-        public void checkIfRegistered()
-        {
-            IClientCallbackInterface callback = OperationContext.Current.GetCallbackChannel<IClientCallbackInterface>();
 
-            if (!clients.Contains(callback))
-            {
-                clients.Add(callback);
-            }
-        }
 
 
 
         #endregion
 
         /*
-         *  The implementation of the callbacks to the callbackinteerface in the duplex contract
+         * The implementation of the callbacks to the callbackinteerface in the duplex contract
          * */
         #region Communication with client
 
@@ -323,53 +386,5 @@ namespace ATMS_Server
 
 
         #endregion
-
-
-
-        /*
-         *  Implementation of the time incrementer and the notification of the clients
-         * */
-        public void tickTock()
-        {
-            //incrementing the time by the value in the radarinterval
-            currentServerTime += ATMS_Model.BuisnessLogicValues.radarInterval;
-
-            //notifying listening clients of the update
-            clients.ForEach(
-          delegate(IClientCallbackInterface callback)
-          {
-              callback.notifyTimeUpdate(currentServerTime);
-
-          });
-
-
-
-        }
-
-        /*
-         * no longer used needs future review
-         * 
-         * */
-        public void handleClientCallback(Action action, IClientCallbackInterface client)
-        {
-
-            try
-            {
-                action.Invoke();
-            }
-            catch (Exception e)
-            {
-                clients.Remove(client);
-                debugMessage("Failed to handleClientCallback.", e);
-            }
-        }
-
-        //handle  debugging message 
-        public void debugMessage(string explanation, Exception e)
-        {
-            Debug.WriteLine("ATMS/" + this.GetType().Name + "- " + explanation);
-            Debug.WriteLine("Excpetion" + e);
-            Debug.WriteLine("Stacktrace:" + e.StackTrace);
-        }
     }
 }

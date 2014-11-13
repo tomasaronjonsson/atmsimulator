@@ -14,10 +14,10 @@ namespace Model
 {
     public class SimulationModel : Messenger
     {
-        //to store the handler for the callbacks from the server
+        //This stores the handler for the callbacks from the server
         CallbackHandler modelCallbackHandler;
 
-        //to store the instance of the server client
+        //This stores the instance of the server client
         public ServerInterfaceClient server;
 
         #region Properties

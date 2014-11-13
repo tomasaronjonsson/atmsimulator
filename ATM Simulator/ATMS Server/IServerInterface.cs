@@ -8,10 +8,27 @@ using System.Text;
 
 namespace ATMS_Server
 {
+    /*
+     * This is the interface through
+     * which the clients send requests
+     * towards the server.
+     * 
+     * A ServiceContract needs to be specified
+     * together with a CallbackContract.
+     * */
     [ServiceContract(Namespace = "ATMS_Server", SessionMode = SessionMode.Allowed,
                      CallbackContract = typeof(IClientCallbackInterface))]
     public interface IServerInterface
     {
+        /*
+         * Below are all the methods that can be called by the clients.
+         * 
+         * They have suggestive names which leave no doubt to what they are 
+         * meant to do.
+         * 
+         * All methods need to be an Operation Contract
+         * [OperationContract]
+         * */
         [OperationContract]
         void populateClient();
 
@@ -21,11 +38,6 @@ namespace ATMS_Server
         [OperationContract]
         void playSimulation();
 
-        /**
-         *  todo: review
-         *  sprint 6
-         * 
-         * */
         [OperationContract]
         void createNewTrack(Track t);
 
@@ -45,44 +57,45 @@ namespace ATMS_Server
         void editPlot(Plot p);
     }
 
+
+    /*
+     * This is the interface through which the server
+     * is calling back towards the client.
+     * */
     public interface IClientCallbackInterface
     {
-        //notifies all clients of all the time related changes
+        /*
+         * Below are all the methods that can be called by the server.
+         * 
+         * They have suggestive names which leave no doubt to what they are 
+         * meant to do.
+         * 
+         * All methods need to be a one way Operation Contract
+         * [OperationContract(IsOneWay = true)]
+         * */
+
         [OperationContract(IsOneWay = true)]
         void notifyTimeUpdate(int currentServerTime);
 
-        //notifies all clients of all the changes
         [OperationContract(IsOneWay = true)]
         void notifyNewScenario(Scenario data);
 
-        /**
-         *   Sprint 6
-         * */
-        //notifies all clients of all the changes
         [OperationContract(IsOneWay = true)]
         void notifyNewTrack(Track t);
 
-        //notifies the clients that a track has been removed
         [OperationContract(IsOneWay = true)]
         void notifyRemoveTrack(Track t);
 
-        
-        //notifies that a track as been edited
         [OperationContract(IsOneWay = true)]
         void notifyEditedTrack(Track t);
 
-        //notifies that a plot as been edited
         [OperationContract(IsOneWay = true)]
         void notifyEditedPlot(Plot t);
 
-        //notifies that a new plot has been create
         [OperationContract(IsOneWay = true)]
         void notifyNewPlot(Plot t);
 
-        //notifies that a plot as been removed
         [OperationContract(IsOneWay = true)]
         void notifyRemovePlot(Plot t);
-
-
     }
 }

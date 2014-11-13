@@ -35,6 +35,7 @@ namespace ATMS_Model
                 this.callSign = t.callSign;
         }
 
+        //A custom made Equals method to handle the List operations
         public override bool Equals(object obj)
         {
             //Return false if there is a missing parameter
