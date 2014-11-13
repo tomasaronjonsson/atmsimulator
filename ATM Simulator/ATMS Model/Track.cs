@@ -9,65 +9,57 @@ namespace ATMS_Model
     [Serializable]
     public class Track
     {
-        //to store the trackid 
+        //This is the main identifier of a track 
         public int trackID;
-        //to store the list of plots
+        //This list holds all the plots that form this track
         public List<Plot> plots;
-
-        //to store the calsign
-        public string callsign;
-
-
-        //public location
-       // public GeoPoint location;
+        //The callSign identifies a flight on the map
+        public string callSign;
         
+
         public Track()
         {
+            //Initialize the list of Plots
             plots = new List<Plot>();
+            //Upon initialization, default values are being assigned to the trackID and the callSign
             trackID = 0;
-            callsign = "n/a";
+            callSign = "N/A";
         }
 
+        //The edit method updates the changes made to a Track using a Track type parameter
+        public void edit(Track t)
+        {
+            //Check the argument
+            if (t.callSign != null)
+                //Update the callSign using the Track argument
+                this.callSign = t.callSign;
+        }
+
+        public override bool Equals(object obj)
+        {
+            //Return false if there is a missing parameter
+            if (obj == null) 
+                return false;
+
+            //Cast the object to a Track object
+            Track objAsTrack = obj as Track;
+
+            //Return false of the casting is not successful
+            if (objAsTrack == null) 
+                return false;
+
+            //If the casting is successful,
+            //check the trackID to make sure the plots are the same.
+            if (objAsTrack.trackID == this.trackID) 
+                return true;
+            return false;
+        }
+
+        //For prototype purposes, a custom ToString method 
+        //prints out the relevant details of the current Track
         public override string ToString()
         {
             return "Track ID: " + trackID;
         }
-        /*
-         * todo review 
-         * we have to implement our own equals method to determin be sure we are talkinga lways about the same track
-         * 
-         * sprint 6
-         * */
-        public override bool Equals(object obj)
-        {
-            if (obj == null) 
-                return false;
-
-            Track objAsTrack = obj as Track;
-
-            if (objAsTrack == null) 
-                return false;
-
-            if (objAsTrack.trackID == this.trackID) 
-                return true;
-
-            return false;
-        }
-
-        /**
-         * todo review
-         * 
-         * to edit the track basically copy the information between the tracks when we pass it another track
-         * sprint 6
-         * */
-        
-        public void edit(Track t)
-        {
-            //if the callsign is set on the remote track, we take it
-            if (t.callsign != null)
-                this.callsign = t.callsign;
-        }
-
-
     }
 }

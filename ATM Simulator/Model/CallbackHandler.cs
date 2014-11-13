@@ -38,7 +38,6 @@ namespace Model
             model.notifyRemoveTrack(t);
         }
 
-
         public void notifyEditedTrack(Track t)
         {
             model.notifyEditedTrack(t);

@@ -32,7 +32,7 @@ namespace Model
               });
 
             this.trackID = track.trackID;
-            this.callsign = track.callsign;
+            this.callsign = track.callSign;
 
             //default values for the row and the column
             this.column = 2;
@@ -222,7 +222,7 @@ namespace Model
         {
             Track tempTrack = new Track();
 
-            tempTrack.callsign = callsign;
+            tempTrack.callSign = callsign;
             tempTrack.trackID = trackID;
             return tempTrack;
         }
@@ -284,8 +284,8 @@ namespace Model
         public void edit(Track t)
         {
             //check if the callsign on the foreign object is set
-            if (t.callsign != null)
-                this.callsign = t.callsign;
+            if (t.callSign != null)
+                this.callsign = t.callSign;
         }
 
         /*

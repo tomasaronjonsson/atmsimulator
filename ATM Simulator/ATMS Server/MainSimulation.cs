@@ -92,7 +92,7 @@ namespace ATMS_Server
                 mainScenario = new Scenario();
 
                 //for testing pruposes only
-                mainScenario = Test.populateScenarioBigger();
+                mainScenario = Test.populateInitialScenario();
 
                 avilableTrackID = mainScenario.tracks.Count;
 
