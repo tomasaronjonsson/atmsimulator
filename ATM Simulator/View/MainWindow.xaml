@@ -16,7 +16,7 @@
     <StackPanel>
         <Grid>
             <Grid.Resources>
-
+                <!--The track template -->
                 <DataTemplate x:Key="trackTemplate">
                     <Grid  Background="Transparent">
                         <Grid.ColumnDefinitions>
@@ -30,7 +30,6 @@
                             <RowDefinition/>
                         </Grid.RowDefinitions>
                         <Rectangle Margin="0,15,0,0" Grid.Row="0" Grid.Column="0" Width="30" Height="30" Fill="Transparent" Stroke="Gray"/>
-
 
                         <!-- The grid for the track information on the mat if you check the below grid and column value you will move the inffomration around the track icon-->
                         <Grid Grid.Row="{Binding row}" Grid.Column="{Binding column}">
@@ -56,6 +55,7 @@
                     </Grid>
                 </DataTemplate>
 
+                <!--The plot template -->
                 <DataTemplate x:Key="plotTemplate">
                     <Grid  Background="Transparent">
                         <Grid.ColumnDefinitions>
@@ -66,7 +66,6 @@
                             <RowDefinition/>
                         </Grid.RowDefinitions>
                         <Rectangle Margin="0,15,0,0" Grid.Row="0" Grid.Column="0" Width="15" Height="15" Fill="Transparent" Stroke="Gray"/>
-
 
                         <!-- The grid for the track information on the mat if you check the below grid and column value you will move the inffomration around the track icon-->
                         <Grid Grid.Row="0" Grid.Column="1">
@@ -102,6 +101,7 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="200"/>
             </Grid.ColumnDefinitions>
+
             <!-- Stackpanel to the left with all the buttons and etc.-->
             <StackPanel Grid.Row="0" Grid.Column="0">
                 <Button Content="Create Scenario" Command="{Binding CreateScenario}"/>
@@ -121,8 +121,8 @@
                 <Label  Content="{Binding serverCurrentTime}"/>
             </StackPanel>
 
+            <!-- The map itself from openstreet -->
             <dxm:MapControl Grid.Row="0" Grid.Column="1" Grid.RowSpan="2"   ZoomLevel="8"  CenterPoint="55.85,9.82">
-                <!-- The map itself from openstreet -->
                 <dxm:ImageTilesLayer Name="mapContainer">
                     <dxm:ImageTilesLayer.DataProvider>
                         <dxm:OpenStreetMapDataProvider/>
@@ -135,7 +135,6 @@
                                  LatitudeDataMember="location.Latitude"
                                  LongitudeDataMember="location.Longitude"
                                  ItemTemplate="{StaticResource plotTemplate}">
-
                 </dxm:VectorLayer>
 
                 <!-- layer to show the tracks on the map-->
@@ -144,13 +143,8 @@
                                  LatitudeDataMember="currentPlot.location.Latitude"
                                  LongitudeDataMember="currentPlot.location.Longitude"
                                  ItemTemplate="{StaticResource trackTemplate}">
-
                 </dxm:VectorLayer>
-
-               
             </dxm:MapControl>
-
-
 
             <!--  Selected track and plot in the top right corner  -->
             <Grid  Grid.Row="0" Grid.Column="2">
@@ -175,18 +169,17 @@
                         <RowDefinition Height="25"/>
                     </Grid.RowDefinitions>
                     <!-- Track information -->
-                    
+
                     <StackPanel Grid.Row="0" Grid.ColumnSpan="2" HorizontalAlignment="Left" Orientation="Horizontal" >
                         <Label Content="Track id"/>
                         <Label Content="{Binding selectedTrack.trackID}"/>
                     </StackPanel>
-                    
+
                     <Label  Grid.Row="1" Grid.Column="0" HorizontalAlignment="Left" Content="Call Sign:"></Label>
                     <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding selectedTrack.callsign}"/>
 
-                   
                     <Button Grid.Row="2" Grid.ColumnSpan="2" Content="Save track changes" Command="{Binding EditTrack}"/>
-                    
+
                     <!-- Plot information -->
                     <StackPanel  HorizontalAlignment="Left" Orientation="Horizontal" Grid.Row="4" Grid.ColumnSpan="2">
                         <Label Content="Plot time:"/>
@@ -197,7 +190,7 @@
                     <TextBox Grid.Row="5" Grid.Column="1" HorizontalAlignment="Left" Text="{Binding selectedPlot.location.Latitude}"/>
                     <Label Grid.Row="6" Grid.Column="0" HorizontalAlignment="Right" Content="Longitude:"/>
                     <TextBox Grid.Row="6" Grid.Column="1" HorizontalAlignment="Left" Text="{Binding selectedPlot.location.Longitude}"/>
-                    
+
                     <Label Grid.Row="7" Grid.Column="0" HorizontalAlignment="Right" Content="Altitude:"></Label>
                     <TextBox Grid.Row="7" Grid.Column="1" Text="{Binding selectedPlot.altitude}"/>
 
@@ -206,7 +199,6 @@
 
                     <Label Grid.Row="9" Grid.Column="0" HorizontalAlignment="Right" Content="Course:"></Label>
                     <TextBox Grid.Row="9" Grid.Column="1" Text="{Binding selectedPlot.course}"/>
-
 
                     <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" Grid.Row="10" Grid.ColumnSpan="2">
                         <Button Width="100" Content="Prev Plot" Command="{Binding}"/>
@@ -241,7 +233,6 @@
                         IsMoveToPointEnabled="False" />
                 <CheckBox Content="Sync" IsChecked="{Binding syncTimeWithServer,Mode=TwoWay}" />
             </StackPanel>
-
         </Grid>
         <Label Content="{Binding plots.Count}"/>
     </StackPanel>
