@@ -52,30 +52,18 @@ namespace Model.ServiceReference1 {
         System.Threading.Tasks.Task editTrackAsync(ATMS_Model.Track t);
         
         [System.ServiceModel.OperationContractAttribute(Action="ATMS_Server/IServerInterface/createNewPlot", ReplyAction="ATMS_Server/IServerInterface/createNewPlotResponse")]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ATMS_Model.Track))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ATMS_Model.Plot[]))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ATMS_Model.Scenario))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ATMS_Model.Track[]))]
         void createNewPlot(ATMS_Model.Plot p);
         
         [System.ServiceModel.OperationContractAttribute(Action="ATMS_Server/IServerInterface/createNewPlot", ReplyAction="ATMS_Server/IServerInterface/createNewPlotResponse")]
         System.Threading.Tasks.Task createNewPlotAsync(ATMS_Model.Plot p);
         
         [System.ServiceModel.OperationContractAttribute(Action="ATMS_Server/IServerInterface/removePlot", ReplyAction="ATMS_Server/IServerInterface/removePlotResponse")]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ATMS_Model.Track))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ATMS_Model.Plot[]))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ATMS_Model.Scenario))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ATMS_Model.Track[]))]
         void removePlot(ATMS_Model.Plot p);
         
         [System.ServiceModel.OperationContractAttribute(Action="ATMS_Server/IServerInterface/removePlot", ReplyAction="ATMS_Server/IServerInterface/removePlotResponse")]
         System.Threading.Tasks.Task removePlotAsync(ATMS_Model.Plot p);
         
         [System.ServiceModel.OperationContractAttribute(Action="ATMS_Server/IServerInterface/editPlot", ReplyAction="ATMS_Server/IServerInterface/editPlotResponse")]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ATMS_Model.Track))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ATMS_Model.Plot[]))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ATMS_Model.Scenario))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ATMS_Model.Track[]))]
         void editPlot(ATMS_Model.Plot p);
         
         [System.ServiceModel.OperationContractAttribute(Action="ATMS_Server/IServerInterface/editPlot", ReplyAction="ATMS_Server/IServerInterface/editPlotResponse")]
@@ -101,24 +89,12 @@ namespace Model.ServiceReference1 {
         void notifyEditedTrack(ATMS_Model.Track t);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="ATMS_Server/IServerInterface/notifyEditedPlot")]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ATMS_Model.Track))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ATMS_Model.Plot[]))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ATMS_Model.Scenario))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ATMS_Model.Track[]))]
         void notifyEditedPlot(ATMS_Model.Plot t);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="ATMS_Server/IServerInterface/notifyNewPlot")]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ATMS_Model.Track))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ATMS_Model.Plot[]))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ATMS_Model.Scenario))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ATMS_Model.Track[]))]
         void notifyNewPlot(ATMS_Model.Plot t);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="ATMS_Server/IServerInterface/notifyRemovePlot")]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ATMS_Model.Track))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ATMS_Model.Plot[]))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ATMS_Model.Scenario))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ATMS_Model.Track[]))]
         void notifyRemovePlot(ATMS_Model.Plot t);
     }
     

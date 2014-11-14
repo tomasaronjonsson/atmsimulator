@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ATMS_Model;
+﻿using ATMS_Model;
 using DevExpress.Xpf.Map;
-using GalaSoft.MvvmLight;
 using System.ComponentModel;
-using System.Windows;
+using System.Linq;
 using ViewModel;
 
 namespace Model

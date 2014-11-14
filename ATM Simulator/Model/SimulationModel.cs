@@ -1,21 +1,17 @@
 ﻿using ATMS_Model;
-using ATMS_Server;
 using GalaSoft.MvvmLight.Messaging;
 using Model.ServiceReference1;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.ServiceModel;
-using System.Text;
-using System.Threading.Tasks;
 using System.Diagnostics;
+using System.ServiceModel;
+using System.Threading.Tasks;
 
 namespace Model
 {
-    public class SimulationModel : Messenger
+    public class SimulationModel : Messenger, IServerInterfaceCallback
     {
         //This stores the handler for the callbacks from the server
-        CallbackHandler modelCallbackHandler;
+        //CallbackHandler modelCallbackHandler;
 
         //This stores the instance of the server client
         public ServerInterfaceClient server;
@@ -77,7 +73,14 @@ namespace Model
             serverIsPlaying = false;
 
             //the CallbackHandler is initialized using the instance of this class
-            modelCallbackHandler = new CallbackHandler(this);
+            //modelCallbackHandler = new CallbackHandler(this);
+        }
+
+        //Updates the time on the model and raises the serverIsPlaying flag
+        public void notifyTimeUpdate(int currentServerTime)
+        {
+            this.currentServerTime = currentServerTime;
+            serverIsPlaying = true;
         }
 
         #region Connection & debugging methods
@@ -94,7 +97,7 @@ namespace Model
                 if (server == null)
                 {
                     //Prepare the instance context
-                    InstanceContext instanceContext = new InstanceContext(modelCallbackHandler);
+                    InstanceContext instanceContext = new InstanceContext(this);
                     //Initialize the server using the instance context above
                     server = new ServerInterfaceClient(instanceContext);
                 }
@@ -102,7 +105,7 @@ namespace Model
                 if (server.State != CommunicationState.Opened)
                 {
                     //Prepare the instance context
-                    InstanceContext instanceContext = new InstanceContext(modelCallbackHandler);
+                    InstanceContext instanceContext = new InstanceContext(this);
                     //Initialize the server using the instance context above
                     server = new ServerInterfaceClient(instanceContext);
                 }
@@ -230,7 +233,7 @@ namespace Model
             Messenger.Default.Send<Scenario>(s, "newScenario");
         }
 
-        internal void notifyNewTrack(Track t)
+        public void notifyNewTrack(Track t)
         {
             Messenger.Default.Send<Track>(t, "createTrack");
         }

@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ATMS_Server;
+using System;
 using System.ServiceModel;
-using ATMS_Server;
 using System.ServiceModel.Description;
 
 namespace ATMS_Host

@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ATMS_Model;
 using DevExpress.Xpf.Map;
 using System.ComponentModel;
-using ATMS_Model;
 
 namespace ViewModel
 {
