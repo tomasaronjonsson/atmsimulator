@@ -151,10 +151,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ATMS Client\Dse.MapFile\Dse.MapFile.csproj">
-      <Project>{cd6d645d-55f3-4505-8375-a5079af0b9d0}</Project>
-      <Name>Dse.MapFile</Name>
-    </ProjectReference>
     <ProjectReference Include="..\ViewModel\ViewModel.csproj">
       <Project>{6f1428cd-540b-48ab-9984-a01751180182}</Project>
       <Name>ViewModel</Name>
