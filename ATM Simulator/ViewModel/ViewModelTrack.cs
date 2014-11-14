@@ -12,73 +12,14 @@ using ViewModel;
 
 namespace Model
 {
+    /*
+     * This is the ViewModel representation of a Track
+     * */
     public class ViewModelTrack : INotifyPropertyChanged
     {
+        #region Properties
 
-        /* 
-        * make a consrtuctor that can take a track object in and initlize everything from that track
-        * */
-        public ViewModelTrack(Track track)
-        {
-
-            //copy the plots to a bindinglist
-            plots = new BindingList<ViewModelPlot>();
-            //convert them to viewmodel plots
-            track.plots.ForEach(
-                delegate(Plot p)
-              {
-                  plots.Add(new ViewModelPlot(p));
-
-              });
-
-            this.trackID = track.trackID;
-            this.callsign = track.callSign;
-
-            //default values for the row and the column
-            this.column = 2;
-            this.row = 0;
-
-            UpdateTick();
-        }
-        /* 
-         * for later use, this can be used by the gui to determin where the user want his information for the track to appear in a 3x3 matrix
-         * */
-        private int _column;
-        public int column
-        {
-            get { return _column; }
-            set
-            {
-                if (value != _column)
-                {
-                    _column = value;
-                    RaisePropertyChanged("column");
-                }
-            }
-        }
-        /*
-        * 
-        * for later use, this can be used by the gui to determin where the user want his information for the track to appear in a 3x3 matrix
-        * */
-        private int _row;
-        public int row
-        {
-            get { return _row; }
-            set
-            {
-                if (value != _row)
-                {
-                    _row = value;
-                    RaisePropertyChanged("row");
-                }
-            }
-        }
-
-
-        /*
-         * 
-         * we want a property storing the current plot
-         */
+        //Stores the current plot
         private ViewModelPlot _currentPlot;
         public ViewModelPlot currentPlot
         {
@@ -92,11 +33,8 @@ namespace Model
                 }
             }
         }
-        /*
-         * 
-         * we want a property storing the current location we can later implement geopoint into our plots and then we don't need this
-         */
 
+        //Stores the current location
         private GeoPoint _currentLocation;
         public GeoPoint currentLocation
         {
@@ -111,11 +49,7 @@ namespace Model
             }
         }
 
-
-        /*
-         * 
-         * we want a property storing our trackid
-         */
+        //Stores the track id
         private int _trackID;
         public int trackID
         {
@@ -130,13 +64,11 @@ namespace Model
             }
         }
 
-       
         /*
+         * Stores the current time
          * 
-         * we want the scenario to update the current time on the track and the track will then update its location 
-         * and update the currentlocation property, if the current property is the same as before, example . the track has no location, the map doesn't 
-         * need to update that track, less load
-        */
+         * Every time the current time is updated call the UpdateTick method that updates the location and the current plot
+         * */
         private int _currentTime;
         public int currentTime
         {
@@ -151,9 +83,9 @@ namespace Model
                 }
             }
         }
+
         /*
-         * 
-         * we want a property storing the callsign
+         * Stores the callsign
          */
         private string _callsign;
         public string callsign
@@ -169,12 +101,26 @@ namespace Model
             }
         }
 
-      
+        /*
+         *  Stores the current altitude
+         * */
+        private double _currentAltitude;
+        public double currentAltitude
+        {
+            get { return _currentAltitude; }
+            set
+            {
+                if (value != _currentAltitude)
+                {
+                    _currentAltitude = value;
+                    RaisePropertyChanged("altitude");
+                }
+            }
+        }
 
         /*
-        * 
-        * store our plots has a property and a binding list for binding purposes
-        */
+         * Stores the list of ViewModelPlots
+         * */
         private BindingList<ViewModelPlot> _plots;
         public BindingList<ViewModelPlot> plots
         {
@@ -188,36 +134,83 @@ namespace Model
                 }
             }
         }
-        
 
-        /*
-         * review - Tomas - changed the First() method to FirstOrDefault()
-         * 
-         * Everytime the currentime is updated this method is called
-         * 
-         */
-        public void UpdateTick()
+        //Graphical positioning of the track information
+        private int _column;
+        public int column
         {
-            //find the plot for the timeframe
-            var tempCurrentPlot = plots.FirstOrDefault(x => x.time == currentTime);
-            //check if we found anything
-            if (tempCurrentPlot != null)
+            get { return _column; }
+            set
             {
-
-                //update the current plot
-                currentPlot = tempCurrentPlot;
-
-                //update the current location
-               //update the current altitude
-                altitude = currentPlot.altitude;
+                if (value != _column)
+                {
+                    _column = value;
+                    RaisePropertyChanged("column");
+                }
             }
+        }
+
+        private int _row;
+        public int row
+        {
+            get { return _row; }
+            set
+            {
+                if (value != _row)
+                {
+                    _row = value;
+                    RaisePropertyChanged("row");
+                }
+            }
+        }
+
+        #endregion
+
+
+        public ViewModelTrack(Track t)
+        {
+            //Initialize the list of ViewModelPlots
+            plots = new BindingList<ViewModelPlot>();
+
+            //Populate the list of plots
+            t.plots.ForEach(delegate(Plot p)
+                {
+                    plots.Add(new ViewModelPlot(p));
+                }
+            );
+
+            //Handle the input
+            edit(t);
+
+            //Default values for the track information positioning
+            this.column = 2;
+            this.row = 0;
+
+            //Update the current plot
+            UpdateTick();
         }
 
 
         /*
-         * 
-         * return a track objet we can use to send to the server if we need have edited something or want to remove this track from the system
-         */
+         * This method updates the track information according to the current time
+         * */
+        public void UpdateTick()
+        {
+            //Find the current plot
+            var tempCurrentPlot = plots.FirstOrDefault(x => x.time == currentTime);
+
+            //Validate the current plot
+            if (tempCurrentPlot != null)
+            {
+                //Update the current plot
+                currentPlot = tempCurrentPlot;
+
+                //Update the current altitude
+                currentAltitude = currentPlot.altitude;
+            }
+        }
+
+        // Convert the current ViewModelTrack to a Track
         public Track toTrack()
         {
             Track tempTrack = new Track();
@@ -227,95 +220,69 @@ namespace Model
             return tempTrack;
         }
 
-
-      
-        /*
-         * 
-         * override the equals method for the remove command and etc.
-         */
+        //A custom made Equals method to handle the List operations
         public override bool Equals(object obj)
         {
             if (obj == null)
                 return false;
 
-            //try to convert the obj to viewmodeltrack or track to see if it's either one of those obj
-            ViewModelTrack objasViewModelTrack = obj as ViewModelTrack;            
+            //Convert the input into both a ViewModeltrack and a Track
+            ViewModelTrack objasViewModelTrack = obj as ViewModelTrack;
             Track objasTrack = obj as Track;
 
 
-            //check if the convertion to ViewModeltrack was successfull and if so check if it's the same track id
+            //Validate the ViewModelTrack
             if (objasViewModelTrack != null)
                 if (objasViewModelTrack.trackID == this.trackID)
                     return true;
 
-            //same as above except now checking if it's track
+            //Validate the Track
             if (objasTrack != null)
                 if (objasTrack.trackID == this.trackID)
                     return true;
-            //all checks have failed not the same
+
+            //If both checks fail - return false
             return false;
         }
 
-        /*
-         * 
-         * to store the current altitude, should be currentAltitude?
-         * 
-         */
-        private double _altitude;
-        public double altitude
-        {
-            get { return _altitude; }
-            set
-            {
-                if (value != _altitude)
-                {
-                    _altitude = value;
-                    RaisePropertyChanged("altitude");
-                }
-            }
-        }
-
-
-        /*
-         * 
-         * we accept and track object we want to use to edit the information in this object
-
-         */
+        //Edit the current ViewModelPlot using the input Plot
         public void edit(Track t)
         {
-            //check if the callsign on the foreign object is set
+            // Validate the input
             if (t.callSign != null)
+            {
+                this.trackID = t.trackID;
                 this.callsign = t.callSign;
+            }
         }
 
         /*
-         * 
-         *  overridiing the default tostring method
-         */
+         * A custom made ToString method for the ASTERIX module
+         * */
         public override string ToString()
         {
-            string tempString = "Trackid: " + trackID +
-                   "\nCallsign: " + callsign;
+            string tempString = "Trackid: " + trackID + "\nCallsign: " + callsign;
 
+            //Validate the current plot
             if (currentPlot != null)
             {
-
-                tempString += "\nCourse: " + currentPlot.course +
-                    "\nAltitude: " + currentPlot.altitude;
+                tempString += "\nCourse: " + currentPlot.course + "\nAltitude: " + currentPlot.altitude;
             }
+
             tempString += "\nNumber of plots: " + plots.Count;
             return tempString;
         }
 
+
         /*
-        * 
-        *  implementing the intofiyproerty change interface
-        */
+         * Here is the implementation of the INotifyPropertyChanged
+         * */
+        #region PropertyChanged implementation
+
+        //PropertyChangedEventHandler
         public event PropertyChangedEventHandler PropertyChanged;
-        /*
-        * 
-        *  Create the RaisePropertyChanged method to raise the event 
-        */
+
+        //Raise property changed
         protected void RaisePropertyChanged(string name)
         {
             PropertyChangedEventHandler handler = PropertyChanged;
@@ -324,5 +291,7 @@ namespace Model
                 handler(this, new PropertyChangedEventArgs(name));
             }
         }
+
+        #endregion
     }
 }

@@ -22,51 +22,12 @@ namespace ViewModel
 {
     public class SimulationViewModel : ViewModelBase
     {
-        //storing a instance of the Simulation model
+        // Store an instance of the model
         SimulationModel model;
 
-        public SimulationViewModel()
-        {
+        #region Properties
 
-            // initilization of the viewmodel 
-            _viewModelCurrentTime = 0;
-            _serverIsAvailable = false;
-            _serverIsPlaying = false;
-            _syncTimeWithServer = true;
-
-
-            planes = null;
-            historyPlanes = null;
-
-            //creating a new model
-            model = new SimulationModel();
-
-            //These listen to the brodcasted messages sent by the Messenger
-            Messenger.Default.Register<Scenario>(this, handleScenarioUpdate);
-            Messenger.Default.Register<int>(this, handleServerTimeUpdate);
-            Messenger.Default.Register<bool>(this, handleBoolChanges);
-
-            Messenger.Default.Register<Scenario>(this, "newScenario", handleNewScenario);
-            Messenger.Default.Register<Track>(this, "createTrack", handleCreateTrack);
-            Messenger.Default.Register<Track>(this, "removeTrack", handleRemoveTrack);
-            Messenger.Default.Register<Track>(this, "editTrack", handleEditTrack);
-            Messenger.Default.Register<Plot>(this, "createPlot", handleCreatePlot);
-            Messenger.Default.Register<Plot>(this, "removePlot", handleRemovePlot);
-            Messenger.Default.Register<Plot>(this, "editPlot", handleEditPlot);
-
-            //initialize the plots list
-            _plots = new BindingList<ViewModelPlot>();
-            //ininitlize the tracks list
-            _tracks = new BindingList<ViewModelTrack>();
-
-            //end of initilization of the viewmodel
-
-            model.startUp();
-        }
-
-
-        #region properties
-
+        //Stores the current time
         private int _viewModelCurrentTime;
         public int viewModelCurrentTime
         {
@@ -76,11 +37,12 @@ namespace ViewModel
                 if (value != _viewModelCurrentTime)
                 {
                     _viewModelCurrentTime = value;
-                    //in the case it's not the same (we are adjusting the slider or something we disable the sync with the server
+
+                    // Lower the timer synchronization flag if times are not identical
                     if (viewModelCurrentTime != serverCurrentTime)
                         syncTimeWithServer = false;
 
-                    //update the currentTime on each track
+                    // Update the current time on each track
                     foreach (ViewModelTrack track in tracks)
                     {
                         track.currentTime = value;
@@ -90,6 +52,7 @@ namespace ViewModel
             }
         }
 
+        // A flag that shows if the client is in sync with the server
         private bool _syncTimeWithServer;
         public bool syncTimeWithServer
         {
@@ -104,6 +67,7 @@ namespace ViewModel
             }
         }
 
+        // Stores the server time
         private int _serverCurrentTime;
         public int serverCurrentTime
         {
@@ -118,34 +82,7 @@ namespace ViewModel
             }
         }
 
-        private List<MapDot> _planes;
-        public List<MapDot> planes
-        {
-            get { return _planes; }
-            set
-            {
-                if (value != _planes)
-                {
-                    _planes = value;
-                    RaisePropertyChanged("planes");
-                }
-            }
-        }
-
-        private List<MapDot> _historyPlanes;
-        public List<MapDot> historyPlanes
-        {
-            get { return _historyPlanes; }
-            set
-            {
-                if (value != _historyPlanes)
-                {
-                    _historyPlanes = value;
-                    RaisePropertyChanged("historyPlanes");
-                }
-            }
-        }
-
+        // A flag that shows if the server is playing
         private bool _serverIsPlaying;
         public bool serverIsPlaying
         {
@@ -162,6 +99,7 @@ namespace ViewModel
             }
         }
 
+        // A flag that shows if the server is available for request
         private bool _serverIsAvailable;
         public bool serverIsAvailable
         {
@@ -180,7 +118,7 @@ namespace ViewModel
             }
         }
 
-        //these hold the list of plots 
+        // Stores the list of Plots 
         private BindingList<ViewModelPlot> _plots;
         public BindingList<ViewModelPlot> plots
         {
@@ -195,7 +133,7 @@ namespace ViewModel
             }
         }
 
-        //these hold the list of tracks
+        // Stores the list of Tracks
         private BindingList<ViewModelTrack> _tracks;
         public BindingList<ViewModelTrack> tracks
         {
@@ -204,14 +142,13 @@ namespace ViewModel
             {
                 if (value != _tracks)
                 {
-                    //we have to copy the list else, the binding will not update 
                     _tracks = value;
                     RaisePropertyChanged("tracks");
                 }
             }
         }
 
-        //property to store information about the selected plane og track
+        // Stores the selected track & updates the current plot
         private ViewModelTrack _selectedTrack;
         public ViewModelTrack selectedTrack
         {
@@ -223,22 +160,17 @@ namespace ViewModel
 
                     if (value != null)
                     {
-
                         _selectedTrack = value;
+
+                        // Update the current plot
                         selectedPlot = _selectedTrack.currentPlot;
                         RaisePropertyChanged("selectedTrack");
-
-
                     }
-
                 }
             }
         }
-        /*
-         * 
-         * to store the selected plot
-         * 
-         */
+
+        // Stores the selected plot
         private ViewModelPlot _selectedPlot;
         public ViewModelPlot selectedPlot
         {
@@ -253,12 +185,64 @@ namespace ViewModel
             }
         }
 
-
         #endregion
 
 
+        /*
+         * The ViewModel constructor includes
+         * 
+         * -the initialization of the properties and variables
+         * -the registration of the messages sent by the model
+         * -the call for the startUp method on the model
+         * */
+        public SimulationViewModel()
+        {
+            //Current time starts from 0
+            _viewModelCurrentTime = 0;
+
+            //Server is not available until the model starts up
+            _serverIsAvailable = false;
+
+            //Server is not playing upon the start of the program
+            _serverIsPlaying = false;
+
+            //Client current time is in sync with the server time at the start of the program
+            _syncTimeWithServer = true;
+
+            //Plots and Tracks lists are initialized
+            _plots = new BindingList<ViewModelPlot>();
+            _tracks = new BindingList<ViewModelTrack>();
+
+            //Initialize the model
+            model = new SimulationModel();
+
+            //Register the possible incoming message from the model
+            //Messenger.Default.Register<Scenario>(this, handleScenarioUpdate);
+            Messenger.Default.Register<int>(this, "serverTime", handleServerTimeUpdate);
+            Messenger.Default.Register<bool>(this, "serverAvailability", checkIfServerIsAvailable);
+            Messenger.Default.Register<bool>(this, "serverIsPlaying", checkIfServerIsPlaying);
+            Messenger.Default.Register<Scenario>(this, "newScenario", handleNewScenario);
+            Messenger.Default.Register<Track>(this, "createTrack", handleCreateTrack);
+            Messenger.Default.Register<Track>(this, "removeTrack", handleRemoveTrack);
+            Messenger.Default.Register<Track>(this, "editTrack", handleEditTrack);
+            Messenger.Default.Register<Plot>(this, "createPlot", handleCreatePlot);
+            Messenger.Default.Register<Plot>(this, "removePlot", handleRemovePlot);
+            Messenger.Default.Register<Plot>(this, "editPlot", handleEditPlot);
+
+            //Start up the model
+            model.startUp();
+        }
+
+        /*
+         * The relay commands are sent towards the Model 
+         * 
+         * They consist of two parts:
+         * -the command itself
+         * -the availability condition (the condition that needs to be met for the command to be available)
+         * 
+         * */
         #region RelayCommands
-        //this is the create scenario command that calls the create scenario method from the model
+
         private RelayCommand _CreateScenario;
         public RelayCommand CreateScenario
         {
@@ -280,10 +264,7 @@ namespace ViewModel
                 return _CreateScenario;
             }
         }
-        /*
-         * play the simulation
-         * 
-         */
+
         private RelayCommand _PlaySimulation;
         public RelayCommand PlaySimulation
         {
@@ -295,7 +276,6 @@ namespace ViewModel
                        async () =>
                        {
                            await model.playSimulation();
-
                            serverIsPlaying = true;
                        },
                        () =>
@@ -306,10 +286,7 @@ namespace ViewModel
                 return _PlaySimulation;
             }
         }
-        /*
-         * create a new track
-         * 
-         */
+
         private RelayCommand _CreateNewTrack;
         public RelayCommand CreateNewTrack
         {
@@ -330,10 +307,6 @@ namespace ViewModel
                 return _CreateNewTrack;
             }
         }
-        /*
-         * removes the selected track
-         * 
-         */
 
         private RelayCommand _RemoveTrack;
         public RelayCommand RemoveTrack
@@ -357,10 +330,6 @@ namespace ViewModel
                 return _RemoveTrack;
             }
         }
-        /*
-         * edits the selected track and sends it to the model
-         * 
-         */
 
         private RelayCommand _EditTrack;
         public RelayCommand EditTrack
@@ -383,10 +352,6 @@ namespace ViewModel
             }
         }
 
-        /*
-         * create a new plot
-         * 
-         */
         private RelayCommand _CreateNewPlot;
         public RelayCommand CreateNewPlot
         {
@@ -408,10 +373,7 @@ namespace ViewModel
                 return _CreateNewPlot;
             }
         }
-        /*
-         * remove the selected plot
-         * 
-         */
+
         private RelayCommand _RemovePlot;
         public RelayCommand RemovePlot
         {
@@ -422,7 +384,7 @@ namespace ViewModel
                     _RemovePlot = new RelayCommand(
                        async () =>
                        {
-                           MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show("Are you sure you want remove plot at time " + selectedPlot.time + "belonging to callsign " + selectedTrack.callsign + "?", "Remove plot Confirmation", System.Windows.MessageBoxButton.YesNo);
+                           MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show("Are you sure you want remove plot at time " + selectedPlot.time + " belonging to callsign " + selectedTrack.callsign + "?", "Remove plot Confirmation", System.Windows.MessageBoxButton.YesNo);
                            if (messageBoxResult == MessageBoxResult.Yes)
                                await model.removePlot(selectedPlot.toPlot());
                        },
@@ -434,10 +396,7 @@ namespace ViewModel
                 return _RemovePlot;
             }
         }
-        /*
-        * edit the selected plot and 
-        * 
-        */
+
         private RelayCommand _EditPlot;
         public RelayCommand EditPlot
         {
@@ -452,131 +411,189 @@ namespace ViewModel
                        },
                        () =>
                        {
-                           return serverIsAvailable &&(selectedPlot != null);
+                           return serverIsAvailable && (selectedPlot != null);
                        });
                 }
                 return _EditPlot;
             }
         }
 
-
         #endregion
 
-        #region Listening methods for the messenger
+        /*
+         * These methods handle the messages sent by the model
+         * */
+        #region Message handling methods
 
-        //listens to the scenario time update
+        /* 
+         * Handle the server time update
+         * 
+         * -validate the model
+         * -sync the serverCurrentTime
+         * -check the syncTimeWithServer flag
+         * -sync the viewModelCurrentTime
+         * */
         private void handleServerTimeUpdate(int currentServertime)
         {
-            serverCurrentTime = currentServertime;
-            if (syncTimeWithServer)
-            {
-                viewModelCurrentTime = currentServertime;
-            }
-        }
-
-        //listens to the scenario update
-        private void handleScenarioUpdate(Scenario obj)
-        {
-
-            //check if the scenario is null
-            if (obj != null)
-            {
-                //make a temp to store the new track list
-                BindingList<ViewModelTrack> temp = new BindingList<ViewModelTrack>();
-                //populate the track list
-                foreach (Track t in obj.tracks)
-                {
-                    //converitng the base object to the derived version
-                    temp.Add(new ViewModelTrack(t));
-                }
-                //storing the new list
-                tracks = temp;
-            }
-
-        }
-        /*
-         * 
-         * Purpose handle messenges sent from the Model when changes are made to a bool on the model and updating all boolean values of interest
-         * */
-        private void handleBoolChanges(bool obj)
-        {
-            //check if the model is null before doing anything
             if (model != null)
             {
-                //the boolean values of interest
-                serverIsPlaying = model.serverIsPlaying;
+                serverCurrentTime = currentServertime;
+                if (syncTimeWithServer)
+                {
+                    viewModelCurrentTime = currentServertime;
+                }
+            }
+        }
+
+        /*
+         * Check if the server is available
+         * 
+         * -validate the model
+         * -update the flag
+         * */
+        private void checkIfServerIsAvailable(bool obj)
+        {
+            if (model != null)
+            {
                 serverIsAvailable = model.serverIsAvailable;
             }
         }
 
-        /**
-        * 
-        * Purpose handle messenges sent from the Model when we add a track
-        * */
-
-        private void handleNewScenario(Scenario s)
+        /*
+         * Check if the server isplaying
+         * 
+         * -validate the model
+         * -update the flag
+         * */
+        private void checkIfServerIsPlaying(bool obj)
         {
-            foreach (Track item in s.tracks)
+            if (model != null)
             {
-                tracks.Add(new ViewModelTrack(item));
+                serverIsPlaying = model.serverIsPlaying;
             }
         }
 
-        private void handleCreateTrack(Track t)
+        /* Populate the scenario with the incoming tracks
+         * 
+         * -validate the input
+         * -add all the tracks to the list of tracks
+         * */
+        private void handleNewScenario(Scenario s)
         {
-            tracks.Add(new ViewModelTrack(t));
-        }
-
-        private void handleRemoveTrack(Track t)
-        {
-            tracks.Remove(new ViewModelTrack(t));
-        }
-
-        private void handleEditTrack(Track t)
-        {
-            var trackToEdit = tracks.First(x => x.Equals(t));
-
-            if (trackToEdit != null)
-                trackToEdit.edit(t);
+            if (s != null)
+            {
+                foreach (Track item in s.tracks)
+                {
+                    tracks.Add(new ViewModelTrack(item));
+                }
+            }
         }
 
         /*
-         * handles a new plot beeing send in from the model
+         * Create a track
+         * 
+         * -validate the input
+         * -add the new track
          * */
+        private void handleCreateTrack(Track t)
+        {
+            if (t != null)
+            {
+                tracks.Add(new ViewModelTrack(t));
+            }
+        }
 
+        /*
+         * Remove track
+         * 
+         * -validate the input
+         * -remove the track
+         * */
+        private void handleRemoveTrack(Track t)
+        {
+            if (t != null)
+            {
+                tracks.Remove(new ViewModelTrack(t));
+            }
+        }
+
+        /*
+         * Edit track
+         * 
+         * -validate the input
+         * -find the trackToBeEdited
+         * -validate the trackToBeEdited
+         * -edit the track
+         * */
+        private void handleEditTrack(Track t)
+        {
+            if (t != null)
+            {
+                var trackToBeEdited = tracks.First(x => x.Equals(t));
+
+                if (trackToBeEdited != null)
+                    trackToBeEdited.edit(t);
+            }
+        }
+
+        /* Create a new plot
+         * 
+         * -validate the input
+         * -add the plot
+         * */
         private void handleCreatePlot(Plot p)
         {
-            plots.Add(new ViewModelPlot(p));
+            if (p != null)
+            {
+                plots.Add(new ViewModelPlot(p));
+            }
         }
 
+        /*
+         * Remove plot
+         * 
+         * -validate the input
+         * -find the trackToLookInto
+         * -validate the trackToLookInto
+         * -remove the plot
+         * */
         private void handleRemovePlot(Plot p)
         {
-            //let'sf ind the track the plot belongs to
-            var trackToEdit = tracks.First(x => x.trackID == p.trackID);
-            //check if the track is not null and them remove from the list the plot
-            if (trackToEdit != null)
-                trackToEdit.plots.Remove(new ViewModelPlot(p));
+            if (p != null)
+            {
+                var trackToLookInto = tracks.First(x => x.trackID == p.trackID);
 
+                if (trackToLookInto != null)
+                    trackToLookInto.plots.Remove(new ViewModelPlot(p));
+            }
         }
 
+        /*
+         * Edit a plot
+         * 
+         * -validate the input
+         * -find the trackToLookInto
+         * -validate the trackToLookInto
+         * -find the plotToBeChanged
+         * -validate the plotToBeChanged
+         * -edit the plot
+         * */
         private void handleEditPlot(Plot p)
         {
-            //finding the track to be changed
-            ViewModelTrack trackToLookInto = tracks.First(x => x.trackID == p.trackID);
-
-            //check if we found something
-            if (trackToLookInto != null)
+            if (p != null)
             {
-                //edit what we found
-                ViewModelPlot plotToBeChanged = trackToLookInto.plots.First(x => x.Equals(p));
-                //check if we found something and then edit it
-                if (plotToBeChanged != null)
-                    plotToBeChanged.edit(p);
+                ViewModelTrack trackToLookInto = tracks.First(x => x.trackID == p.trackID);
+
+                if (trackToLookInto != null)
+                {
+                    ViewModelPlot plotToBeChanged = trackToLookInto.plots.First(x => x.Equals(p));
+
+                    if (plotToBeChanged != null)
+                        plotToBeChanged.edit(p);
+                }
             }
         }
 
         #endregion
-
-
     }
 }

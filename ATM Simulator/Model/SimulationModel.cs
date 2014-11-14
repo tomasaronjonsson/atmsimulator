@@ -32,7 +32,7 @@ namespace Model
                 if (value != _serverIsPlaying)
                 {
                     _serverIsPlaying = value;
-                    Messenger.Default.Send(value);
+                    Messenger.Default.Send(value, "serverIsPlaying");
                 }
             }
         }
@@ -47,7 +47,7 @@ namespace Model
                 if (value != _serverIsAvailable)
                 {
                     _serverIsAvailable = value;
-                    Messenger.Default.Send(value);
+                    Messenger.Default.Send(value, "serverAvailability");
                 }
             }
         }
@@ -62,7 +62,7 @@ namespace Model
                 if (value != _currentServerTime)
                 {
                     _currentServerTime = value;
-                    Messenger.Default.Send(value);
+                    Messenger.Default.Send(value, "serverTime");
                 }
             }
         }
@@ -214,7 +214,7 @@ namespace Model
 
         #endregion
 
-        #region Brodcasting methods
+        #region Message brodcasting methods
         /*
          * These methods are being called from the server
          * and they brodcast a Message containing the object

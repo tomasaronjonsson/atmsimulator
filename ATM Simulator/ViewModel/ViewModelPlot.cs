@@ -9,14 +9,14 @@ using ATMS_Model;
 
 namespace ViewModel
 {
+    /*
+     * This is the ViewModel representation of a Plot
+     * */
     public class ViewModelPlot : INotifyPropertyChanged
     {
+        #region Properties
 
-        /*
-         * 
-         * Store the location of the plot 
-         */
-        
+        // Store the location of the plot 
         private GeoPoint _location;
         public GeoPoint location
         {
@@ -30,10 +30,23 @@ namespace ViewModel
                 }
             }
         }
-        /*
-         * store the trackID the plot belongs to
-         * 
-         */
+
+        //Store the altitude of the plot
+        private double _altitude;
+        public double altitude
+        {
+            get { return _altitude; }
+            set
+            {
+                if (value != _altitude)
+                {
+                    _altitude = value;
+                    RaisePropertyChanged("altitude");
+                }
+            }
+        }
+
+        // Store the trackID of the track that the current plot belongs to
         private int _trackID;
         public int trackID
         {
@@ -48,10 +61,7 @@ namespace ViewModel
             }
         }
 
-        /*
-        * store the time
-        * 
-        */
+        //Store the time of the plot
         private int _time;
         public int time
         {
@@ -65,10 +75,8 @@ namespace ViewModel
                 }
             }
         }
-        /*
-        * store the speed at this plot
-        * 
-        */
+
+        //Store the speed of the flight at that plot
         private double _speed;
         public double speed
         {
@@ -82,10 +90,8 @@ namespace ViewModel
                 }
             }
         }
-        /*
-        * store the course at this plot
-        * 
-        */
+
+        //Store the course of the plot
         private double _course;
         public double course
         {
@@ -99,54 +105,38 @@ namespace ViewModel
                 }
             }
         }
+
+        #endregion
+
+
         /*
-       * store the altitude at this plot
-       * 
-       */
-        private double _altitude;
-        public double altitude
-        {
-            get { return _altitude; }
-            set
-            {
-                if (value != _altitude)
-                {
-                    _altitude = value;
-                    RaisePropertyChanged("altitude");
-                }
-            }
-        }
-        
-
-        
-
+         * Initialize the ViewModelPlot using a real Plot
+         * */
         public ViewModelPlot(Plot p)
         {
-            //take the foreign information
-            edit(p);
-
-
+            if (p != null)
+            {
+                edit(p);
+            }
         }
 
 
-
+        //Edit the current ViewModelPlot using the input Plot
         public void edit(Plot p)
         {
-            this.location = new GeoPoint(p.latitude, p.longitude);
-
-            this.trackID = p.trackID;
-
-            this.time = p.time;
-
-            this.speed = p.speed;
-
-            this.course = p.course;
-
-            this.altitude = p.altitude;
+            //Validate the input
+            if (p != null)
+            {
+                this.location = new GeoPoint(p.latitude, p.longitude);
+                this.altitude = p.altitude;
+                this.trackID = p.trackID;
+                this.time = p.time;
+                this.speed = p.speed;
+                this.course = p.course;
+            }
         }
-        /*
-         * to be able to return a plot
-         */
+
+        //Convert the ViewModelPlot to a Plot
         public Plot toPlot()
         {
             Plot p = new Plot();
@@ -161,44 +151,40 @@ namespace ViewModel
             return p;
         }
 
-
-
-        /*
-        * 
-        * override the equals method for the remove command and etc.
-        */
+        //A custom made Equals method to handle the List operations
         public override bool Equals(object obj)
         {
             if (obj == null)
                 return false;
 
-            //try to convert the obj to ViewModelPlot or Plot to see if it's either one of those obj
+            //Convert the input into both a ViewModelPlot and a Plot
             ViewModelPlot objasViewModelPlot = obj as ViewModelPlot;
-            Plot objasPlot = obj as Plot;
+            Plot objAsPlot = obj as Plot;
 
 
-            //check if the convertion to objasViewModelPlot was successfull and if so check if it's the same track id and time
+            //Validate objasViewModelPlot and then check the trackID and thetime in order to identify the plot
             if (objasViewModelPlot != null)
                 if ((objasViewModelPlot.trackID == this.trackID) && (objasViewModelPlot.time == this.time))
                     return true;
 
-            //same as above except now checking if it's plot and if the trackid and time is the same that defines it is the same plot
-            if (objasPlot != null)
-                if ((objasPlot.trackID == this.trackID) && (objasPlot.time == this.time))
+            //Validate objAsPlot and then check the trackID and thetime in order to identify the plot
+            if (objAsPlot != null)
+                if ((objAsPlot.trackID == this.trackID) && (objAsPlot.time == this.time))
                     return true;
-            //all checks have failed not the same
+
+            //If both checks fail - return false
             return false;
         }
 
         /*
-       * 
-       *  implementing the intofiyproerty change interface
-       */
+         * Here is the implementation of the INotifyPropertyChanged
+         * */
+        #region PropertyChanged implementation
+
+        //PropertyChangedEventHandler
         public event PropertyChangedEventHandler PropertyChanged;
-        /*
-        * 
-        *  Create the RaisePropertyChanged method to raise the event 
-        */
+
+        //Raise property changed
         protected void RaisePropertyChanged(string name)
         {
             PropertyChangedEventHandler handler = PropertyChanged;
@@ -208,6 +194,6 @@ namespace ViewModel
             }
         }
 
-
+        #endregion
     }
 }
