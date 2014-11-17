@@ -12,19 +12,7 @@ namespace View
             InitializeComponent();
         }
 
-        //todo review
-        //The Remove track Window
-        private void Track_RemoveWindow(object sender, RoutedEventArgs e)
-        {
-            Track_RemoveWindow d = new Track_RemoveWindow();
-            d.Show();
-        }
-
-        //The Edit track Window
-        private void Track_EditWindow(object sender, RoutedEventArgs e)
-        {
-            Track_EditWindow d = new Track_EditWindow();
-            d.Show();
-        }
+        
+       
     }
 }
