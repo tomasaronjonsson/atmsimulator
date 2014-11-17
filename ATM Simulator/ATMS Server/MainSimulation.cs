@@ -159,7 +159,7 @@ namespace ATMS_Server
                 //Check the client registration
                 checkIfRegistered();
 
-                //Start the time worker thread which plays the simulation
+               //check if the timeThread is already  running
                 if (timeThread == null)
                 {
                     //Instantiate the TimeWorker
@@ -168,7 +168,7 @@ namespace ATMS_Server
                     {
                         //Call the DoWork method
                         timeThread = new Thread(worker.DoWork);
-                        //Start the thread
+                        //Start the time worker thread which plays the simulatio
                         timeThread.Start();
                     }
                 }
@@ -265,7 +265,7 @@ namespace ATMS_Server
                     //Reference the track that will be changed
                     Track trackToBeChanged = mainScenario.tracks.First(x => x.Equals(t));
 
-                    //Validate the track
+                    //Validate that the track was found
                     if (trackToBeChanged != null)
                     {
                         //Edit the track

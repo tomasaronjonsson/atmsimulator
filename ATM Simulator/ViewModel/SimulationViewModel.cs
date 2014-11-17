@@ -206,7 +206,6 @@ namespace ViewModel
             model = new SimulationModel();
 
             //Register the possible incoming message from the model
-            //Messenger.Default.Register<Scenario>(this, handleScenarioUpdate);
             Messenger.Default.Register<int>(this, "serverTime", handleServerTimeUpdate);
             Messenger.Default.Register<bool>(this, "serverAvailability", checkIfServerIsAvailable);
             Messenger.Default.Register<bool>(this, "serverIsPlaying", checkIfServerIsPlaying);

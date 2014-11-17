@@ -68,12 +68,11 @@ namespace Model
         
         public SimulationModel()
         {
-            //serverIsAvailable & serverIsPlaying are initialized to false as a default measure
+            //indicates if the server is available, set to default value which is not avilable
             serverIsAvailable = false;
+            //indicates of the server is playing a scenario, by default he is not
             serverIsPlaying = false;
 
-            //the CallbackHandler is initialized using the instance of this class
-            //modelCallbackHandler = new CallbackHandler(this);
         }
 
         //Updates the time on the model and raises the serverIsPlaying flag
@@ -217,7 +216,7 @@ namespace Model
 
         #endregion
 
-        #region Message brodcasting methods
+        #region ICallbackInterface  methods
         /*
          * These methods are being called from the server
          * and they brodcast a Message containing the object
