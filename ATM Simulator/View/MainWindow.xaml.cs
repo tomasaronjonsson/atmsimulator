@@ -1,4 +1,8 @@
-﻿using System.Windows;
+﻿using DevExpress.Xpf.Bars;
+using DevExpress.Xpf.Map;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace View
 {
@@ -12,7 +16,9 @@ namespace View
             InitializeComponent();
         }
 
-        
-       
+        private void VectorLayer_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            //GeoPoint geoPt = this.theMap.Layers[0].ScreenToGeoPoint(e.GetPosition(this.theMap));
+        }
     }
 }

@@ -93,7 +93,7 @@
 
             <Grid.RowDefinitions>
                 <RowDefinition Height="400"/>
-                <RowDefinition Height="275"/>
+                <RowDefinition Height="250"/>
                 <RowDefinition Height="50"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
@@ -122,7 +122,7 @@
             </StackPanel>
 
             <!-- The map itself from openstreet -->
-            <dxm:MapControl Grid.Row="0" Grid.Column="1" Grid.RowSpan="2"   ZoomLevel="8"  CenterPoint="55.85,9.82">
+            <dxm:MapControl Name="theMap" Grid.Row="0" Grid.Column="1" Grid.RowSpan="2"   ZoomLevel="8"  CenterPoint="55.85,9.82" MouseRightButtonUp="VectorLayer_MouseLeftButtonDown" >
                 <dxm:ImageTilesLayer Name="mapContainer">
                     <dxm:ImageTilesLayer.DataProvider>
                         <dxm:OpenStreetMapDataProvider/>
@@ -187,9 +187,9 @@
                     </StackPanel>
 
                     <Label Grid.Row="5" Grid.Column="0" HorizontalAlignment="Right" Content="Latitude:"/>
-                    <TextBox Grid.Row="5" Grid.Column="1" HorizontalAlignment="Left" Text="{Binding selectedPlot.location.Latitude}"/>
+                    <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding selectedPlot.latitude}"/>
                     <Label Grid.Row="6" Grid.Column="0" HorizontalAlignment="Right" Content="Longitude:"/>
-                    <TextBox Grid.Row="6" Grid.Column="1" HorizontalAlignment="Left" Text="{Binding selectedPlot.location.Longitude}"/>
+                    <TextBox Grid.Row="6" Grid.Column="1" Text="{Binding selectedPlot.longitude}"/>
 
                     <Label Grid.Row="7" Grid.Column="0" HorizontalAlignment="Right" Content="Altitude:"></Label>
                     <TextBox Grid.Row="7" Grid.Column="1" Text="{Binding selectedPlot.altitude}"/>
@@ -218,14 +218,15 @@
                             <Rectangle Width="20" Height="20" Fill="Transparent" Stroke="Gray"/>
                             <Label Content="sign:"></Label>
                             <Label Content="{Binding callsign}"/>
-                            <Label Content="alt:"></Label>
-                            <Label Content="{Binding altitude}"/>
+                            <Label Content="Plot count:"></Label>
+                            <Label Content="{Binding plots.Count}"/>
                         </StackPanel>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
 
             <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center">
+                <Label Content="{Binding tracks.Count}"/>
                 <Slider  Width="400" Value="{Binding viewModelCurrentTime , Mode=TwoWay}" Orientation="Horizontal" HorizontalAlignment="Left" 
                         IsSnapToTickEnabled="True" Maximum="{Binding serverCurrentTime}" TickPlacement="BottomRight" 
                         AutoToolTipPlacement="BottomRight" TickFrequency="4"
@@ -234,7 +235,6 @@
                 <CheckBox Content="Sync" IsChecked="{Binding syncTimeWithServer,Mode=TwoWay}" />
             </StackPanel>
         </Grid>
-        <Label Content="{Binding plots.Count}"/>
     </StackPanel>
 </Window>
 

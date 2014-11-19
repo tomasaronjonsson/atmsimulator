@@ -107,21 +107,6 @@ namespace ViewModel
             }
         }
 
-        // Stores the list of Plots 
-        private BindingList<ViewModelPlot> _plots;
-        public BindingList<ViewModelPlot> plots
-        {
-            get { return _plots; }
-            set
-            {
-                if (value != _plots)
-                {
-                    _plots = value;
-                    RaisePropertyChanged("plots");
-                }
-            }
-        }
-
         // Stores the list of Tracks
         private BindingList<ViewModelTrack> _tracks;
         public BindingList<ViewModelTrack> tracks
@@ -198,8 +183,7 @@ namespace ViewModel
             //Client current time is in sync with the server time at the start of the program
             _syncTimeWithServer = true;
 
-            //Plots and Tracks lists are initialized
-            _plots = new BindingList<ViewModelPlot>();
+            //Track list is initialized
             _tracks = new BindingList<ViewModelTrack>();
 
             //Initialize the model
@@ -350,7 +334,6 @@ namespace ViewModel
                     _CreateNewPlot = new RelayCommand(
                        async () =>
                        {
-
                            await model.createNewPlot(selectedTrack.toTrack());
                        },
                        () =>
@@ -527,13 +510,24 @@ namespace ViewModel
         /* Create a new plot
          * 
          * -validate the input
+         * -find the trackToAddTo
+         * -validate the trackToAddTo
+         * -convert the input to a ViewModelPlot
          * -add the plot
+         * -select the plot
          * */
         private void handleCreatePlot(Plot p)
         {
             if (p != null)
             {
-                plots.Add(new ViewModelPlot(p));
+                var trackToAddInto = tracks.First(x => x.trackID == p.trackID);
+
+                if (trackToAddInto != null)
+                {
+                    ViewModelPlot vmPlot = new ViewModelPlot(p);
+                    trackToAddInto.plots.Add(vmPlot);
+                    selectedPlot = vmPlot;
+                }
             }
         }
 
@@ -574,7 +568,7 @@ namespace ViewModel
 
                 if (trackToLookInto != null)
                 {
-                    ViewModelPlot plotToBeChanged = trackToLookInto.plots.First(x => x.Equals(p));
+                    ViewModelPlot plotToBeChanged = trackToLookInto.plots.First(x => x.Equals(new ViewModelPlot(p)));
 
                     if (plotToBeChanged != null)
                         plotToBeChanged.edit(p);

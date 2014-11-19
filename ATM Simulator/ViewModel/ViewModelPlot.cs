@@ -11,7 +11,39 @@ namespace ViewModel
     {
         #region Properties
 
-        // Store the location of the plot 
+        // Store the longitude of the plot
+        private double _longitude;
+        public double longitude
+        {
+            get { return _longitude; }
+            set
+            {
+                if (value != _longitude)
+                {
+                    _longitude = value;
+                    _location.Longitude = _longitude;
+                    RaisePropertyChanged("longitude");
+                }
+            }
+        }
+
+        // Store the latitude of the plot
+        private double _latitude;
+        public double latitude
+        {
+            get { return _latitude; }
+            set
+            {
+                if (value != _latitude)
+                {
+                    _latitude = value;
+                    _location.Latitude = _latitude;
+                    RaisePropertyChanged("latitude");
+                }
+            }
+        }
+
+        // Store the location of the plot in a GeoPoint
         private GeoPoint _location;
         public GeoPoint location
         {
@@ -153,13 +185,13 @@ namespace ViewModel
                 return false;
 
             //Convert the input into both a ViewModelPlot and a Plot
-            ViewModelPlot objasViewModelPlot = obj as ViewModelPlot;
+            ViewModelPlot objAsViewModelPlot = obj as ViewModelPlot;
             Plot objAsPlot = obj as Plot;
 
 
             //Validate objasViewModelPlot and then check the trackID and thetime in order to identify the plot
-            if (objasViewModelPlot != null)
-                if ((objasViewModelPlot.trackID == this.trackID) && (objasViewModelPlot.time == this.time))
+            if (objAsViewModelPlot != null)
+                if ((objAsViewModelPlot.trackID == this.trackID) && (objAsViewModelPlot.time == this.time))
                     return true;
 
             //Validate objAsPlot and then check the trackID and thetime in order to identify the plot
