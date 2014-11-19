@@ -273,7 +273,7 @@ namespace ViewModel
                        },
                        () =>
                        {
-                           return serverIsAvailable;
+                           return serverIsAvailable && _tracks.Count != 0;
                        });
                 }
                 return _CreateNewTrack;
