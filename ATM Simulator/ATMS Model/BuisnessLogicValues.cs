@@ -1,4 +1,5 @@
-﻿namespace ATMS_Model
+﻿using System;
+namespace ATMS_Model
 {
     /*
      * This class holds some values
@@ -14,5 +15,46 @@
          * of the real radar.
          * */
         public static int radarInterval = 4;
+
+        /*
+         * This method generates the next plot from another plot
+         * 
+         * -creates a new plot
+         * -validates the input
+         * -prepares the next plot
+         * -returns it
+         * */
+        public static Plot generateNextLogicPlot(Plot p)
+        {
+            Plot nextLogicalPlot = new Plot();
+
+            if (p != null)
+            {
+                //Use the same trackID, speed, altitude & course for the next plot
+                nextLogicalPlot.trackID = p.trackID;
+                nextLogicalPlot.speed = p.speed;
+                nextLogicalPlot.altitude = p.altitude;
+                nextLogicalPlot.course = p.course;
+
+                //Set the right time for the next plot
+                nextLogicalPlot.time = p.time + radarInterval;
+                
+                //calculate the travel distance in kilometers
+                double travelDistanceInKm = p.speed * radarInterval / 1000;
+
+                //Earth Radius in Km
+                var R = 6371; 
+
+                //Calculate the next Latitude & Longitude points
+                var lat2 = Math.Asin(Math.Sin(Math.PI / 180 * p.latitude) * Math.Cos(travelDistanceInKm / R) + Math.Cos(Math.PI / 180 * p.latitude) * Math.Sin(travelDistanceInKm / R) * Math.Cos(Math.PI / 180 * p.course));
+                var lon2 = Math.PI / 180 * p.longitude + Math.Atan2(Math.Sin( Math.PI / 180 * p.course) * Math.Sin(travelDistanceInKm / R) * Math.Cos( Math.PI / 180 * p.latitude ), Math.Cos(travelDistanceInKm / R) - Math.Sin( Math.PI / 180 * p.latitude) * Math.Sin(lat2));
+
+                //Assign the location points to the plot
+                nextLogicalPlot.latitude = 180 / Math.PI * lat2;
+                nextLogicalPlot.longitude = 180 / Math.PI * lon2;
+            }
+
+            return nextLogicalPlot;
+        }
     }
 }

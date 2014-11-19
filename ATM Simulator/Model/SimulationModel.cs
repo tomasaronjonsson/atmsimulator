@@ -271,8 +271,5 @@ namespace Model
         }
 
         #endregion
-
-
-       
     }
 }

@@ -12,8 +12,8 @@ namespace ATMS_Model
         public static Scenario populateInitialScenario()
         {
             Scenario sc = new Scenario();
-            int tracks = 5;
-            int plots = 300;
+            int tracks = 1;
+            int plots = 1;
 
             //starting point for the test flights
             double baseLatitude = 55.850223;
