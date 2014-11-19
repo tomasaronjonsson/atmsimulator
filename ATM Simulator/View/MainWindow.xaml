@@ -122,7 +122,7 @@
             </StackPanel>
 
             <!-- The map itself from openstreet -->
-            <dxm:MapControl Name="theMap" Grid.Row="0" Grid.Column="1" Grid.RowSpan="2"   ZoomLevel="8"  CenterPoint="55.85,9.82" MouseRightButtonUp="VectorLayer_MouseLeftButtonDown" >
+            <dxm:MapControl Name="theMap" Grid.Row="0" Grid.Column="1" Grid.RowSpan="2"   ZoomLevel="8"  CenterPoint="55.85,9.82" MouseRightButtonDown="VectorLayer_MouseLeftButtonDown" >
                 <dxm:ImageTilesLayer Name="mapContainer">
                     <dxm:ImageTilesLayer.DataProvider>
                         <dxm:OpenStreetMapDataProvider/>
