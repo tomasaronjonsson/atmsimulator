@@ -180,14 +180,14 @@
                     <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding selectedTrack.callsign}"/>
 
                     <Label Grid.Row="2" Grid.Column="0" HorizontalAlignment="Left" Content="Speed:"/>
-                    <TextBox Grid.Row="2" Grid.Column="1" Text="NO TEXT"/>
+                    <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding selectedPlot.speed}"/>
                     <Label Grid.Row="3" Grid.Column="0" HorizontalAlignment="Left" Content="Course:"/>
-                    <TextBox Grid.Row="3" Grid.Column="1" Text="NO TEXT"/>
+                    <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding selectedPlot.course}"/>
 
                     <Button Grid.Row="4" Grid.ColumnSpan="2" Content="Save track changes" Command="{Binding EditTrack}"/>
 
                     <!-- Plot information -->
-                    <StackPanel  HorizontalAlignment="Left" Orientation="Horizontal" Grid.Row="4" Grid.ColumnSpan="2">
+                    <StackPanel  HorizontalAlignment="Left" Orientation="Horizontal" Grid.Row="6" Grid.ColumnSpan="2">
                         <Label Content="Plot time:"/>
                         <Label Content="{Binding selectedPlot.time}"/>
                     </StackPanel>
