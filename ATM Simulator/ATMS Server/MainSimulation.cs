@@ -420,22 +420,72 @@ namespace ATMS_Server
                     //Reference the track where the plot will be removed from
                     Track trackToLookInto = mainScenario.tracks.First(x => x.trackID == p.trackID);
 
-                    //Validate the track
+                    //Validate the trackToLookInto
                     if (trackToLookInto != null)
                     {
-                        //Reference the plot that will be edited
-                        Plot plotToBeChanged = trackToLookInto.plots.First(x => x.trackID == p.trackID);
+                        if (timeThread != null)
+                        {
+                            //Reference the plot that will be edited
+                            Plot plotToBeChanged = trackToLookInto.plots.FirstOrDefault(x => x.time == currentServerTime + ATMS_Model.BuisnessLogicValues.radarInterval);
 
-                        //Validate the plot
-                        if (plotToBeChanged != null)
-                            plotToBeChanged.edit(p);
-
-                        //Call back towards the client with the reply
-                        clients.ForEach(delegate(IClientCallbackInterface callback)
+                            //Validate the plotToBeChanged
+                            if (plotToBeChanged != null)
                             {
-                                callback.notifyEditedPlot(p);
+                                //Edit the plot
+                                plotToBeChanged.edit(p);
+
+                                foreach (Plot item in trackToLookInto.plots)
+                                {
+                                    Plot plotToBeDeleted = trackToLookInto.plots.First(x => x.time > currentServerTime + ATMS_Model.BuisnessLogicValues.radarInterval);
+
+                                    //Validate the plotToBeDeleted
+                                    if (plotToBeDeleted != null)
+                                    {
+                                        trackToLookInto.plots.Remove(plotToBeDeleted);
+                                    }
+                                }
                             }
-                        );
+                            //If there is no future plot
+                            else
+                            {
+                                Plot currentPlot = trackToLookInto.plots.First(x => x.time == currentServerTime);
+
+                                //Validate the current plot
+                                if (currentPlot != null)
+                                {
+                                    //Generate a plot
+                                    Plot generatedPlot = ATMS_Model.BuisnessLogicValues.generateNextLogicPlot(currentPlot);
+                                    generatedPlot.course = p.course;
+                                    
+                                    //Add it to the list
+                                    trackToLookInto.plots.Add(generatedPlot);
+
+                                    //Call back towards the client with the reply
+                                    clients.ForEach(delegate(IClientCallbackInterface callback)
+                                        {
+                                            callback.notifyNewPlot(generatedPlot);
+                                        }
+                                    );
+                                }
+                            }
+                        }
+
+                        else
+                        {
+                            //Reference the plot that will be edited
+                            Plot plotToBeChanged = trackToLookInto.plots.First(x => x.Equals(p));
+
+                            //Validate the plot
+                            if (plotToBeChanged != null)
+                                plotToBeChanged.edit(p);
+
+                            //Call back towards the client with the reply
+                            clients.ForEach(delegate(IClientCallbackInterface callback)
+                                {
+                                    callback.notifyEditedPlot(p);
+                                }
+                            );
+                        }
                     }
                 }
             }
