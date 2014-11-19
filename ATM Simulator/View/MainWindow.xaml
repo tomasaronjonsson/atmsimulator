@@ -179,7 +179,7 @@
                     <Label  Grid.Row="1" Grid.Column="0" HorizontalAlignment="Left" Content="Call Sign:"></Label>
                     <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding selectedTrack.callsign}"/>
 
-                    <Label Grid.Row="2" Grid.Column="0" HorizontalAlignment="Left" Content="Speed:"/>
+                    <Label Grid.Row="2" Grid.Column="0" HorizontalAlignment="Left" Content="Speed (m/s):"/>
                     <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding selectedPlot.speed}"/>
                     <Label Grid.Row="3" Grid.Column="0" HorizontalAlignment="Left" Content="Course:"/>
                     <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding selectedPlot.course}"/>
@@ -188,7 +188,7 @@
 
                     <!-- Plot information -->
                     <StackPanel  HorizontalAlignment="Left" Orientation="Horizontal" Grid.Row="6" Grid.ColumnSpan="2">
-                        <Label Content="Plot time:"/>
+                        <Label Content="Plot time (s):"/>
                         <Label Content="{Binding selectedPlot.time}"/>
                     </StackPanel>
 
@@ -200,7 +200,7 @@
                     <Label Grid.Row="9" Grid.Column="0" HorizontalAlignment="Left" Content="Altitude:"></Label>
                     <TextBox Grid.Row="9" Grid.Column="1" Text="{Binding selectedPlot.altitude}"/>
 
-                    <Label Grid.Row="10" Grid.Column="0" HorizontalAlignment="Left" Content="Speed:"></Label>
+                    <Label Grid.Row="10" Grid.Column="0" HorizontalAlignment="Left" Content="Speed (m/s):"></Label>
                     <TextBox Grid.Row="10" Grid.Column="1" Text="{Binding selectedPlot.speed}"/>
 
                     <Label Grid.Row="11" Grid.Column="0" HorizontalAlignment="Left" Content="Course:"></Label>
