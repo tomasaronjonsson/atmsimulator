@@ -2,6 +2,7 @@
 using DevExpress.Xpf.Map;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Input;
 using ViewModel;
 
@@ -17,27 +18,40 @@ namespace View
             InitializeComponent();
         }
 
+        /*
+         * This method creates a context menu on the map layer
+         * if a track is selected.
+         * */
         private void VectorLayer_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            GeoPoint geoPt = this.theMap.Layers[0].ScreenToGeoPoint(e.GetPosition(this.theMap));
+            //Sets the data context for the following operations
+            var vm = (SimulationViewModel)DataContext;
 
-            ContextMenu contextmenu = new ContextMenu();
-            theMap.ContextMenu = contextmenu;
-
-            MenuItem mi = new MenuItem();
-            mi.Header = "Create Plot";
-            mi.MouseLeftButtonDown += new MouseButtonEventHandler(createPlot);
-            contextmenu.Items.Add(mi);
-        }
-
-        private void createPlot(object sender, MouseButtonEventArgs e)
-        {
-            /*var vm = (SimulationViewModel)DataContext;
-
-            if (vm.CreateNewPlot.CanExecute(vm.tracks.Count > 0))
+            //Validate the selected track
+            if (vm.selectedTrack != null)
             {
-                vm.CreateNewPlot.Execute(null);
-            }*/
+                //Create a GeoPoint with the coordinates of the pointer
+                GeoPoint geoPt = this.theMap.Layers[0].ScreenToGeoPoint(e.GetPosition(this.theMap));
+                //Set the newPlotLocation property on the ViewModel
+                vm.newPlotLocation = geoPt;
+
+                /*
+                 * -Create the context menu
+                 * -Assign the context menu to the map
+                 * -Create a menu item
+                 * -Set the header of the menu item
+                 * -Bind a command to the menu item
+                 * -Add the menu item to the context menu
+                 * */
+                ContextMenu contextmenu = new ContextMenu();
+                theMap.ContextMenu = contextmenu;
+
+                MenuItem mi = new MenuItem();
+                mi.Header = "Create Plot";
+                mi.Command = vm.CreateNewPlotOnMap;
+
+                contextmenu.Items.Add(mi);
+            }
         }
     }
 }

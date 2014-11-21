@@ -1,4 +1,5 @@
 ﻿using ATMS_Model;
+using DevExpress.Xpf.Map;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
@@ -155,6 +156,20 @@ namespace ViewModel
                 {
                     _selectedPlot = value;
                     RaisePropertyChanged("selectedPlot");
+                }
+            }
+        }
+
+        private GeoPoint _newPlotLocation;
+        public GeoPoint newPlotLocation
+        {
+            get { return _newPlotLocation; }
+            set
+            {
+                if (value != _newPlotLocation)
+                {
+                    _newPlotLocation = value;
+                    RaisePropertyChanged("newPlotLocation");
                 }
             }
         }
@@ -342,6 +357,27 @@ namespace ViewModel
                        });
                 }
                 return _CreateNewPlot;
+            }
+        }
+
+        private RelayCommand _CreateNewPlotOnMap;
+        public RelayCommand CreateNewPlotOnMap
+        {
+            get
+            {
+                if (_CreateNewPlotOnMap == null)
+                {
+                    _CreateNewPlotOnMap = new RelayCommand(
+                       async () =>
+                       {
+                           await model.createNewPlotOnMap(selectedTrack.toTrack(), newPlotLocation.Latitude, newPlotLocation.Longitude);
+                       },
+                       () =>
+                       {
+                           return serverIsAvailable && (selectedTrack != null);
+                       });
+                }
+                return _CreateNewPlotOnMap;
             }
         }
 

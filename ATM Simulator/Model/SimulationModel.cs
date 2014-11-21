@@ -198,6 +198,20 @@ namespace Model
             serverIsAvailable = true;
         }
 
+        //Create a new plot from the map and assign a track to it
+        public async Task createNewPlotOnMap(Track t, double lat, double lon)
+        {
+            Plot p = new Plot();
+            //Make the plot belong to a track by taking the trackID from the selected track
+            p.trackID = t.trackID;
+            //Set the latitude & longitude from the input Plot
+            p.latitude = lat;
+            p.longitude = lon;
+            checkServerStatus();
+            await server.createNewPlotAsync(p);
+            serverIsAvailable = true;
+        }
+
         //Remove a plot
         public async Task removePlot(Plot p)
         {
