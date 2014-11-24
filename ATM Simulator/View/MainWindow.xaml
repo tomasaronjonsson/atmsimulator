@@ -126,7 +126,7 @@
             <dxm:VectorLayer ItemsSource="{Binding map }">
             </dxm:VectorLayer>
 
-            <!-- layer to show the plots to each track on the map-->
+                <!-- layer to show the plots to each track on the map-->
                 <dxm:VectorLayer ItemsSource="{Binding selectedTrack.plots }">
                 </dxm:VectorLayer>
 
