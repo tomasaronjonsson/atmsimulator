@@ -121,20 +121,13 @@
                 <Label  Content="{Binding serverCurrentTime}"/>
             </StackPanel>
 
-            <!-- The map itself from openstreet -->
-            <dxm:MapControl Name="theMap" Grid.Row="0" Grid.Column="1" Grid.RowSpan="2"   ZoomLevel="8"  CenterPoint="55.85,9.82" MouseRightButtonUp="VectorLayer_MouseLeftButtonDown" >
-                <dxm:ImageTilesLayer Name="mapContainer">
-                    <dxm:ImageTilesLayer.DataProvider>
-                        <dxm:OpenStreetMapDataProvider/>
-                    </dxm:ImageTilesLayer.DataProvider>
-                </dxm:ImageTilesLayer>
+            <dxm:MapControl Grid.Column="1" Grid.Row="0" Grid.RowSpan="2">
+            <!-- layer to show the plots to each track on the map-->
+            <dxm:VectorLayer ItemsSource="{Binding map }">
+            </dxm:VectorLayer>
 
-                <!-- layer to show the plots to each track on the map-->
-                <dxm:VectorLayer ItemsSource="{Binding selectedTrack.plots }" 
-                                 SelectedItem="{Binding selectedPlot, Mode=TwoWay}"
-                                 LatitudeDataMember="location.Latitude"
-                                 LongitudeDataMember="location.Longitude"
-                                 ItemTemplate="{StaticResource plotTemplate}">
+            <!-- layer to show the plots to each track on the map-->
+                <dxm:VectorLayer ItemsSource="{Binding selectedTrack.plots }">
                 </dxm:VectorLayer>
 
                 <!-- layer to show the tracks on the map-->
