@@ -154,7 +154,6 @@
                                  EnableHighlighting="False" 
                                  Visibility="{Binding IsChecked,ElementName=layerCheckbox,Converter={StaticResource b2v}}"/>
 
-
                 <!-- layer to show the plots to each track on the map-->
                 <dxm:VectorLayer ItemsSource="{Binding selectedTrack.plots }" 
                                  SelectedItem="{Binding selectedPlot, Mode=TwoWay}"
