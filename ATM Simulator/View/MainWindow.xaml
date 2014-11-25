@@ -66,7 +66,7 @@
                         <Grid.RowDefinitions>
                             <RowDefinition/>
                         </Grid.RowDefinitions>
-                        <Rectangle Margin="0,15,0,0" Grid.Row="0" Grid.Column="0" Width="15" Height="15" Fill="Transparent" Stroke="Gray"/>
+                        <Rectangle Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="15" Height="15" Fill="Transparent" Stroke="Gray"/>
 
                         <!-- The grid for the track information on the map if you check the below grid and column value you will move the inffomration around the track icon-->
                         <Grid Grid.Row="0" Grid.Column="1">
