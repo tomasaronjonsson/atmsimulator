@@ -28,6 +28,8 @@ namespace ViewModel
 
         List<MapImporter.MapObject> mapObjects;
 
+        bool newTrackCreated;
+
         #region Properties
 
         //store the mapitem list that represents Inseros map
@@ -227,6 +229,9 @@ namespace ViewModel
             //Client current time is in sync with the server time at the start of the program
             _syncTimeWithServer = true;
 
+            //newly created track flag
+            newTrackCreated = false;
+
             //Track list is initialized
             _tracks = new BindingList<ViewModelTrack>();
 
@@ -368,6 +373,28 @@ namespace ViewModel
             }
         }
 
+        private RelayCommand _CreateNewTrackOnMap;
+        public RelayCommand CreateNewTrackOnMap
+        {
+            get
+            {
+                if (_CreateNewTrackOnMap == null)
+                {
+                    _CreateNewTrackOnMap = new RelayCommand(
+                       async () =>
+                       {
+                           newTrackCreated = true;
+                           await model.createNewTrackOnMap(newPlotLocation.Latitude, newPlotLocation.Longitude);
+                       },
+                       () =>
+                       {
+                           return serverIsAvailable && _tracks.Count != 0 && !serverIsPlaying;
+                       });
+                }
+                return _CreateNewTrackOnMap;
+            }
+        }
+
         private RelayCommand _RemoveTrack;
         public RelayCommand RemoveTrack
         {
@@ -433,24 +460,25 @@ namespace ViewModel
             }
         }
 
-        private RelayCommand _CreateNewPlotOnMap;
-        public RelayCommand CreateNewPlotOnMap
+        private RelayCommand _AddWaypointToMap;
+        public RelayCommand AddWaypointToMap
         {
             get
             {
-                if (_CreateNewPlotOnMap == null)
+                if (_AddWaypointToMap == null)
                 {
-                    _CreateNewPlotOnMap = new RelayCommand(
+                    _AddWaypointToMap = new RelayCommand(
                        async () =>
                        {
-                           await model.createNewPlotOnMap(selectedTrack.toTrack(), newPlotLocation.Latitude, newPlotLocation.Longitude);
+                           await model.addWaypointToMap(selectedTrack.toTrack(), newPlotLocation.Latitude, newPlotLocation.Longitude);
                        },
                        () =>
                        {
-                           return serverIsAvailable && (selectedTrack != null);
+                           return serverIsAvailable && (selectedTrack != null) && !serverIsPlaying
+;
                        });
                 }
-                return _CreateNewPlotOnMap;
+                return _AddWaypointToMap;
             }
         }
 
@@ -579,7 +607,14 @@ namespace ViewModel
         {
             if (t != null)
             {
+                ViewModelTrack vmT = new ViewModelTrack(t);
                 tracks.Add(new ViewModelTrack(t));
+
+                if (newTrackCreated)
+                {
+                    selectedTrack = vmT;
+                    newTrackCreated = false;
+                }
             }
         }
 
@@ -736,8 +771,8 @@ namespace ViewModel
                     MapImporter.Polygon polygon = (MapImporter.Polygon)s;
 
                     MapPolygon tempPolygon = new MapPolygon();
-                    
-                    
+
+
 
                     for (int i = 0; i < polygon.Points.Count; i++)
                     {
@@ -753,7 +788,7 @@ namespace ViewModel
                     }
                     tempMap.Add(tempPolygon);
                 }
-                    //inseros polyline to devex polyline
+                //inseros polyline to devex polyline
                 else if (s is MapImporter.Polyline)
                 {
                     MapImporter.Polyline polyline = (MapImporter.Polyline)s;
@@ -761,7 +796,7 @@ namespace ViewModel
 
                     MapPolyline tempPolyline = new MapPolyline();
 
-                    for (int i = 0; i < polyline.Points.Count;i++ )
+                    for (int i = 0; i < polyline.Points.Count; i++)
                     {
                         GeoPoint newGeoPoint = new GeoPoint();
 
@@ -775,7 +810,7 @@ namespace ViewModel
                     }
                     tempMap.Add(tempPolyline);
                 }
-                
+
 
             }
 
@@ -785,7 +820,7 @@ namespace ViewModel
             mapObjects = tempMapObjects;
 
         }
-        
+
 
     }
 }

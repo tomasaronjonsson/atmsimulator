@@ -180,6 +180,29 @@ namespace Model
             serverIsAvailable = true;
         }
 
+        //Create a new track on the map
+        public async Task createNewTrackOnMap(double lat, double lon)
+        {
+            Plot p = new Plot();
+            p.latitude = lat;
+            p.longitude = lon;
+            p.altitude = ATMS_Model.BuisnessLogicValues.altitude;
+            p.course = ATMS_Model.BuisnessLogicValues.course;
+            p.speed = ATMS_Model.BuisnessLogicValues.speed;
+
+            Track t = new Track();
+            t.SSR = ATMS_Model.BuisnessLogicValues.SSR;
+            t.WTC = ATMS_Model.BuisnessLogicValues.WTC;
+            t.ArType = ATMS_Model.BuisnessLogicValues.ArType;
+            t.ADEP = ATMS_Model.BuisnessLogicValues.ADEP;
+            t.ADES = ATMS_Model.BuisnessLogicValues.ADES;
+            t.plots.Add(p);
+
+            checkServerStatus();
+            await server.createNewTrackAsync(t);
+            serverIsAvailable = true;
+        }
+
         //Remove a track
         public async Task removeTrack(Track t)
         {
@@ -207,8 +230,8 @@ namespace Model
             serverIsAvailable = true;
         }
 
-        //Create a new plot from the map and assign a track to it
-        public async Task createNewPlotOnMap(Track t, double lat, double lon)
+        //Create a new waypoint on the map and assign a track to it
+        public async Task addWaypointToMap(Track t, double lat, double lon)
         {
             Plot p = new Plot();
             //Make the plot belong to a track by taking the trackID from the selected track
@@ -219,6 +242,7 @@ namespace Model
             p.altitude = ATMS_Model.BuisnessLogicValues.altitude;
             p.course = ATMS_Model.BuisnessLogicValues.course;
             p.speed = ATMS_Model.BuisnessLogicValues.speed;
+
             checkServerStatus();
             await server.createNewPlotAsync(p);
             serverIsAvailable = true;

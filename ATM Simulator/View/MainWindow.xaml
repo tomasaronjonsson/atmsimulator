@@ -120,7 +120,7 @@
 
                 <!-- Map controls -->
                 <Label Content="Map:"/>
-                
+
                 <Button Content="Import map" Command="{Binding ImportMap}"/>
 
                 <CheckBox Name="layerCheckbox" Margin="5">
@@ -136,11 +136,9 @@
                 <Label  Content="Server Time:"/>
                 <Label  Content="{Binding serverCurrentTime}"/>
             </StackPanel>
-            
-            <dxm:MapControl 
-                Name="theMap" Grid.Row="0" Grid.Column="1" Grid.RowSpan="2"   ZoomLevel="8"  CenterPoint="55.85,9.82" 
-                MouseRightButtonDown="VectorLayer_MouseRightButtonDown" 
-               >
+
+            <dxm:MapControl Name="theMap" Grid.Row="0" Grid.Column="1" Grid.RowSpan="2"   ZoomLevel="8"  CenterPoint="55.85,9.82" 
+                MouseRightButtonDown="VectorLayer_MouseRightButtonDown">
                 <dxm:ImageTilesLayer Name="mapContainer" 
                                      Visibility="{Binding IsChecked,ElementName=providerCheckbox,Converter={StaticResource b2v}}">
                     <dxm:ImageTilesLayer.DataProvider>
@@ -198,13 +196,13 @@
                     <!-- Track information -->
                     <Label Grid.Row="0" Grid.Column="0" Content="Track id "/>
                     <Label Grid.Row="0" Grid.Column="1" Content="{Binding selectedTrack.trackID}"/>
-                    
+
                     <Label Grid.Row="1" Grid.Column="0" Content="SSR "/>
                     <Label Grid.Row="1" Grid.Column="1" Content="{Binding selectedTrack.SSR}"/>
-                    
+
                     <Label Grid.Row="2" Grid.Column="0" Content="Aircraft type "/>
                     <Label Grid.Row="2" Grid.Column="1" Content="{Binding selectedTrack.ArType}"/>
-                    
+
                     <Label Grid.Row="3" Grid.Column="0" Content="ADEP "/>
                     <Label Grid.Row="3" Grid.Column="1" Content="{Binding selectedTrack.ADEP}"/>
 
