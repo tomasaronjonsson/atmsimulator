@@ -22,9 +22,9 @@ namespace View
          * This method creates a context menu on the map layer
          * if a track is selected.
          * */
-        private void VectorLayer_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void VectorLayer_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
         {
-            //Sets the data context for the following operations
+     //Sets the data context for the following operations
             var vm = (SimulationViewModel)DataContext;
 
             //Validate the selected track
@@ -51,7 +51,7 @@ namespace View
                 mi.Command = vm.CreateNewPlotOnMap;
 
                 contextmenu.Items.Add(mi);
-            }
         }
+}
     }
 }

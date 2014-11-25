@@ -115,19 +115,23 @@
                 <Button Content="Create new plot" Command="{Binding CreateNewPlot}"/>
                 <Button Content="Remove plot" Command="{Binding RemovePlot}"/>
 
+                <Label Content="Others:"/>
+
+                <Button Content="Import map" Command="{Binding ImportMap}"/>
                 <Label  Content="VM Time:"/>
                 <Label  Content="{Binding viewModelCurrentTime}"/>
                 <Label  Content="Server Time:"/>
                 <Label  Content="{Binding serverCurrentTime}"/>
+
             </StackPanel>
 
-            <dxm:MapControl Grid.Column="1" Grid.Row="0" Grid.RowSpan="2">
+            <dxm:MapControl Name="theMap" Grid.Row="0" Grid.Column="1" Grid.RowSpan="2"   ZoomLevel="8"  CenterPoint="55.85,9.82" MouseRightButtonDown="VectorLayer_MouseRightButtonDown" >
             <!-- layer to show the plots to each track on the map-->
-            <dxm:VectorLayer ItemsSource="{Binding map }">
+                <dxm:VectorLayer Name="mapContainer" ItemsSource="{Binding map }" EnableSelection="False" EnableHighlighting="False">
             </dxm:VectorLayer>
 
                 <!-- layer to show the plots to each track on the map-->
-                <dxm:VectorLayer ItemsSource="{Binding selectedTrack.plots }">
+                <dxm:VectorLayer ItemsSource="{Binding selectedTrack.plots }" >
                 </dxm:VectorLayer>
 
                 <!-- layer to show the tracks on the map-->

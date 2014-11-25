@@ -11,6 +11,10 @@ using System.Collections.Generic;
 using DevExpress.Xpf.Map;
 using System;
 using System.Collections.ObjectModel;
+using System.Xml.Linq;
+using System.Threading.Tasks;
+using System.Xml.Serialization;
+using System.IO;
 
 namespace ViewModel
 {
@@ -21,6 +25,8 @@ namespace ViewModel
 
         //at the moment we only have a static value for the map
         string mapPath = "C:/maps.xml";
+
+        List<MapImporter.MapObject> mapObjects;
 
         #region Properties
 
@@ -239,8 +245,7 @@ namespace ViewModel
             Messenger.Default.Register<Plot>(this, "removePlot", handleRemovePlot);
             Messenger.Default.Register<Plot>(this, "editPlot", handleEditPlot);
 
-            //import the map and work with that
-            importMap();
+
 
 
             //Start up the model
@@ -256,6 +261,28 @@ namespace ViewModel
          * 
          * */
         #region RelayCommands
+
+        private RelayCommand _ImportMap;
+        public RelayCommand ImportMap
+        {
+            get
+            {
+                if (_ImportMap == null)
+                {
+                    _ImportMap = new RelayCommand(
+                       () =>
+                       {
+                           importMap();
+                       },
+                       () =>
+                       {
+                           return serverIsAvailable;
+                       });
+                }
+
+                return _ImportMap;
+            }
+        }
 
         private RelayCommand _CreateScenario;
         public RelayCommand CreateScenario
@@ -641,20 +668,23 @@ namespace ViewModel
 
         #endregion
 
-
-
+        /*
+         * review alex 
+         * 
+         * import the map objects from insero and populate our map list
+         */
         public void importMap()
         {
 
             //we are using the explicit names to not get them mixed with the devexpress or microsoft items
             //let's import the map
-            List<MapImporter.MapObject> mapObjects = MapImporter.Parser.parse(mapPath);
+            List<MapImporter.MapObject> tempMapObjects = MapImporter.Parser.parse(mapPath);
 
 
             //make a tempoarary list of shape to extract from the map ( we are taking ALL maps in atm
             List<MapImporter.Shape> tempShapes = new List<MapImporter.Shape>();
 
-            foreach (MapImporter.MapObject o in mapObjects)
+            foreach (MapImporter.MapObject o in tempMapObjects)
             {
                 foreach (MapImporter.Shape s in o.shapes)
                 {
@@ -681,14 +711,16 @@ namespace ViewModel
                     tempDot.Size = circle.Radius;
 
                 }
+                //inseros polygon to devex polygon
                 else if (s is MapImporter.Polygon)
                 {
                     MapImporter.Polygon polygon = (MapImporter.Polygon)s;
 
                     MapPolygon tempPolygon = new MapPolygon();
+                    
+                    
 
-
-                    for (int i = 0; i < polygon.Points.Count;)
+                    for (int i = 0; i < polygon.Points.Count; )
                     {
                         GeoPoint newGeoPoint = new GeoPoint();
 
@@ -703,15 +735,39 @@ namespace ViewModel
                     }
                     tempMap.Add(tempPolygon);
                 }
+                    //inseros polyline to devex polyline
+                else if (s is MapImporter.Polyline)
+                {
+                    MapImporter.Polyline polyline = (MapImporter.Polyline)s;
+
+
+                    MapPolyline tempPolyline = new MapPolyline();
+
+                    for (int i = 0; i < polyline.Points.Count; )
+                    {
+                        GeoPoint newGeoPoint = new GeoPoint();
+
+                        var split = polyline.Points[i].Split(',');
+
+
+                        newGeoPoint.Latitude = Double.Parse(split[0], System.Globalization.CultureInfo.InvariantCulture);
+                        newGeoPoint.Longitude = Double.Parse(split[1], System.Globalization.CultureInfo.InvariantCulture);
+
+                        i += 2;
+                        tempPolyline.Points.Add(newGeoPoint);
+                    }
+                }
+                
 
             }
 
-
+            //store the map we have created
             map = new ObservableCollection<MapItem>(tempMap);
-
-            
-
+            //store the mapobjects for later use (save, selected wich ones to use tc.)
+            mapObjects = tempMapObjects;
 
         }
+        
+
     }
 }
