@@ -245,9 +245,6 @@ namespace ViewModel
             Messenger.Default.Register<Plot>(this, "removePlot", handleRemovePlot);
             Messenger.Default.Register<Plot>(this, "editPlot", handleEditPlot);
 
-
-
-
             //Start up the model
             model.startUp();
         }
@@ -364,7 +361,7 @@ namespace ViewModel
                        },
                        () =>
                        {
-                           return serverIsAvailable && _tracks.Count != 0;
+                           return serverIsAvailable && _tracks.Count != 0 && !serverIsPlaying;
                        });
                 }
                 return _CreateNewTrack;
@@ -429,7 +426,7 @@ namespace ViewModel
                        },
                        () =>
                        {
-                           return serverIsAvailable && (selectedTrack != null);
+                           return serverIsAvailable && (selectedTrack != null) && !serverIsPlaying;
                        });
                 }
                 return _CreateNewPlot;
@@ -473,7 +470,7 @@ namespace ViewModel
                        },
                        () =>
                        {
-                           return serverIsAvailable && (selectedPlot != null);
+                           return serverIsAvailable && (selectedPlot != null) && !serverIsPlaying;
                        });
                 }
                 return _RemovePlot;
