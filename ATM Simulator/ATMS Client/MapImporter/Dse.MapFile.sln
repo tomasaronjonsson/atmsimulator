@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30723.0
+VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dse.MapFile", "Dse.MapFile.csproj", "{CD6D645D-55F3-4505-8375-A5079AF0B9D0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MapImporter", "MapImporter.csproj", "{CD6D645D-55F3-4505-8375-A5079AF0B9D0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "testing", "..\testing\testing.csproj", "{4DC86727-4C25-407F-98DB-F2D67AF610CF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{CD6D645D-55F3-4505-8375-A5079AF0B9D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CD6D645D-55F3-4505-8375-A5079AF0B9D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CD6D645D-55F3-4505-8375-A5079AF0B9D0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4DC86727-4C25-407F-98DB-F2D67AF610CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4DC86727-4C25-407F-98DB-F2D67AF610CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4DC86727-4C25-407F-98DB-F2D67AF610CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4DC86727-4C25-407F-98DB-F2D67AF610CF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

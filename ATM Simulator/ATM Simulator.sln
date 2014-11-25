@@ -27,7 +27,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "View", "View\View.csproj", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AsterixLib", "AsterixLib\AsterixLib.csproj", "{F25735B1-105B-40BC-9B17-CA5C6B30A5AA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MapImporter", "..\..\..\..\Dropbox\Bachelor Project\Dse.MapFile our prototype\MapImporter.csproj", "{CD6D645D-55F3-4505-8375-A5079AF0B9D0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MapImporter", "ATMS Client\MapImporter\MapImporter.csproj", "{CD6D645D-55F3-4505-8375-A5079AF0B9D0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

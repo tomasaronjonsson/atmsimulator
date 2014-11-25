@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Drawing;
 
-namespace Dse.MapFile
+namespace MapImporter
 {
    public class Shape
    {
@@ -10,7 +10,7 @@ namespace Dse.MapFile
 
       public Shape()
       {
-         LineStyle = Dse.MapFile.LineStyle.Solid;
+          LineStyle = MapImporter.LineStyle.Solid;
       }
    }
 }

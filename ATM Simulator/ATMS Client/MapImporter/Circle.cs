@@ -1,5 +1,5 @@
 ﻿
-namespace Dse.MapFile
+namespace MapImporter
 {
    public class Circle : Shape
    {

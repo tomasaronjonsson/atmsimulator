@@ -1,24 +1,30 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
 using System.IO;
 
-namespace Dse.MapFile
+namespace MapImporter
 {
    public static class MapFileParser
    {
-      public static MapFile Parse( string path )
+       /*
+        * changing their orginal method of taking a path to take in a string 
+        * 
+        * 
+        */
+      public static List<Shape> Parse( string toParse )
       {
-         var mapFile = new MapFile();
-         mapFile.Path = path;
-
          ColorConverter colorConverter = new ColorConverter();
 
          Nullable<Color> color = null;
          LineStyle lineStyle = LineStyle.Solid;
 
-         string originalLine = null;
-         using ( var reader = File.OpenText( path ) )
+         List<Shape> listOfShapes = new List<Shape>();
+
+         var originalLine = String.Empty;
+
+         using (StringReader reader = new StringReader(toParse))
          {
             var isProcessingPolygon = false;
             var isProcessingPolyline = false;
@@ -27,7 +33,7 @@ namespace Dse.MapFile
 
             while ( ( originalLine = reader.ReadLine() ) != null )
             {
-               var line = originalLine.ToUpper();
+               var line = originalLine.ToUpper().Trim();
 
                // Skip header, empty lines and comments.
                if ( String.IsNullOrWhiteSpace( line ) ||
@@ -42,7 +48,8 @@ namespace Dse.MapFile
                if ( line.StartsWith( "UNIT" ) )
                {
                   var lineParts = line.Split( ' ' );
-                  mapFile.Unit = lineParts[ 1 ];
+                   //todo
+                  //mapFile.Unit = lineParts[ 1 ];
                }
                else if ( line.StartsWith( "ATB" ) )
                {
@@ -52,10 +59,24 @@ namespace Dse.MapFile
                      if ( linePart.StartsWith( "COL" ) )
                      {
                         var linePartParts = linePart.Split( '=' );
-                        var colorObject = colorConverter.ConvertFromString( linePartParts[ 1 ] );
-                        if ( colorObject != null )
+                         //we did this tomas
+                        try
                         {
-                           color = (Color)colorObject;
+
+                            var colorParted = linePartParts[1].Split(',');
+                            String colorString = string.Format("#{0:X}{1:X}{2:X}", colorParted[0], colorParted[1], colorParted[2]);
+
+
+
+                            var colorObject = colorConverter.ConvertFromString(colorString);
+                            if (colorObject != null)
+                            {
+                                color = (Color)colorObject;
+                            }
+                        }
+                        catch (Exception)
+                        {
+                            color = Color.Black;
                         }
                      }
                      else if ( linePart.StartsWith( "LINE" ) )
@@ -74,7 +95,7 @@ namespace Dse.MapFile
                   var polygon = new Polygon();
                   polygon.Color = color;
                   polygon.LineStyle = lineStyle;
-                  polygon.Points.Add( TrimPoint( lineParts[ 1 ] ) );
+                  polygon.Points.Add(TrimPoint(lineParts[1] + "," + lineParts[2]));
 
                   currentPolygon = polygon;
                }
@@ -87,26 +108,32 @@ namespace Dse.MapFile
                   var polyline = new Polyline();
                   polyline.Color = color;
                   polyline.LineStyle = lineStyle;
-                  polyline.Points.Add( TrimPoint( lineParts[ 1 ] ) );
+                  polyline.Points.Add(TrimPoint(lineParts[1] + "," + lineParts[2]));
 
                   currentPolyline = polyline;
                }
                else if ( line.StartsWith( "C +" ) && isProcessingPolygon )
                {
+                /*   
                   var lineParts = line.Split( ' ' );
                   currentPolygon.Points.Add( TrimPoint( lineParts[ 1 ] ) );
+                  */ 
+
+                   var lineParts = line.Split(' ');
+                   currentPolygon.Points.Add(TrimPoint(lineParts[1] + "," + lineParts[2] ));
+
                }
                else if ( line.StartsWith( "C +" ) && isProcessingPolyline )
                {
                   var lineParts = line.Split( ' ' );
-                  currentPolyline.Points.Add( TrimPoint( lineParts[ 1 ] ) );
+                  currentPolyline.Points.Add(TrimPoint(lineParts[1] + "," + lineParts[2]));
                }
                else if ( line.StartsWith( "C )" ) && isProcessingPolygon )
                {
                   var lineParts = line.Split( ' ' );
-                  currentPolygon.Points.Add( TrimPoint( lineParts[ 1 ] ) );
+                  currentPolygon.Points.Add(TrimPoint(lineParts[1] + "," + lineParts[2]));
 
-                  mapFile.Shapes.Add( currentPolygon );
+                  listOfShapes.Add(currentPolygon);
                   currentPolygon = null;
 
                   isProcessingPolygon = false;
@@ -114,9 +141,9 @@ namespace Dse.MapFile
                else if ( line.StartsWith( "C )" ) && isProcessingPolyline )
                {
                   var lineParts = line.Split( ' ' );
-                  currentPolyline.Points.Add( TrimPoint( lineParts[ 1 ] ) );
+                  currentPolyline.Points.Add(TrimPoint(lineParts[1] + "," + lineParts[2]));
 
-                  mapFile.Shapes.Add( currentPolyline );
+                  listOfShapes.Add(currentPolyline);
                   currentPolyline = null;
 
                   isProcessingPolyline = false;
@@ -148,22 +175,22 @@ namespace Dse.MapFile
                      }
                   }
 
-                  mapFile.Shapes.Add( circle );
+                  listOfShapes.Add(circle);
                }
                else
                {
-                  var message = String.Format( "Could not parse the line \"{0}\" in MAP file \"{1}\".", line, mapFile.Path );
-                  throw new Exception( message );
+                  var message = String.Format( "Could not parse." );
+                 
                }
             }
          }
 
-         return mapFile;
+         return listOfShapes;
       }
 
       private static string TrimPoint( string point )
       {
-         return point.Replace( "(", "" ).Replace( "+", "" ).Replace( ")", "" );
+         return point.Replace( "(", "" ).Replace( "+", "" ).Replace( ")", "" ).Replace("#","");
       }
    }
 }

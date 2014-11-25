@@ -85,7 +85,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\..\Dropbox\Bachelor Project\Dse.MapFile our prototype\MapImporter.csproj">
+    <ProjectReference Include="..\ATMS Client\MapImporter\MapImporter.csproj">
       <Project>{cd6d645d-55f3-4505-8375-a5079af0b9d0}</Project>
       <Name>MapImporter</Name>
     </ProjectReference>

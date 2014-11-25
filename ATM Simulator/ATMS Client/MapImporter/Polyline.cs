@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Dse.MapFile
+namespace MapImporter
 {
    public class Polyline : Shape
    {
