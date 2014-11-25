@@ -54,23 +54,5 @@ namespace View
                 contextMenu.Items.Add(mi);
             }
         }
-
-        /*private void PlotGrid_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            //Sets the data context for the following operations
-            var vm = (SimulationViewModel)DataContext;
-
-            if (vm.selectedPlot != null)
-            {
-                ContextMenu plotContextMenu = new ContextMenu();
-                theMap.ContextMenu = plotContextMenu;
-
-                MenuItem mi = new MenuItem();
-                mi.Header = "Remove Plot";
-                mi.Command = vm.RemovePlot;
-
-                plotContextMenu.Items.Add(mi);
-            }
-        }*/
     }
 }

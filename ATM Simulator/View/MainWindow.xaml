@@ -7,9 +7,7 @@
         mc:Ignorable="d"
         x:Class="View.MainWindow" 
         Title="View test panel"
-        WindowStartupLocation="CenterScreen"
-        xmlns:V="clr-namespace:View"
-        x:Name="theWindow">
+        WindowStartupLocation="CenterScreen">
 
     <Window.DataContext>
         <vm:SimulationViewModel/>
@@ -68,24 +66,7 @@
                         <Grid.RowDefinitions>
                             <RowDefinition/>
                         </Grid.RowDefinitions>
-                        <Grid.ContextMenu>
-                            <ContextMenu>
-                                <MenuItem Header="Remove Plot" Command="{Binding RemovePlot}" />
-                            </ContextMenu>
-                        </Grid.ContextMenu>
-                        <Ellipse Name="plotRectangle" HorizontalAlignment="Left" VerticalAlignment="Top"  Grid.Row="0" Grid.Column="0" Width="10" Height="10" >
-                            <Ellipse.Style>
-                                <Style>
-                                    <Setter Property="Ellipse.Stroke" Value="Gray"/>
-                                    <Style.Triggers>
-                                        <Trigger Property="Ellipse.IsMouseOver" Value="True">
-                                            <Setter Property="Ellipse.Stroke" Value="Red" />
-                                            <Setter Property="Ellipse.Fill" Value="White"/>
-                                        </Trigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Ellipse.Style>
-                        </Ellipse>
+                        <Rectangle Margin="0,15,0,0" Grid.Row="0" Grid.Column="0" Width="15" Height="15" Fill="Transparent" Stroke="Gray"/>
 
                         <!-- The grid for the track information on the map if you check the below grid and column value you will move the inffomration around the track icon-->
                         <Grid Grid.Row="0" Grid.Column="1">
@@ -109,6 +90,7 @@
                         </Grid>
                     </Grid>
                 </DataTemplate>
+                <BooleanToVisibilityConverter x:Key="b2v" />
             </Grid.Resources>
 
             <Grid.RowDefinitions>
@@ -136,19 +118,42 @@
                 <Button Content="Create new plot" Command="{Binding CreateNewPlot}"/>
                 <Button Content="Remove plot" Command="{Binding RemovePlot}"/>
 
+                <!-- Map controls -->
+                <Label Content="Map:"/>
+                
+                <Button Content="Import map" Command="{Binding ImportMap}"/>
+
+                <CheckBox Name="layerCheckbox" Margin="5">
+                    <TextBlock>Layer</TextBlock>
+                </CheckBox>
+
+                <CheckBox Name="providerCheckbox" Margin="5" >
+                    <TextBlock>Provider</TextBlock>
+                </CheckBox>
+
                 <Label  Content="VM Time:"/>
                 <Label  Content="{Binding viewModelCurrentTime}"/>
                 <Label  Content="Server Time:"/>
                 <Label  Content="{Binding serverCurrentTime}"/>
             </StackPanel>
-
-            <!-- The map itself from openstreet -->
-            <dxm:MapControl Name="theMap" Grid.Row="0" Grid.Column="1" Grid.RowSpan="2"   ZoomLevel="8"  CenterPoint="55.85,9.82" MouseRightButtonDown="VectorLayer_MouseRightButtonDown" >
-                <dxm:ImageTilesLayer Name="mapContainer">
+            
+            <dxm:MapControl 
+                Name="theMap" Grid.Row="0" Grid.Column="1" Grid.RowSpan="2"   ZoomLevel="8"  CenterPoint="55.85,9.82" 
+                MouseRightButtonDown="VectorLayer_MouseRightButtonDown" 
+               >
+                <dxm:ImageTilesLayer Name="mapContainer" 
+                                     Visibility="{Binding IsChecked,ElementName=providerCheckbox,Converter={StaticResource b2v}}">
                     <dxm:ImageTilesLayer.DataProvider>
                         <dxm:OpenStreetMapDataProvider/>
                     </dxm:ImageTilesLayer.DataProvider>
                 </dxm:ImageTilesLayer>
+
+                <!-- layer to show the insero mapping-->
+                <dxm:VectorLayer ItemsSource="{Binding map }" 
+                                 EnableSelection="False" 
+                                 EnableHighlighting="False" 
+                                 Visibility="{Binding IsChecked,ElementName=layerCheckbox,Converter={StaticResource b2v}}"/>
+
 
                 <!-- layer to show the plots to each track on the map-->
                 <dxm:VectorLayer ItemsSource="{Binding selectedTrack.plots }" 
@@ -203,7 +208,7 @@
                     
                     <Label Grid.Row="3" Grid.Column="0" Content="ADEP "/>
                     <Label Grid.Row="3" Grid.Column="1" Content="{Binding selectedTrack.ADEP}"/>
-                    
+
                     <Label Grid.Row="4" Grid.Column="0" Content="ADES "/>
                     <Label Grid.Row="4" Grid.Column="1" Content="{Binding selectedTrack.ADES}"/>
 
@@ -212,7 +217,7 @@
 
                     <Label Grid.Row="6" Grid.Column="0" HorizontalAlignment="Left" Content="Speed (m/s)"/>
                     <TextBox Grid.Row="6" Grid.Column="1" Text="{Binding selectedPlot.speed}"/>
-                    
+
                     <Label Grid.Row="7" Grid.Column="0" HorizontalAlignment="Left" Content="Course"/>
                     <TextBox Grid.Row="7" Grid.Column="1" Text="{Binding selectedPlot.course}"/>
 
