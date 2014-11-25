@@ -267,10 +267,32 @@ namespace ViewModel
                        },
                        () =>
                        {
-                           return serverIsAvailable && !serverIsPlaying;
+                           return serverIsAvailable && !serverIsPlaying && tracks.Count > 0;
                        });
                 }
                 return _PlaySimulation;
+            }
+        }
+
+        private RelayCommand _PauseSimulation;
+        public RelayCommand PauseSimulation
+        {
+            get
+            {
+                if (_PauseSimulation == null)
+                {
+                    _PauseSimulation = new RelayCommand(
+                       async () =>
+                       {
+                           await model.pauseSimulation();
+                           serverIsPlaying = false;
+                       },
+                       () =>
+                       {
+                           return serverIsAvailable && serverIsPlaying;
+                       });
+                }
+                return _PauseSimulation;
             }
         }
 

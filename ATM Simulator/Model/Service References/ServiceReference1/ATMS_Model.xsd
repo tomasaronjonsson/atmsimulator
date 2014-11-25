@@ -1,7 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/ATMS_Model" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/ATMS_Model" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:schema xmlns:ser="http://schemas.microsoft.com/2003/10/Serialization/" xmlns:tns="http://schemas.datacontract.org/2004/07/ATMS_Model" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/ATMS_Model" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
   <xs:complexType name="Track">
     <xs:sequence>
+      <xs:element name="ADEP" nillable="true" type="xs:string" />
+      <xs:element name="ADES" nillable="true" type="xs:string" />
+      <xs:element name="ArType" nillable="true" type="xs:string" />
+      <xs:element name="SSR" nillable="true" type="xs:string" />
+      <xs:element name="WTC" type="ser:char" />
       <xs:element name="callSign" nillable="true" type="xs:string" />
       <xs:element name="plots" nillable="true" type="tns:ArrayOfPlot" />
       <xs:element name="trackID" type="xs:int" />

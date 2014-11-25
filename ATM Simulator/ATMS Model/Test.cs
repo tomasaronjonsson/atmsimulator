@@ -19,14 +19,16 @@ namespace ATMS_Model
             double baseLatitude = 55.850223;
             double baseLongitude = 9.829360;
 
-            //random number object to randomly simulate a track (testing purposes)
-            Random randGen = new Random();
-
             for (int i = 0; i < tracks; i++)
             {
                 Track track = new Track();
                 track.trackID = i;
                 track.callSign = "ISS" + i;
+                track.ADEP = BuisnessLogicValues.ADEP;
+                track.ADES = BuisnessLogicValues.ADES;
+                track.ArType = BuisnessLogicValues.ArType;
+                track.SSR = BuisnessLogicValues.SSR;
+                track.WTC = BuisnessLogicValues.WTC;
 
                 for (int a = 0; a < plots; a++)
                 {
@@ -45,7 +47,9 @@ namespace ATMS_Model
                         plot.longitude = baseLongitude - (i * 0.01) - (a * 0.01);
                     }
 
-                    plot.altitude = a * 4;
+                    plot.altitude = BuisnessLogicValues.altitude;
+                    plot.course = BuisnessLogicValues.course;
+                    plot.speed = BuisnessLogicValues.speed;
 
                     track.plots.Add(plot);
                 }

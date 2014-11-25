@@ -113,6 +113,91 @@ namespace Model
         }
 
         /*
+         *  Stores the SSR code
+         * */
+        private string _SSR;
+        public string SSR
+        {
+            get { return _SSR; }
+            set
+            {
+                if (value != _SSR)
+                {
+                    _SSR = value;
+                    RaisePropertyChanged("SSR");
+                }
+            }
+        }
+
+        /*
+         *  Stores the Airport of departure
+         * */
+        private string _ADEP;
+        public string ADEP
+        {
+            get { return _ADEP; }
+            set
+            {
+                if (value != _ADEP)
+                {
+                    _ADEP = value;
+                    RaisePropertyChanged("ADEP");
+                }
+            }
+        }
+
+        /*
+         *  Stores the Airport of destination
+         * */
+        private string _ADES;
+        public string ADES
+        {
+            get { return _ADES; }
+            set
+            {
+                if (value != _ADES)
+                {
+                    _ADES = value;
+                    RaisePropertyChanged("ADES");
+                }
+            }
+        }
+
+        /*
+         *  Stores the Aircraft type
+         * */
+        private string _ArType;
+        public string ArType
+        {
+            get { return _ArType; }
+            set
+            {
+                if (value != _ArType)
+                {
+                    _ArType = value;
+                    RaisePropertyChanged("ArType");
+                }
+            }
+        }
+
+        /*
+         *  Stores the Aircraft weight code
+         * */
+        private char _WTC;
+        public char WTC
+        {
+            get { return _WTC; }
+            set
+            {
+                if (value != _WTC)
+                {
+                    _WTC = value;
+                    RaisePropertyChanged("WTC");
+                }
+            }
+        }
+
+        /*
          * Stores the list of ViewModelPlots
          * */
         private BindingList<ViewModelPlot> _plots;
@@ -211,6 +296,11 @@ namespace Model
 
             tempTrack.callSign = callsign;
             tempTrack.trackID = trackID;
+            tempTrack.SSR = SSR;
+            tempTrack.WTC = WTC;
+            tempTrack.ArType = ArType;
+            tempTrack.ADEP = ADEP;
+            tempTrack.ADES = ADES;
             return tempTrack;
         }
 
@@ -247,6 +337,11 @@ namespace Model
             {
                 this.trackID = t.trackID;
                 this.callsign = t.callSign;
+                this.SSR = t.SSR;
+                this.WTC = t.WTC;
+                this.ArType = t.ArType;
+                this.ADEP = t.ADEP;
+                this.ADES = t.ADES;
             }
         }
 

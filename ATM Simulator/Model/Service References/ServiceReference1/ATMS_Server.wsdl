@@ -61,6 +61,12 @@
   <wsdl:message name="IServerInterface_editPlot_OutputMessage">
     <wsdl:part name="parameters" element="tns:editPlotResponse" />
   </wsdl:message>
+  <wsdl:message name="IServerInterface_pauseSimulation_InputMessage">
+    <wsdl:part name="parameters" element="tns:pauseSimulation" />
+  </wsdl:message>
+  <wsdl:message name="IServerInterface_pauseSimulation_OutputMessage">
+    <wsdl:part name="parameters" element="tns:pauseSimulationResponse" />
+  </wsdl:message>
   <wsdl:message name="IServerInterface_notifyTimeUpdate_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:notifyTimeUpdate" />
   </wsdl:message>
@@ -124,6 +130,10 @@
     <wsdl:operation name="editPlot">
       <wsdl:input wsaw:Action="ATMS_Server/IServerInterface/editPlot" message="tns:IServerInterface_editPlot_InputMessage" />
       <wsdl:output wsaw:Action="ATMS_Server/IServerInterface/editPlotResponse" message="tns:IServerInterface_editPlot_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="pauseSimulation">
+      <wsdl:input wsaw:Action="ATMS_Server/IServerInterface/pauseSimulation" message="tns:IServerInterface_pauseSimulation_InputMessage" />
+      <wsdl:output wsaw:Action="ATMS_Server/IServerInterface/pauseSimulationResponse" message="tns:IServerInterface_pauseSimulation_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="notifyTimeUpdate">
       <wsdl:output wsaw:Action="ATMS_Server/IServerInterface/notifyTimeUpdate" message="tns:IServerInterface_notifyTimeUpdate_OutputCallbackMessage" />

@@ -120,6 +120,15 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="pauseSimulation">
+      <soap12:operation soapAction="ATMS_Server/IServerInterface/pauseSimulation" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="notifyTimeUpdate">
       <soap12:operation soapAction="ATMS_Server/IServerInterface/notifyTimeUpdate" style="document" />
       <wsdl:output>

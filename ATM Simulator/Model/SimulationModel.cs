@@ -5,6 +5,7 @@ using System;
 using System.Diagnostics;
 using System.ServiceModel;
 using System.Threading.Tasks;
+using ATMS_Model;
 
 namespace Model
 {
@@ -154,11 +155,19 @@ namespace Model
             serverIsAvailable = true;
         }
 
-        //Play simulation
+        //Play / Resume simulation
         public async Task playSimulation()
         {
             checkServerStatus();
             await server.playSimulationAsync();
+            serverIsAvailable = true;
+        }
+
+        //Pause simulation
+        public async Task pauseSimulation()
+        {
+            checkServerStatus();
+            await server.pauseSimulationAsync();
             serverIsAvailable = true;
         }
 
@@ -207,6 +216,9 @@ namespace Model
             //Set the latitude & longitude from the input Plot
             p.latitude = lat;
             p.longitude = lon;
+            p.altitude = ATMS_Model.BuisnessLogicValues.altitude;
+            p.course = ATMS_Model.BuisnessLogicValues.course;
+            p.speed = ATMS_Model.BuisnessLogicValues.speed;
             checkServerStatus();
             await server.createNewPlotAsync(p);
             serverIsAvailable = true;

@@ -1,5 +1,6 @@
 ﻿using DevExpress.Xpf.Bars;
 using DevExpress.Xpf.Map;
+using System.Drawing;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -22,7 +23,7 @@ namespace View
          * This method creates a context menu on the map layer
          * if a track is selected.
          * */
-        private void VectorLayer_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void VectorLayer_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
         {
             //Sets the data context for the following operations
             var vm = (SimulationViewModel)DataContext;
@@ -43,15 +44,33 @@ namespace View
                  * -Bind a command to the menu item
                  * -Add the menu item to the context menu
                  * */
-                ContextMenu contextmenu = new ContextMenu();
-                theMap.ContextMenu = contextmenu;
+                ContextMenu contextMenu = new ContextMenu();
+                theMap.ContextMenu = contextMenu;
 
                 MenuItem mi = new MenuItem();
                 mi.Header = "Create Plot";
                 mi.Command = vm.CreateNewPlotOnMap;
 
-                contextmenu.Items.Add(mi);
+                contextMenu.Items.Add(mi);
             }
         }
+
+        /*private void PlotGrid_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            //Sets the data context for the following operations
+            var vm = (SimulationViewModel)DataContext;
+
+            if (vm.selectedPlot != null)
+            {
+                ContextMenu plotContextMenu = new ContextMenu();
+                theMap.ContextMenu = plotContextMenu;
+
+                MenuItem mi = new MenuItem();
+                mi.Header = "Remove Plot";
+                mi.Command = vm.RemovePlot;
+
+                plotContextMenu.Items.Add(mi);
+            }
+        }*/
     }
 }

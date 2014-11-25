@@ -103,6 +103,16 @@
       <xs:sequence />
     </xs:complexType>
   </xs:element>
+  <xs:element name="pauseSimulation">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="pauseSimulationResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
   <xs:element name="notifyTimeUpdate">
     <xs:complexType>
       <xs:sequence>

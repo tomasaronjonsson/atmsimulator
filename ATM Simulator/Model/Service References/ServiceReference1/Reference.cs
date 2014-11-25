@@ -68,6 +68,12 @@ namespace Model.ServiceReference1 {
         
         [System.ServiceModel.OperationContractAttribute(Action="ATMS_Server/IServerInterface/editPlot", ReplyAction="ATMS_Server/IServerInterface/editPlotResponse")]
         System.Threading.Tasks.Task editPlotAsync(ATMS_Model.Plot p);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="ATMS_Server/IServerInterface/pauseSimulation", ReplyAction="ATMS_Server/IServerInterface/pauseSimulationResponse")]
+        void pauseSimulation();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="ATMS_Server/IServerInterface/pauseSimulation", ReplyAction="ATMS_Server/IServerInterface/pauseSimulationResponse")]
+        System.Threading.Tasks.Task pauseSimulationAsync();
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -199,6 +205,14 @@ namespace Model.ServiceReference1 {
         
         public System.Threading.Tasks.Task editPlotAsync(ATMS_Model.Plot p) {
             return base.Channel.editPlotAsync(p);
+        }
+        
+        public void pauseSimulation() {
+            base.Channel.pauseSimulation();
+        }
+        
+        public System.Threading.Tasks.Task pauseSimulationAsync() {
+            return base.Channel.pauseSimulationAsync();
         }
     }
 }

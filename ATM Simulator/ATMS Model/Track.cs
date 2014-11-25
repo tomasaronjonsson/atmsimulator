@@ -12,7 +12,17 @@ namespace ATMS_Model
         public List<Plot> plots;
         //The callSign identifies a flight on the map
         public string callSign;
-        
+        //the weight identification sign
+        public char WTC;
+        //The SSR code
+        public string SSR;
+        //Airport of departure
+        public string ADEP;
+        //Airport of destination
+        public string ADES;
+        //Aircraft type
+        public string ArType;
+
 
         public Track()
         {
@@ -22,6 +32,7 @@ namespace ATMS_Model
             trackID = 0;
             callSign = "N/A";
         }
+
 
         //The edit method updates the changes made to a Track using a Track type parameter
         public void edit(Track t)

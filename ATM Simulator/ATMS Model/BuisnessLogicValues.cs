@@ -17,6 +17,25 @@ namespace ATMS_Model
         public static int radarInterval = 4;
 
         /*
+         * These are default values used to create new plots
+         * */
+        #region Default Values
+
+        //Plot default values
+        public static int altitude = 8000;
+        public static int speed = 100;
+        public static int course = 0;
+
+        //Track default values
+        public static char WTC = 'M';
+        public static string SSR = "000";
+        public static string ADEP = "CPH1";
+        public static string ADES = "BLL2";
+        public static string ArType = "Airbus A320";
+
+        #endregion
+
+        /*
          * This method generates the next plot from another plot
          * 
          * -creates a new plot

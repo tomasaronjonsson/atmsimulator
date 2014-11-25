@@ -34,6 +34,9 @@ namespace ATMS_Server
         //This is the Thread that runs the system time
         Thread timeThread;
 
+        //This is a simulation pause flag
+        bool pause;
+
 
         public MainSimulation()
         {
@@ -46,6 +49,7 @@ namespace ATMS_Server
             //currentServerTime & availableTrackID are initialized as 0
             currentServerTime = 0;
             avilableTrackID = 0;
+            pause = false;
         }
 
 
@@ -205,6 +209,15 @@ namespace ATMS_Server
                 //Check the client registration
                 checkIfRegistered();
 
+                //Check if the simulation is paused
+                if (pause == true)
+                {
+                    //Resume the thread
+                    timeThread.Resume();
+                    //Lower the pause flag
+                    pause = false;
+                }
+
                 //check if the timeThread is already  running
                 if (timeThread == null)
                 {
@@ -216,6 +229,7 @@ namespace ATMS_Server
                         timeThread = new Thread(worker.DoWork);
                         //Start the time worker thread which plays the simulatio
                         timeThread.Start();
+                        pause = false;
                     }
                 }
             }
@@ -456,7 +470,7 @@ namespace ATMS_Server
                                     //Generate a plot
                                     Plot generatedPlot = ATMS_Model.BuisnessLogicValues.generateNextLogicPlot(currentPlot);
                                     generatedPlot.course = p.course;
-                                    
+
                                     //Add it to the list
                                     trackToLookInto.plots.Add(generatedPlot);
 
@@ -494,6 +508,33 @@ namespace ATMS_Server
                 //Catch and report the exception
                 debugMessage("Failed to edit the plot", e);
                 throw new Exception("ATMS-MainSimulation-0009: Failed to edit the plot");
+            }
+        }
+
+        /*
+         * Play the simulation
+         * */
+        public void pauseSimulation()
+        {
+            try
+            {
+                //Check the client registration
+                checkIfRegistered();
+
+                //check if the timeThread is already  running
+                if (timeThread != null)
+                {
+                    //Suspend the thread
+                    timeThread.Suspend();
+                    //Raise the pause thread
+                    pause = true;
+                }
+            }
+            catch (Exception e)
+            {
+                //Catch and report the exception
+                debugMessage("Failed to stop the simulation", e);
+                throw new Exception("ATMS-MainSimulation-0010: Failed to stop the simulation");
             }
         }
 
