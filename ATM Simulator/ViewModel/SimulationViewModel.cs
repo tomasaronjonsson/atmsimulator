@@ -720,7 +720,7 @@ namespace ViewModel
                     
                     
 
-                    for (int i = 0; i < polygon.Points.Count; )
+                    for (int i = 0; i < polygon.Points.Count; i++)
                     {
                         GeoPoint newGeoPoint = new GeoPoint();
 
@@ -730,7 +730,6 @@ namespace ViewModel
                         newGeoPoint.Latitude = Double.Parse(split[0], System.Globalization.CultureInfo.InvariantCulture);
                         newGeoPoint.Longitude = Double.Parse(split[1], System.Globalization.CultureInfo.InvariantCulture);
 
-                        i += 2;
                         tempPolygon.Points.Add(newGeoPoint);
                     }
                     tempMap.Add(tempPolygon);
@@ -743,7 +742,7 @@ namespace ViewModel
 
                     MapPolyline tempPolyline = new MapPolyline();
 
-                    for (int i = 0; i < polyline.Points.Count; )
+                    for (int i = 0; i < polyline.Points.Count;i++ )
                     {
                         GeoPoint newGeoPoint = new GeoPoint();
 
@@ -753,9 +752,9 @@ namespace ViewModel
                         newGeoPoint.Latitude = Double.Parse(split[0], System.Globalization.CultureInfo.InvariantCulture);
                         newGeoPoint.Longitude = Double.Parse(split[1], System.Globalization.CultureInfo.InvariantCulture);
 
-                        i += 2;
                         tempPolyline.Points.Add(newGeoPoint);
                     }
+                    tempMap.Add(tempPolyline);
                 }
                 
 
