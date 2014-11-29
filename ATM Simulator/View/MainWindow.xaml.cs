@@ -28,8 +28,7 @@ namespace View
             //Sets the data context for the following operations
             var vm = (SimulationViewModel)DataContext;
 
-            //Validate the selected track
-            if (vm.selectedTrack != null)
+            if (vm.tracks.Count > 0)
             {
                 //Create a GeoPoint with the coordinates of the pointer
                 GeoPoint geoPt = this.theMap.Layers[0].ScreenToGeoPoint(e.GetPosition(this.theMap));
@@ -47,11 +46,15 @@ namespace View
                 ContextMenu contextMenu = new ContextMenu();
                 theMap.ContextMenu = contextMenu;
 
-                MenuItem mi = new MenuItem();
-                mi.Header = "Create Plot";
-                mi.Command = vm.CreateNewPlotOnMap;
+                MenuItem addWaypoint = new MenuItem();
+                addWaypoint.Header = "Add waypoint";
+                addWaypoint.Command = vm.AddWaypointToMap;
+                MenuItem addTrack = new MenuItem();
+                addTrack.Header = "Add track";
+                addTrack.Command = vm.CreateNewTrackOnMap;
 
-                contextMenu.Items.Add(mi);
+                contextMenu.Items.Add(addWaypoint);
+                contextMenu.Items.Add(addTrack);   
             }
         }
     }

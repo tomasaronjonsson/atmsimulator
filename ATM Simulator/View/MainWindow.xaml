@@ -118,7 +118,7 @@
 
                 <!-- Map controls -->
                 <Label Content="Map:"/>
-
+                
                 <Button Content="Import map" Command="{Binding ImportMap}"/>
                 <Button Content="Save map" Command="{Binding SaveMap}"/>
 
@@ -135,11 +135,9 @@
                 <Label  Content="Server Time:"/>
                 <Label  Content="{Binding serverCurrentTime}"/>
             </StackPanel>
-
-            <dxm:MapControl 
-                Name="theMap" Grid.Row="0" Grid.Column="1" Grid.RowSpan="2"   ZoomLevel="8"  CenterPoint="55.85,9.82" 
-                MouseRightButtonDown="VectorLayer_MouseRightButtonDown" 
-               >
+            
+            <dxm:MapControl Name="theMap" Grid.Row="0" Grid.Column="1" Grid.RowSpan="2"   ZoomLevel="8"  CenterPoint="55.85,9.82" 
+                MouseRightButtonDown="VectorLayer_MouseRightButtonDown">
                 <dxm:ImageTilesLayer Name="mapContainer" 
                                      Visibility="{Binding IsChecked,ElementName=providerCheckbox,Converter={StaticResource b2v}}">
                     <dxm:ImageTilesLayer.DataProvider>
@@ -192,13 +190,13 @@
                     <!-- Track information -->
                     <Label Grid.Row="0" Grid.Column="0" Content="Track ID"/>
                     <Label Grid.Row="0" Grid.Column="1" Content="{Binding selectedTrack.trackID}"/>
-
+                    
                     <Label Grid.Row="1" Grid.Column="0" Content="SSR"/>
                     <Label Grid.Row="1" Grid.Column="1" Content="{Binding selectedTrack.SSR}"/>
-
+                    
                     <Label Grid.Row="2" Grid.Column="0" Content="Aircraft type "/>
                     <Label Grid.Row="2" Grid.Column="1" Content="{Binding selectedTrack.ArType}"/>
-
+                    
                     <Label Grid.Row="3" Grid.Column="0" Content="ADEP "/>
                     <Label Grid.Row="3" Grid.Column="1" Content="{Binding selectedTrack.ADEP}"/>
 
@@ -222,7 +220,7 @@
 
                     <Button Grid.Row="9" Grid.ColumnSpan="2" Content="Save track changes" Command="{Binding EditTrack}"/>
                 </Grid>
-                <!-- Plot information -->
+                    <!-- Plot information -->
                 <Grid Visibility="{Binding IsEnabled,ElementName=PlaySimulation,Converter={StaticResource b2v}}">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="75"/>
@@ -251,10 +249,10 @@
 
                     <!--Add the save plots command binding here -->
                     <Button Grid.Row="4" Grid.ColumnSpan="2" Content="Save plot changes" Command="{Binding EditPlot}"/>
-                </Grid>
+            </Grid>
             </StackPanel>
 
-    <!-- List of all the tracks avilable -->
+            <!-- List of all the tracks avilable -->
             <ListBox Grid.Row="1" Grid.Column="2" ItemsSource="{Binding tracks}" SelectedItem="{Binding selectedTrack }">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
