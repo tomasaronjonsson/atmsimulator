@@ -120,6 +120,7 @@
                 <Label Content="Map:"/>
 
                 <Button Content="Import map" Command="{Binding ImportMap}"/>
+                <Button Content="Save map" Command="{Binding SaveMap}"/>
 
                 <CheckBox Name="layerCheckbox" Margin="5" IsChecked="true">
                     <TextBlock>Layer</TextBlock>
