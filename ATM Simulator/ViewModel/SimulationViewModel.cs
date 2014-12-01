@@ -26,13 +26,12 @@ namespace ViewModel
         // Store an instance of the model
         SimulationModel model;
 
-        //A flag to use for selecting new track when creating
+        //Flag for selecting a newly created track
         bool newTrackCreated;
 
         #region Properties
 
-        //store the list of mapObjects
-
+        //Store the list of mapObjects
         private List<ViewModelMapObject> _MapObjects;
         public List<ViewModelMapObject> MapObjects
         {
@@ -48,8 +47,7 @@ namespace ViewModel
             }
         }
 
-      
-        //store the mapitem list that represents the layer map
+        //Store the mapitem list that represents the layer map
         private ObservableCollection<MapItem> _map;
         public ObservableCollection<MapItem> map
         {
@@ -59,12 +57,10 @@ namespace ViewModel
                 if (value != _map)
                 {
                     _map = value;
-
                     RaisePropertyChanged("map");
                 }
             }
         }
-
 
         //Stores the current time
         private int _viewModelCurrentTime;
@@ -278,7 +274,6 @@ namespace ViewModel
          * They consist of two parts:
          * -the command itself
          * -the availability condition (the condition that needs to be met for the command to be available)
-         * 
          * */
         #region RelayCommands
 
@@ -297,7 +292,7 @@ namespace ViewModel
                            fileDialog.Filter = "Xml files (.xml)|*.xml";
 
                            bool? userClickedOk = fileDialog.ShowDialog();
-                           
+
                            if (userClickedOk == true)
                            {
 
@@ -496,8 +491,8 @@ namespace ViewModel
                            //review alex
                            await model.editTrack(selectedTrack.toTrack());
                            if (serverIsPlaying)
-                                await model.editPlot(selectedPlot.toPlot());
-                           
+                               await model.editPlot(selectedPlot.toPlot());
+
                        },
                        () =>
                        {
@@ -682,7 +677,7 @@ namespace ViewModel
                 tracks.Add(vmT);
 
                 if (newTrackCreated)
-                { 
+                {
                     selectedTrack = vmT;
                     newTrackCreated = false;
                 }
@@ -792,95 +787,97 @@ namespace ViewModel
         }
 
         #endregion
+
         /*
-         * review alex 
-         * 
-         * import the map objects from insero and populate our map list
+         * These methods handle the map related commands
+         * */
+        #region Map handling methods
+
+        /*
+         * Import map
          */
         public void importMap(string path)
         {
-
-            //we are using the explicit names to not get them mixed with the devexpress or microsoft items
-            //let's import the map
-            List<MapImporter.MapObject> tempMapObjects = MapImporter.Tools.parse(path);
-
-            List<ViewModelMapObject> tempvmMapObjects = new List<ViewModelMapObject>();
-
-            //now to take their objects and change them to out viewmodelmapobject
-            foreach (MapImporter.MapObject inputObject in tempMapObjects)
+            //Validate the input
+            if (path != null)
             {
-                //the constructor takes care of transforming the object
-               tempvmMapObjects.Add(new ViewModelMapObject(inputObject));
-            }
+                //Parse the input
+                List<MapImporter.MapObject> tempMapObjects = MapImporter.Tools.Parse(path);
 
-            //store the list
-            MapObjects = tempvmMapObjects;
+                //Create a list to hold the ViewModelObjects
+                List<ViewModelMapObject> tempViewModelMapObjects = new List<ViewModelMapObject>();
+
+                //Populate the ViewModelObjects list from the first list
+                foreach (MapImporter.MapObject inputObject in tempMapObjects)
+                {
+                    tempViewModelMapObjects.Add(new ViewModelMapObject(inputObject));
+                }
+
+                //Store the list
+                MapObjects = tempViewModelMapObjects;
+            }
         }
-        /* alex review
-         *  
-         * everytime the mapobjects are changed we need to update our list of mapitems, which renders the layered map
-         * 
+
+        /* 
+         * Updates the map items in the event of a new mapfile being imported
          */
         private void updateMapItems()
-            {
-            //create a temp list to later use for the map
+        {
+            //Create a temporary list of MapItems
             List<MapItem> tempMapItems = new List<MapItem>();
 
-            //let's create a huge list
+            //Populate the list
             foreach (ViewModelMapObject mo in MapObjects)
-                {
+            {
                 tempMapItems.AddRange(mo.mapitems);
             }
 
+            //Update the map
             map = new ObservableCollection<MapItem>(tempMapItems);
         }
 
         /*
-         *  
-         * 
-         * save the map to our format 
+         * Save the map
+         * This method saves the map in a file of our own format.
          */
         public void saveMap(String path)
-            {
-
-
+        {
             using (System.IO.StreamWriter file = new System.IO.StreamWriter(path))
-                {
+            {
                 string mapToXML = ToXML(MapObjects);
 
                 file.Write(mapToXML);
             }
+        }
 
-                }
-        /*
-         * 
-         * 
-         *  not working atm cause of serialiazble
-         * 
+        /* TODO - Tomas fix this shit 
          */
+        #region THE SHIT TO BE FIXED
+
         public string ToXML<T>(T obj)
-                {
+        {
             Type[] types = new Type[] { typeof(DevExpress.Xpf.Map.MapPolyline), typeof(MapItem), typeof(Polyline), typeof(Polygon), typeof(Circle) };
 
             using (StringWriter stringWriter = new StringWriter(new StringBuilder()))
-                    {
+            {
                 XmlSerializer xmlSerializer = new XmlSerializer(typeof(T), types);
                 xmlSerializer.Serialize(stringWriter, obj);
                 return stringWriter.ToString();
-                    }
-                }
+            }
+        }
+
         public static T FromXML<T>(string xml)
-                {
-            Type[] types = new Type[] { typeof(DevExpress.Xpf.Map.MapPolyline),typeof(MapItem), typeof(Polyline), typeof(Polygon), typeof(Circle) };
+        {
+            Type[] types = new Type[] { typeof(DevExpress.Xpf.Map.MapPolyline), typeof(MapItem), typeof(Polyline), typeof(Polygon), typeof(Circle) };
 
             using (StringReader stringReader = new StringReader(xml))
-                    {
-                XmlSerializer serializer = new XmlSerializer(typeof(T),types);
+            {
+                XmlSerializer serializer = new XmlSerializer(typeof(T), types);
                 return (T)serializer.Deserialize(stringReader);
-                }
             }
+        }
+        #endregion
 
-        
-
+        #endregion
     }
 }

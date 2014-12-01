@@ -10,26 +10,22 @@ namespace MapImporter
 {
     public class Tools
     {
-
         /*
-       * review alex 
-       * 
-       * import the map objects from the xml file(path) insero and return a list of it
-       */
-
-        public static List<MapObject> parse(String path)
+         * This class is used as a tool to import the objects from an xml file with a given path.
+         * The method returns a list of MapObjects
+         */
+        public static List<MapObject> Parse(String path)
         {
-
+            //Create the lsit of objects
             List<MapObject> list = null;
+
             try
             {
-                //load the XML document from insero
+                //Load the XML file
                 XDocument xml = XDocument.Load(path);
 
                 /*
-                 * Using LINQ to extract the mapobjects from the xml add them to a list 
-                 * 
-                 * 
+                 * Using Linq, the map objects are extracted from the XML and added to the list
                  */
                 list = (from x in xml.Root.Elements("maps").Elements("map")
                         select new MapObject
@@ -43,7 +39,6 @@ namespace MapImporter
                             startTime = (string)x.Element("starttime").Value ?? string.Empty,
                             endDate = (string)x.Element("enddate").Value ?? string.Empty,
                             endTime = (string)x.Element("altitude").Value ?? string.Empty,
-
                         }).ToList();
 
                 //using the parser they gave us, sliglhy modified for our needs we parse the image for each map and store them in the shapes variable
@@ -51,19 +46,12 @@ namespace MapImporter
                 {
                     m.shapes = MapFileParser.Parse(m.image);
                 }
-
-
             }
             catch (Exception e)
             {
                 throw new Exception("File not found.");
             }
-
-
-
-
             return list;
         }
-
     }
 }

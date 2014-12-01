@@ -8,7 +8,6 @@ namespace MapImporter
 {
     public class MapObject
     {
-
         public String groupname;
         
         public String name;
@@ -28,7 +27,5 @@ namespace MapImporter
         public String endTime;
 
         public List<Shape> shapes;
-
-
     }
 }
