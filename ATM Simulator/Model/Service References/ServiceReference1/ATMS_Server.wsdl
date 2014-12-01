@@ -31,6 +31,12 @@
   <wsdl:message name="IServerInterface_createNewTrack_OutputMessage">
     <wsdl:part name="parameters" element="tns:createNewTrackResponse" />
   </wsdl:message>
+  <wsdl:message name="IServerInterface_createNewTrackOnMap_InputMessage">
+    <wsdl:part name="parameters" element="tns:createNewTrackOnMap" />
+  </wsdl:message>
+  <wsdl:message name="IServerInterface_createNewTrackOnMap_OutputMessage">
+    <wsdl:part name="parameters" element="tns:createNewTrackOnMapResponse" />
+  </wsdl:message>
   <wsdl:message name="IServerInterface_removeTrack_InputMessage">
     <wsdl:part name="parameters" element="tns:removeTrack" />
   </wsdl:message>
@@ -48,6 +54,12 @@
   </wsdl:message>
   <wsdl:message name="IServerInterface_createNewPlot_OutputMessage">
     <wsdl:part name="parameters" element="tns:createNewPlotResponse" />
+  </wsdl:message>
+  <wsdl:message name="IServerInterface_createNewWaypoint_InputMessage">
+    <wsdl:part name="parameters" element="tns:createNewWaypoint" />
+  </wsdl:message>
+  <wsdl:message name="IServerInterface_createNewWaypoint_OutputMessage">
+    <wsdl:part name="parameters" element="tns:createNewWaypointResponse" />
   </wsdl:message>
   <wsdl:message name="IServerInterface_removePlot_InputMessage">
     <wsdl:part name="parameters" element="tns:removePlot" />
@@ -111,6 +123,10 @@
       <wsdl:input wsaw:Action="ATMS_Server/IServerInterface/createNewTrack" message="tns:IServerInterface_createNewTrack_InputMessage" />
       <wsdl:output wsaw:Action="ATMS_Server/IServerInterface/createNewTrackResponse" message="tns:IServerInterface_createNewTrack_OutputMessage" />
     </wsdl:operation>
+    <wsdl:operation name="createNewTrackOnMap">
+      <wsdl:input wsaw:Action="ATMS_Server/IServerInterface/createNewTrackOnMap" message="tns:IServerInterface_createNewTrackOnMap_InputMessage" />
+      <wsdl:output wsaw:Action="ATMS_Server/IServerInterface/createNewTrackOnMapResponse" message="tns:IServerInterface_createNewTrackOnMap_OutputMessage" />
+    </wsdl:operation>
     <wsdl:operation name="removeTrack">
       <wsdl:input wsaw:Action="ATMS_Server/IServerInterface/removeTrack" message="tns:IServerInterface_removeTrack_InputMessage" />
       <wsdl:output wsaw:Action="ATMS_Server/IServerInterface/removeTrackResponse" message="tns:IServerInterface_removeTrack_OutputMessage" />
@@ -122,6 +138,10 @@
     <wsdl:operation name="createNewPlot">
       <wsdl:input wsaw:Action="ATMS_Server/IServerInterface/createNewPlot" message="tns:IServerInterface_createNewPlot_InputMessage" />
       <wsdl:output wsaw:Action="ATMS_Server/IServerInterface/createNewPlotResponse" message="tns:IServerInterface_createNewPlot_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="createNewWaypoint">
+      <wsdl:input wsaw:Action="ATMS_Server/IServerInterface/createNewWaypoint" message="tns:IServerInterface_createNewWaypoint_InputMessage" />
+      <wsdl:output wsaw:Action="ATMS_Server/IServerInterface/createNewWaypointResponse" message="tns:IServerInterface_createNewWaypoint_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="removePlot">
       <wsdl:input wsaw:Action="ATMS_Server/IServerInterface/removePlot" message="tns:IServerInterface_removePlot_InputMessage" />

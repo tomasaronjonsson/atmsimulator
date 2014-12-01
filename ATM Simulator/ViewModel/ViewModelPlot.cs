@@ -147,6 +147,8 @@ namespace ViewModel
             }
         }
 
+        public ViewModelPlot() { }
+
 
         //Edit the current ViewModelPlot using the input Plot
         public void edit(Plot p)

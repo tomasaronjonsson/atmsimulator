@@ -39,6 +39,12 @@ namespace Model.ServiceReference1 {
         [System.ServiceModel.OperationContractAttribute(Action="ATMS_Server/IServerInterface/createNewTrack", ReplyAction="ATMS_Server/IServerInterface/createNewTrackResponse")]
         System.Threading.Tasks.Task createNewTrackAsync(ATMS_Model.Track t);
         
+        [System.ServiceModel.OperationContractAttribute(Action="ATMS_Server/IServerInterface/createNewTrackOnMap", ReplyAction="ATMS_Server/IServerInterface/createNewTrackOnMapResponse")]
+        void createNewTrackOnMap(ATMS_Model.Plot p);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="ATMS_Server/IServerInterface/createNewTrackOnMap", ReplyAction="ATMS_Server/IServerInterface/createNewTrackOnMapResponse")]
+        System.Threading.Tasks.Task createNewTrackOnMapAsync(ATMS_Model.Plot p);
+        
         [System.ServiceModel.OperationContractAttribute(Action="ATMS_Server/IServerInterface/removeTrack", ReplyAction="ATMS_Server/IServerInterface/removeTrackResponse")]
         void removeTrack(ATMS_Model.Track t);
         
@@ -56,6 +62,12 @@ namespace Model.ServiceReference1 {
         
         [System.ServiceModel.OperationContractAttribute(Action="ATMS_Server/IServerInterface/createNewPlot", ReplyAction="ATMS_Server/IServerInterface/createNewPlotResponse")]
         System.Threading.Tasks.Task createNewPlotAsync(ATMS_Model.Plot p);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="ATMS_Server/IServerInterface/createNewWaypoint", ReplyAction="ATMS_Server/IServerInterface/createNewWaypointResponse")]
+        void createNewWaypoint(ATMS_Model.Plot p, ATMS_Model.Plot oldPlot);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="ATMS_Server/IServerInterface/createNewWaypoint", ReplyAction="ATMS_Server/IServerInterface/createNewWaypointResponse")]
+        System.Threading.Tasks.Task createNewWaypointAsync(ATMS_Model.Plot p, ATMS_Model.Plot oldPlot);
         
         [System.ServiceModel.OperationContractAttribute(Action="ATMS_Server/IServerInterface/removePlot", ReplyAction="ATMS_Server/IServerInterface/removePlotResponse")]
         void removePlot(ATMS_Model.Plot p);
@@ -167,6 +179,14 @@ namespace Model.ServiceReference1 {
             return base.Channel.createNewTrackAsync(t);
         }
         
+        public void createNewTrackOnMap(ATMS_Model.Plot p) {
+            base.Channel.createNewTrackOnMap(p);
+        }
+        
+        public System.Threading.Tasks.Task createNewTrackOnMapAsync(ATMS_Model.Plot p) {
+            return base.Channel.createNewTrackOnMapAsync(p);
+        }
+        
         public void removeTrack(ATMS_Model.Track t) {
             base.Channel.removeTrack(t);
         }
@@ -189,6 +209,14 @@ namespace Model.ServiceReference1 {
         
         public System.Threading.Tasks.Task createNewPlotAsync(ATMS_Model.Plot p) {
             return base.Channel.createNewPlotAsync(p);
+        }
+        
+        public void createNewWaypoint(ATMS_Model.Plot p, ATMS_Model.Plot oldPlot) {
+            base.Channel.createNewWaypoint(p, oldPlot);
+        }
+        
+        public System.Threading.Tasks.Task createNewWaypointAsync(ATMS_Model.Plot p, ATMS_Model.Plot oldPlot) {
+            return base.Channel.createNewWaypointAsync(p, oldPlot);
         }
         
         public void removePlot(ATMS_Model.Plot p) {

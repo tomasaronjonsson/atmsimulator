@@ -384,7 +384,10 @@ namespace ViewModel
                        async () =>
                        {
                            newTrackCreated = true;
-                           await model.createNewTrackOnMap(newPlotLocation.Latitude, newPlotLocation.Longitude);
+                           ViewModelPlot p = new ViewModelPlot();
+                           p.latitude = newPlotLocation.Latitude;
+                           p.longitude = newPlotLocation.Longitude;
+                           await model.createNewTrackOnMap(p.toPlot());
                        },
                        () =>
                        {
@@ -470,12 +473,14 @@ namespace ViewModel
                     _AddWaypointToMap = new RelayCommand(
                        async () =>
                        {
-                           await model.addWaypointToMap(selectedTrack.toTrack(), newPlotLocation.Latitude, newPlotLocation.Longitude);
+                           ViewModelPlot p = new ViewModelPlot();
+                           p.latitude = newPlotLocation.Latitude;
+                           p.longitude = newPlotLocation.Longitude;
+                           await model.addWaypointToMap(selectedTrack.toTrack(), p.toPlot(), selectedTrack.plots[selectedTrack.plots.Count - 1].toPlot());
                        },
                        () =>
                        {
-                           return serverIsAvailable && (selectedTrack != null) && !serverIsPlaying
-;
+                           return serverIsAvailable && (selectedTrack != null) && !serverIsPlaying;
                        });
                 }
                 return _AddWaypointToMap;

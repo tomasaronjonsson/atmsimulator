@@ -16,24 +16,24 @@ namespace ATMS_Model
             int plots = 1;
 
             //starting point for the test flights
-            double baseLatitude = 55.850223;
-            double baseLongitude = 9.829360;
+            double baseLatitude = 0;
+            double baseLongitude = 0;
 
             for (int i = 0; i < tracks; i++)
             {
                 Track track = new Track();
                 track.trackID = i;
                 track.callSign = "ISS" + i;
-                track.ADEP = BuisnessLogicValues.ADEP;
-                track.ADES = BuisnessLogicValues.ADES;
-                track.ArType = BuisnessLogicValues.ArType;
-                track.SSR = BuisnessLogicValues.SSR;
-                track.WTC = BuisnessLogicValues.WTC;
+                track.ADEP = BuisnessLogic.ADEP;
+                track.ADES = BuisnessLogic.ADES;
+                track.ArType = BuisnessLogic.ArType;
+                track.SSR = BuisnessLogic.SSR;
+                track.WTC = BuisnessLogic.WTC;
 
                 for (int a = 0; a < plots; a++)
                 {
                     Plot plot = new Plot();
-                    plot.time = a * BuisnessLogicValues.radarInterval;
+                    plot.time = a * BuisnessLogic.radarInterval;
                     plot.trackID = track.trackID;
 
                     if (i % 2 == 0)
@@ -47,9 +47,9 @@ namespace ATMS_Model
                         plot.longitude = baseLongitude - (i * 0.01) - (a * 0.01);
                     }
 
-                    plot.altitude = BuisnessLogicValues.altitude;
-                    plot.course = BuisnessLogicValues.course;
-                    plot.speed = BuisnessLogicValues.speed;
+                    plot.altitude = BuisnessLogic.altitude;
+                    plot.course = BuisnessLogic.course;
+                    plot.speed = BuisnessLogic.speed;
 
                     track.plots.Add(plot);
                 }

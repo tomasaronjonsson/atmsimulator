@@ -39,7 +39,7 @@ namespace ATMS_Server
             while (!stopped) 
             {
                 //Sleep as much as the radarInterval dictates
-                Thread.Sleep(ATMS_Model.BuisnessLogicValues.radarInterval * 1000);
+                Thread.Sleep(ATMS_Model.BuisnessLogic.radarInterval * 1000);
                 //call the tickTock method to increment the time on the server
                 mainSimulation.tickTock();
             }

@@ -38,6 +38,9 @@ namespace ATMS_Server
         void createNewTrack(Track t);
 
         [OperationContract]
+        void createNewTrackOnMap(Plot p);
+
+        [OperationContract]
         void removeTrack(Track t);
 
         [OperationContract]
@@ -45,6 +48,9 @@ namespace ATMS_Server
 
         [OperationContract]
         void createNewPlot(Plot p);
+
+        [OperationContract]
+        void createNewWaypoint(Plot p, Plot oldPlot);
 
         [OperationContract]
         void removePlot(Plot p);

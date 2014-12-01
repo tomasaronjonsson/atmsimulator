@@ -29,7 +29,7 @@ namespace ATMS_Server
         int currentServerTime;
 
         //This is the currently available trackID (for incoming new tracks)
-        int avilableTrackID;
+        int availableTrackID;
 
         //This is the Thread that runs the system time
         Thread timeThread;
@@ -48,7 +48,7 @@ namespace ATMS_Server
 
             //currentServerTime & availableTrackID are initialized as 0
             currentServerTime = 0;
-            avilableTrackID = 0;
+            availableTrackID = 0;
             pause = false;
         }
 
@@ -62,7 +62,7 @@ namespace ATMS_Server
         public void tickTock()
         {
             //Increment server time
-            currentServerTime += ATMS_Model.BuisnessLogicValues.radarInterval;
+            currentServerTime += ATMS_Model.BuisnessLogic.radarInterval;
 
             //Create a list of generated plots 
             List<Plot> generatedPlots = new List<Plot>();
@@ -76,11 +76,11 @@ namespace ATMS_Server
                 if (plotToLookInto == null)
                 {
                     //Find the last known plot
-                    Plot lastKnownPlot = item.plots.FirstOrDefault(x => x.time == currentServerTime - ATMS_Model.BuisnessLogicValues.radarInterval);
+                    Plot lastKnownPlot = item.plots.FirstOrDefault(x => x.time == currentServerTime - ATMS_Model.BuisnessLogic.radarInterval);
                     if (lastKnownPlot != null)
                     {
                         //Generate the next plot and add it to the generatedPlots list
-                        generatedPlots.Add(ATMS_Model.BuisnessLogicValues.generateNextLogicPlot(lastKnownPlot));
+                        generatedPlots.Add(ATMS_Model.BuisnessLogic.generateNextLogicPlot(lastKnownPlot));
                     }
                 }
             }
@@ -179,10 +179,12 @@ namespace ATMS_Server
 
                 //Populate the scenario with the Test data
                 if (mainScenario != null)
+                {
                     mainScenario = Test.populateInitialScenario();
+                }
 
                 //Update the available ID
-                avilableTrackID = mainScenario.tracks.Count;
+                availableTrackID = mainScenario.tracks.Count;
 
                 //Call back towards the client with the reply
                 clients.ForEach(delegate(IClientCallbackInterface callback)
@@ -256,8 +258,8 @@ namespace ATMS_Server
                     t = new Track();
 
                 //Assign an available ID and increment the availableTrackID
-                t.trackID = avilableTrackID;
-                avilableTrackID++;
+                t.trackID = availableTrackID;
+                availableTrackID++;
 
                 //Add the track to the main scenario
                 mainScenario.tracks.Add(t);
@@ -440,7 +442,7 @@ namespace ATMS_Server
                         if (timeThread != null)
                         {
                             //Reference the plot that will be edited
-                            Plot plotToBeChanged = trackToLookInto.plots.FirstOrDefault(x => x.time == currentServerTime + ATMS_Model.BuisnessLogicValues.radarInterval);
+                            Plot plotToBeChanged = trackToLookInto.plots.FirstOrDefault(x => x.time == currentServerTime + ATMS_Model.BuisnessLogic.radarInterval);
 
                             //Validate the plotToBeChanged
                             if (plotToBeChanged != null)
@@ -450,7 +452,7 @@ namespace ATMS_Server
 
                                 foreach (Plot item in trackToLookInto.plots)
                                 {
-                                    Plot plotToBeDeleted = trackToLookInto.plots.First(x => x.time > currentServerTime + ATMS_Model.BuisnessLogicValues.radarInterval);
+                                    Plot plotToBeDeleted = trackToLookInto.plots.First(x => x.time > currentServerTime + ATMS_Model.BuisnessLogic.radarInterval);
 
                                     //Validate the plotToBeDeleted
                                     if (plotToBeDeleted != null)
@@ -468,7 +470,7 @@ namespace ATMS_Server
                                 if (currentPlot != null)
                                 {
                                     //Generate a plot
-                                    Plot generatedPlot = ATMS_Model.BuisnessLogicValues.generateNextLogicPlot(currentPlot);
+                                    Plot generatedPlot = ATMS_Model.BuisnessLogic.generateNextLogicPlot(currentPlot);
                                     generatedPlot.course = p.course;
 
                                     //Add it to the list
@@ -535,6 +537,112 @@ namespace ATMS_Server
                 //Catch and report the exception
                 debugMessage("Failed to stop the simulation", e);
                 throw new Exception("ATMS-MainSimulation-0010: Failed to stop the simulation");
+            }
+        }
+
+        /**
+         * Create a new track from the map
+         * */
+        public void createNewTrackOnMap(Plot p)
+        {
+            try
+            {
+                //Check the client registration
+                checkIfRegistered();
+
+                //Validate the input
+                if (p != null)
+                {
+                    //Assign an available ID to both the plot and the track
+                    //and prepare them with default values.
+                    p.trackID = availableTrackID;
+                    p.altitude = ATMS_Model.BuisnessLogic.altitude;
+                    p.course = ATMS_Model.BuisnessLogic.course;
+                    p.speed = ATMS_Model.BuisnessLogic.speed;
+                    p.time = currentServerTime;
+
+                    Track t = new Track();
+                    t.trackID = availableTrackID;
+                    t.SSR = ATMS_Model.BuisnessLogic.SSR;
+                    t.WTC = ATMS_Model.BuisnessLogic.WTC;
+                    t.ArType = ATMS_Model.BuisnessLogic.ArType;
+                    t.ADEP = ATMS_Model.BuisnessLogic.ADEP;
+                    t.ADES = ATMS_Model.BuisnessLogic.ADES;
+                    t.plots.Add(p);
+
+                    //Increment the available trackID
+                    availableTrackID++;
+
+                    //Add the track to the main scenario
+                    mainScenario.tracks.Add(t);
+
+                    //Call back towards the client with the reply
+                    clients.ForEach(delegate(IClientCallbackInterface callback)
+                    {
+                        callback.notifyNewTrack(t);
+                    }
+                    );
+                }
+            }
+            catch (Exception e)
+            {
+                //Catch and report the exception
+                debugMessage("Failed to create a new track on the map", e);
+                throw new Exception("ATMS-MainSimulation-0011: Failed to create a new track on the map");
+            }
+        }
+
+        /*
+         * Create a new waypoint
+         * */
+        public void createNewWaypoint(Plot p, Plot oldPlot)
+        {
+            try
+            {
+                //Check the client registration
+                checkIfRegistered();
+
+                //Validate the input
+                if (p != null && oldPlot != null)
+                {
+                    //Reference the track that will hold the new plot
+                    Track trackToBeAddedTo = mainScenario.tracks.First(x => x.trackID == p.trackID);
+
+                    //Prepare the new plot and edit the old plot
+                    p.altitude = oldPlot.altitude;
+                    p.speed = oldPlot.speed;
+                    p.time = (int)ATMS_Model.BuisnessLogic.findTimeOfNewPlot(p, oldPlot);
+
+                    Plot oldPlotReference = trackToBeAddedTo.plots.Find(x => x.Equals(oldPlot));
+                    if (oldPlotReference != null)
+                    {
+                        oldPlotReference.course = ATMS_Model.BuisnessLogic.calculateOldPlotCourse(p, oldPlotReference);
+                        p.course = oldPlotReference.course;
+
+                        //Call back towards the client with the reply
+                        clients.ForEach(delegate(IClientCallbackInterface callback)
+                        {
+                            callback.notifyEditedPlot(oldPlotReference);
+                        }
+                        );
+                    }
+
+                    //Add the new plot
+                    trackToBeAddedTo.plots.Add(p);
+
+                    //Call back towards the client with the reply
+                    clients.ForEach(delegate(IClientCallbackInterface callback)
+                    {
+                        callback.notifyNewPlot(p);
+                    }
+                    );
+                }
+            }
+            catch (Exception e)
+            {
+                //Catch and report the exception
+                debugMessage("Failed to create the waypoint", e);
+                throw new Exception("ATMS-MainSimulation-0001: Failed to create the waypoint");
             }
         }
 

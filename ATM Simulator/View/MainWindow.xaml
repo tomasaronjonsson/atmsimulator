@@ -109,11 +109,11 @@
                 <Button Name="PauseSimulation" Content="Pause Simulation" Command="{Binding PauseSimulation}"/>
 
                 <Label Content="Track:" HorizontalAlignment="Left"/>
-                <Button Content="Create new track" Command="{Binding CreateNewTrack}"/>
+                <!--<Button Content="Create new track" Command="{Binding CreateNewTrack}"/>-->
                 <Button Content="Remove track" Command="{Binding RemoveTrack}"/>
 
                 <Label Content="Plot:" HorizontalAlignment="Left"/>
-                <Button Content="Create new plot" Command="{Binding CreateNewPlot}"/>
+                <!--<Button Content="Create new plot" Command="{Binding CreateNewPlot}"/>-->
                 <Button Content="Remove plot" Command="{Binding RemovePlot}"/>
 
                 <!-- Map controls -->

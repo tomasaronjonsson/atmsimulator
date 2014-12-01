@@ -181,25 +181,10 @@ namespace Model
         }
 
         //Create a new track on the map
-        public async Task createNewTrackOnMap(double lat, double lon)
+        public async Task createNewTrackOnMap(Plot p)
         {
-            Plot p = new Plot();
-            p.latitude = lat;
-            p.longitude = lon;
-            p.altitude = ATMS_Model.BuisnessLogicValues.altitude;
-            p.course = ATMS_Model.BuisnessLogicValues.course;
-            p.speed = ATMS_Model.BuisnessLogicValues.speed;
-
-            Track t = new Track();
-            t.SSR = ATMS_Model.BuisnessLogicValues.SSR;
-            t.WTC = ATMS_Model.BuisnessLogicValues.WTC;
-            t.ArType = ATMS_Model.BuisnessLogicValues.ArType;
-            t.ADEP = ATMS_Model.BuisnessLogicValues.ADEP;
-            t.ADES = ATMS_Model.BuisnessLogicValues.ADES;
-            t.plots.Add(p);
-
             checkServerStatus();
-            await server.createNewTrackAsync(t);
+            await server.createNewTrackOnMapAsync(p);
             serverIsAvailable = true;
         }
 
@@ -231,20 +216,17 @@ namespace Model
         }
 
         //Create a new waypoint on the map and assign a track to it
-        public async Task addWaypointToMap(Track t, double lat, double lon)
+        public async Task addWaypointToMap(Track t, Plot newPlot, Plot oldPlot)
         {
             Plot p = new Plot();
             //Make the plot belong to a track by taking the trackID from the selected track
             p.trackID = t.trackID;
             //Set the latitude & longitude from the input Plot
-            p.latitude = lat;
-            p.longitude = lon;
-            p.altitude = ATMS_Model.BuisnessLogicValues.altitude;
-            p.course = ATMS_Model.BuisnessLogicValues.course;
-            p.speed = ATMS_Model.BuisnessLogicValues.speed;
+            p.latitude = newPlot.latitude;
+            p.longitude = newPlot.longitude;
 
             checkServerStatus();
-            await server.createNewPlotAsync(p);
+            await server.createNewWaypointAsync(p, oldPlot);
             serverIsAvailable = true;
         }
 

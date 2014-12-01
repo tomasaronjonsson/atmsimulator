@@ -43,10 +43,22 @@
       <xs:sequence />
     </xs:complexType>
   </xs:element>
+  <xs:element name="createNewTrackOnMap">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/ATMS_Model" minOccurs="0" name="p" nillable="true" type="q2:Plot" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="createNewTrackOnMapResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
   <xs:element name="removeTrack">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/ATMS_Model" minOccurs="0" name="t" nillable="true" type="q2:Track" />
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/ATMS_Model" minOccurs="0" name="t" nillable="true" type="q3:Track" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -58,7 +70,7 @@
   <xs:element name="editTrack">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/ATMS_Model" minOccurs="0" name="t" nillable="true" type="q3:Track" />
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/ATMS_Model" minOccurs="0" name="t" nillable="true" type="q4:Track" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -70,7 +82,7 @@
   <xs:element name="createNewPlot">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/ATMS_Model" minOccurs="0" name="p" nillable="true" type="q4:Plot" />
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/ATMS_Model" minOccurs="0" name="p" nillable="true" type="q5:Plot" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -79,10 +91,23 @@
       <xs:sequence />
     </xs:complexType>
   </xs:element>
+  <xs:element name="createNewWaypoint">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/ATMS_Model" minOccurs="0" name="p" nillable="true" type="q6:Plot" />
+        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/ATMS_Model" minOccurs="0" name="oldPlot" nillable="true" type="q7:Plot" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="createNewWaypointResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
   <xs:element name="removePlot">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/ATMS_Model" minOccurs="0" name="p" nillable="true" type="q5:Plot" />
+        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/ATMS_Model" minOccurs="0" name="p" nillable="true" type="q8:Plot" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -94,7 +119,7 @@
   <xs:element name="editPlot">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/ATMS_Model" minOccurs="0" name="p" nillable="true" type="q6:Plot" />
+        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/ATMS_Model" minOccurs="0" name="p" nillable="true" type="q9:Plot" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -123,56 +148,56 @@
   <xs:element name="notifyNewScenario">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/ATMS_Model" minOccurs="0" name="data" nillable="true" type="q7:Scenario" />
+        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/ATMS_Model" minOccurs="0" name="data" nillable="true" type="q10:Scenario" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="notifyNewTrack">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/ATMS_Model" minOccurs="0" name="t" nillable="true" type="q8:Track" />
+        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/ATMS_Model" minOccurs="0" name="t" nillable="true" type="q11:Track" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="notifyRemoveTrack">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/ATMS_Model" minOccurs="0" name="t" nillable="true" type="q9:Track" />
+        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/ATMS_Model" minOccurs="0" name="t" nillable="true" type="q12:Track" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="notifyEditedTrack">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/ATMS_Model" minOccurs="0" name="t" nillable="true" type="q10:Track" />
+        <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/ATMS_Model" minOccurs="0" name="t" nillable="true" type="q13:Track" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="notifyEditedPlot">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/ATMS_Model" minOccurs="0" name="t" nillable="true" type="q11:Plot" />
+        <xs:element xmlns:q14="http://schemas.datacontract.org/2004/07/ATMS_Model" minOccurs="0" name="t" nillable="true" type="q14:Plot" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="notifyNewPlot">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/ATMS_Model" minOccurs="0" name="t" nillable="true" type="q12:Plot" />
+        <xs:element xmlns:q15="http://schemas.datacontract.org/2004/07/ATMS_Model" minOccurs="0" name="t" nillable="true" type="q15:Plot" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="notifyRemovePlot">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/ATMS_Model" minOccurs="0" name="t" nillable="true" type="q13:Plot" />
+        <xs:element xmlns:q16="http://schemas.datacontract.org/2004/07/ATMS_Model" minOccurs="0" name="t" nillable="true" type="q16:Plot" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="createNewAutoGeneratedPlots">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q14="http://schemas.datacontract.org/2004/07/ATMS_Model" minOccurs="0" name="p" nillable="true" type="q14:ArrayOfPlot" />
+        <xs:element xmlns:q17="http://schemas.datacontract.org/2004/07/ATMS_Model" minOccurs="0" name="p" nillable="true" type="q17:ArrayOfPlot" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

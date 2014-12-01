@@ -75,6 +75,15 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="createNewTrackOnMap">
+      <soap12:operation soapAction="ATMS_Server/IServerInterface/createNewTrackOnMap" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="removeTrack">
       <soap12:operation soapAction="ATMS_Server/IServerInterface/removeTrack" style="document" />
       <wsdl:input>
@@ -95,6 +104,15 @@
     </wsdl:operation>
     <wsdl:operation name="createNewPlot">
       <soap12:operation soapAction="ATMS_Server/IServerInterface/createNewPlot" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="createNewWaypoint">
+      <soap12:operation soapAction="ATMS_Server/IServerInterface/createNewWaypoint" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

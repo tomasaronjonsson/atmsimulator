@@ -28,7 +28,7 @@ namespace View
             //Sets the data context for the following operations
             var vm = (SimulationViewModel)DataContext;
 
-            if (vm.tracks.Count > 0)
+            if (!vm.serverIsPlaying)
             {
                 //Create a GeoPoint with the coordinates of the pointer
                 GeoPoint geoPt = this.theMap.Layers[0].ScreenToGeoPoint(e.GetPosition(this.theMap));
