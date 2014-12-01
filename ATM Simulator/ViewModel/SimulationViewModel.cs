@@ -15,6 +15,9 @@ using System.Xml.Linq;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 using System.IO;
+using Microsoft.Win32;
+using System.Text;
+using MapImporter;
 
 namespace ViewModel
 {
@@ -23,16 +26,29 @@ namespace ViewModel
         // Store an instance of the model
         SimulationModel model;
 
-        //at the moment we only have a static value for the map
-        string mapPath = "C:/maps.xml";
 
-        List<MapImporter.MapObject> mapObjects;
-
-        bool newTrackCreated;
 
         #region Properties
 
-        //store the mapitem list that represents Inseros map
+        //store the list of mapObjects
+
+        private List<ViewModelMapObject> _MapObjects;
+        public List<ViewModelMapObject> MapObjects
+        {
+            get { return _MapObjects; }
+            set
+            {
+                if (value != _MapObjects)
+                {
+                    _MapObjects = value;
+                    updateMapItems();
+                    RaisePropertyChanged("MapObjects");
+                }
+            }
+        }
+
+      
+        //store the mapitem list that represents the layer map
         private ObservableCollection<MapItem> _map;
         public ObservableCollection<MapItem> map
         {
@@ -42,6 +58,7 @@ namespace ViewModel
                 if (value != _map)
                 {
                     _map = value;
+
                     RaisePropertyChanged("map");
                 }
             }
@@ -274,7 +291,17 @@ namespace ViewModel
                     _ImportMap = new RelayCommand(
                        () =>
                        {
-                           importMap();
+                           OpenFileDialog fileDialog = new OpenFileDialog();
+
+                           fileDialog.Filter = "Xml files (.xml)|*.xml";
+
+                           bool? userClickedOk = fileDialog.ShowDialog();
+                           
+                           if (userClickedOk == true)
+                           {
+
+                               importMap(fileDialog.FileName);
+                           }
                        },
                        () =>
                        {
@@ -285,6 +312,40 @@ namespace ViewModel
                 return _ImportMap;
             }
         }
+
+        private RelayCommand _SaveMap;
+        public RelayCommand SaveMap
+        {
+            get
+            {
+                if (_SaveMap == null)
+                {
+                    _SaveMap = new RelayCommand(
+                       () =>
+                       {
+                           SaveFileDialog fileDialog = new SaveFileDialog();
+
+                           fileDialog.Filter = "Xml files (.xml)|*.xml";
+
+                           bool? userClickedOk = fileDialog.ShowDialog();
+
+                           if (userClickedOk == true)
+                           {
+
+                               saveMap(fileDialog.FileName);
+                           }
+                       },
+                       () =>
+                       {
+                           //we check if the map is null, if it'snull we can't save else if it's not null and the size neesd to be bigger than 0 to haves omething to save
+                           return serverIsAvailable && ((MapObjects == null) ? false : (MapObjects.Count > 0));
+                       });
+                }
+
+                return _SaveMap;
+            }
+        }
+
 
         private RelayCommand _CreateScenario;
         public RelayCommand CreateScenario
@@ -431,7 +492,11 @@ namespace ViewModel
                     _EditTrack = new RelayCommand(
                        async () =>
                        {
+                           //review alex
                            await model.editTrack(selectedTrack.toTrack());
+                           if (serverIsPlaying)
+                                await model.editPlot(selectedPlot.toPlot());
+                           
                        },
                        () =>
                        {
@@ -726,106 +791,95 @@ namespace ViewModel
         }
 
         #endregion
-
         /*
          * review alex 
          * 
          * import the map objects from insero and populate our map list
          */
-        public void importMap()
+        public void importMap(string path)
         {
 
             //we are using the explicit names to not get them mixed with the devexpress or microsoft items
             //let's import the map
-            List<MapImporter.MapObject> tempMapObjects = MapImporter.Parser.parse(mapPath);
+            List<MapImporter.MapObject> tempMapObjects = MapImporter.Tools.parse(path);
 
+            List<ViewModelMapObject> tempvmMapObjects = new List<ViewModelMapObject>();
 
-            //make a tempoarary list of shape to extract from the map ( we are taking ALL maps in atm
-            List<MapImporter.Shape> tempShapes = new List<MapImporter.Shape>();
-
-            foreach (MapImporter.MapObject o in tempMapObjects)
+            //now to take their objects and change them to out viewmodelmapobject
+            foreach (MapImporter.MapObject inputObject in tempMapObjects)
             {
-                foreach (MapImporter.Shape s in o.shapes)
-                {
-                    tempShapes.Add(s);
-                }
+                //the constructor takes care of transforming the object
+               tempvmMapObjects.Add(new ViewModelMapObject(inputObject));
             }
 
-
-            //prepeare a list of mapitem it's a binding list because we are going to use it for the property
-            List<MapItem> tempMap = new List<MapItem>();
-
-
-            //change from insero's custom shape to a mapitem
-            foreach (MapImporter.Shape s in tempShapes)
+            //store the list
+            MapObjects = tempvmMapObjects;
+        }
+        /* alex review
+         *  
+         * everytime the mapobjects are changed we need to update our list of mapitems, which renders the layered map
+         * 
+         */
+        private void updateMapItems()
             {
+            //create a temp list to later use for the map
+            List<MapItem> tempMapItems = new List<MapItem>();
 
-                //chance their circle to devex mapdot
-                if (s is MapImporter.Circle)
+            //let's create a huge list
+            foreach (ViewModelMapObject mo in MapObjects)
                 {
-
-                    MapImporter.Circle circle = (MapImporter.Circle)s;
-
-                    MapDot tempDot = new MapDot();
-                    tempDot.Size = circle.Radius;
-
-                }
-                //inseros polygon to devex polygon
-                else if (s is MapImporter.Polygon)
-                {
-                    MapImporter.Polygon polygon = (MapImporter.Polygon)s;
-
-                    MapPolygon tempPolygon = new MapPolygon();
-
-
-
-                    for (int i = 0; i < polygon.Points.Count; i++)
-                    {
-                        GeoPoint newGeoPoint = new GeoPoint();
-
-                        var split = polygon.Points[i].Split(',');
-
-
-                        newGeoPoint.Latitude = Double.Parse(split[0], System.Globalization.CultureInfo.InvariantCulture);
-                        newGeoPoint.Longitude = Double.Parse(split[1], System.Globalization.CultureInfo.InvariantCulture);
-
-                        tempPolygon.Points.Add(newGeoPoint);
-                    }
-                    tempMap.Add(tempPolygon);
-                }
-                //inseros polyline to devex polyline
-                else if (s is MapImporter.Polyline)
-                {
-                    MapImporter.Polyline polyline = (MapImporter.Polyline)s;
-
-
-                    MapPolyline tempPolyline = new MapPolyline();
-
-                    for (int i = 0; i < polyline.Points.Count; i++)
-                    {
-                        GeoPoint newGeoPoint = new GeoPoint();
-
-                        var split = polyline.Points[i].Split(',');
-
-
-                        newGeoPoint.Latitude = Double.Parse(split[0], System.Globalization.CultureInfo.InvariantCulture);
-                        newGeoPoint.Longitude = Double.Parse(split[1], System.Globalization.CultureInfo.InvariantCulture);
-
-                        tempPolyline.Points.Add(newGeoPoint);
-                    }
-                    tempMap.Add(tempPolyline);
-                }
-
-
+                tempMapItems.AddRange(mo.mapitems);
             }
 
-            //store the map we have created
-            map = new ObservableCollection<MapItem>(tempMap);
-            //store the mapobjects for later use (save, selected wich ones to use tc.)
-            mapObjects = tempMapObjects;
-
+            map = new ObservableCollection<MapItem>(tempMapItems);
         }
 
+        /*
+         *  
+         * 
+         * save the map to our format 
+         */
+        public void saveMap(String path)
+            {
+
+
+            using (System.IO.StreamWriter file = new System.IO.StreamWriter(path))
+                {
+                string mapToXML = ToXML(MapObjects);
+
+                file.Write(mapToXML);
+            }
+
+                }
+        /*
+         * 
+         * 
+         *  not working atm cause of serialiazble
+         * 
+         */
+        public string ToXML<T>(T obj)
+                {
+            Type[] types = new Type[] { typeof(DevExpress.Xpf.Map.MapPolyline), typeof(MapItem), typeof(Polyline), typeof(Polygon), typeof(Circle) };
+
+            using (StringWriter stringWriter = new StringWriter(new StringBuilder()))
+                    {
+                XmlSerializer xmlSerializer = new XmlSerializer(typeof(T), types);
+                xmlSerializer.Serialize(stringWriter, obj);
+                return stringWriter.ToString();
+                    }
+                }
+        public static T FromXML<T>(string xml)
+                {
+            Type[] types = new Type[] { typeof(DevExpress.Xpf.Map.MapPolyline),typeof(MapItem), typeof(Polyline), typeof(Polygon), typeof(Circle) };
+
+            using (StringReader stringReader = new StringReader(xml))
+                    {
+                XmlSerializer serializer = new XmlSerializer(typeof(T),types);
+                return (T)serializer.Deserialize(stringReader);
+                }
+            }
+
+        
 
     }
 }
