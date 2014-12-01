@@ -26,7 +26,8 @@ namespace ViewModel
         // Store an instance of the model
         SimulationModel model;
 
-
+        //A flag to use for selecting new track when creating
+        bool newTrackCreated;
 
         #region Properties
 
@@ -678,10 +679,10 @@ namespace ViewModel
             if (t != null)
             {
                 ViewModelTrack vmT = new ViewModelTrack(t);
-                tracks.Add(new ViewModelTrack(t));
+                tracks.Add(vmT);
 
                 if (newTrackCreated)
-                {
+                { 
                     selectedTrack = vmT;
                     newTrackCreated = false;
                 }
