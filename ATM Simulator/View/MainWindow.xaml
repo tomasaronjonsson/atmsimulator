@@ -62,7 +62,7 @@
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                         </Grid.RowDefinitions>
-                        <Rectangle Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="15" Height="15" Fill="Transparent" Stroke="Gray"/>
+                        <Ellipse Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="10" Height="10" Fill="gray" Stroke="Gray"/>
 
                         <!-- The grid for the track information on the map if you check the below grid and column value you will move the inffomration around the track icon-->
 

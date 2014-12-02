@@ -40,9 +40,7 @@ namespace ATMS_Model
             //Check the argument
             if (p != null)
             {
-                //Each variable of the incoming argument overwrites the current plot variables
-                this.latitude = p.latitude;
-                this.longitude = p.longitude;
+                //Each variable of the incoming argument overwrites the current plot variables  
                 this.speed = p.speed;
                 this.course = p.course;
                 this.altitude = p.altitude;

@@ -189,8 +189,20 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="notifyNewPlots">
+      <soap12:operation soapAction="ATMS_Server/IServerInterface/notifyNewPlots" style="document" />
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="notifyRemovePlot">
       <soap12:operation soapAction="ATMS_Server/IServerInterface/notifyRemovePlot" style="document" />
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="notifyRemovePlots">
+      <soap12:operation soapAction="ATMS_Server/IServerInterface/notifyRemovePlots" style="document" />
       <wsdl:output>
         <soap12:body use="literal" />
       </wsdl:output>

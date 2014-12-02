@@ -493,7 +493,6 @@ namespace ViewModel
                     _EditTrack = new RelayCommand(
                        async () =>
                        {
-                           //review alex
                            await model.editTrack(selectedTrack.toTrack());
                            if (serverIsPlaying)
                                 await model.editPlot(selectedPlot.toPlot());
@@ -741,7 +740,11 @@ namespace ViewModel
                 {
                     ViewModelPlot vmPlot = new ViewModelPlot(p);
                     trackToAddInto.plots.Add(vmPlot);
-                    selectedPlot = vmPlot;
+                    //check if the plot being created belongs tot he track selected (
+                    if (selectedTrack.trackID == vmPlot.trackID) 
+                    { 
+                        selectedPlot = vmPlot; 
+                    }
                 }
             }
         }
@@ -764,7 +767,7 @@ namespace ViewModel
                     trackToLookInto.plots.Remove(new ViewModelPlot(p));
             }
         }
-
+  
         /*
          * Edit a plot
          * 

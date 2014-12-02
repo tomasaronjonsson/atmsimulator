@@ -62,11 +62,11 @@ namespace ATMS_Model
                 double travelDistanceInKm = p.speed * radarInterval / 1000;
 
                 //Earth Radius in Km
-                var R = 6371;
+                double R = 6371;
 
                 //Calculate the next Latitude & Longitude points
-                var lat2 = Math.Asin(Math.Sin(Math.PI / 180 * p.latitude) * Math.Cos(travelDistanceInKm / R) + Math.Cos(Math.PI / 180 * p.latitude) * Math.Sin(travelDistanceInKm / R) * Math.Cos(Math.PI / 180 * p.course));
-                var lon2 = Math.PI / 180 * p.longitude + Math.Atan2(Math.Sin(Math.PI / 180 * p.course) * Math.Sin(travelDistanceInKm / R) * Math.Cos(Math.PI / 180 * p.latitude), Math.Cos(travelDistanceInKm / R) - Math.Sin(Math.PI / 180 * p.latitude) * Math.Sin(lat2));
+                double lat2 = Math.Asin(Math.Sin(Math.PI / 180 * p.latitude) * Math.Cos(travelDistanceInKm / R) + Math.Cos(Math.PI / 180 * p.latitude) * Math.Sin(travelDistanceInKm / R) * Math.Cos(Math.PI / 180 * p.course));
+                double lon2 = Math.PI / 180 * p.longitude + Math.Atan2(Math.Sin(Math.PI / 180 * p.course) * Math.Sin(travelDistanceInKm / R) * Math.Cos(Math.PI / 180 * p.latitude), Math.Cos(travelDistanceInKm / R) - Math.Sin(Math.PI / 180 * p.latitude) * Math.Sin(lat2));
 
                 //Assign the location points to the plot
                 nextLogicalPlot.latitude = 180 / Math.PI * lat2;
@@ -123,110 +123,46 @@ namespace ATMS_Model
                 {
                     finalTime = timeResult + (radarInterval - (timeResult % radarInterval));
                 }
-
-                return (int)finalTime + oldPlot.time;
             }
 
             return (int)finalTime + oldPlot.time;
         }
 
-        /*
+        /* review Alex
+         * 
          * This method calculates the course of an old plot depending on the position of the a new plot
          * 
          * -validate the input
          * -creates the angle
-         * -calculate the angle based on the given 8 cases
-         * 4 of the cases represent the 4 possible dials an angle can be found in
-         * 4 represent the 4 axis the angle can coincide to
-         * -calculates and returns the angle
+         * 
+         * Formulas from: http://www.sunearthtools.com/tools/distance.php#txtDist_3
          * */
         public static double calculateOldPlotCourse(Plot newPlot, Plot oldPlot)
         {
-            double angle = -1;
+            //set the standard output for this method expected output should betwen 0 and 360 setting -1 to return "nothing"
+            double course = -1;
 
             if (newPlot != null && oldPlot != null)
             {
-                //Case I - Course is towards North-East
-                if (newPlot.latitude > oldPlot.latitude && newPlot.longitude > oldPlot.longitude)
+                double op = Math.Log(Math.Tan(newPlot.latitude / 2 + Math.PI / 4) / Math.Tan(oldPlot.latitude / 2 + Math.PI / 4));
+                //finding the difference of long, going east or west?
+                double longitudeDifference = oldPlot.longitude - newPlot.longitude;
+                //for the bearing caluclating we need absolute value of the  longitude difference
+                double lon = Math.Abs(longitudeDifference);
+                //calculate the bearings from oldPlot to newPlot
+                double bearing = Math.Atan2(lon, op);
+                //convert radians to degrees
+                course = bearing * 180 / Math.PI;
+
+                //check if the course is in the west or east, if we are going west we need to correct the value (north beeing zero)
+                if (longitudeDifference > 0)
                 {
-                    double deltaLat = newPlot.latitude - oldPlot.latitude;
-                    double deltaLon = newPlot.longitude - oldPlot.longitude;
-
-                    angle = (double)Math.Atan2(deltaLon, deltaLat) * 180 / Math.PI;
-
-                    return angle;
-                }
-
-                //Case II - Course is towards South-East
-                if (newPlot.latitude < oldPlot.latitude && newPlot.longitude > oldPlot.longitude)
-                {
-                    double deltaLat = (oldPlot.latitude - newPlot.latitude) * Math.PI / 180;
-                    double deltaLon = (newPlot.longitude - oldPlot.longitude) * Math.PI / 180;
-
-                    double provAngle = (double)(Math.Atan2(deltaLat, deltaLon) * 180 / Math.PI);
-
-                    angle = provAngle + 90;
-
-                    return angle;
-                }
-
-                //Case III - Course is towards South-West
-                if (newPlot.latitude < oldPlot.latitude && newPlot.longitude < oldPlot.longitude)
-                {
-                    double deltaLat = (oldPlot.latitude - newPlot.latitude) * Math.PI / 180;
-                    double deltaLon = (oldPlot.longitude - newPlot.longitude) * Math.PI / 180;
-
-                    double provAngle = (double)(Math.Atan2(deltaLon, deltaLat) * 180 / Math.PI);
-
-                    angle = provAngle + 180;
-
-                    return angle;
-                }
-
-                //Case IV - Course is towards North-West
-                if (newPlot.latitude > oldPlot.latitude && newPlot.longitude < oldPlot.longitude)
-                {
-                    double deltaLat = (newPlot.latitude - oldPlot.latitude) * Math.PI / 180;
-                    double deltaLon = (oldPlot.longitude - newPlot.longitude) * Math.PI / 180;
-
-                    double provAngle = (double)(Math.Atan2(deltaLat, deltaLon) * 180 / Math.PI);
-
-                    angle = provAngle + 270;
-
-                    return angle;
-                }
-
-                if (newPlot.latitude == oldPlot.latitude)
-                {
-                    //Case V - Course is towards East
-                    if (newPlot.longitude > oldPlot.longitude)
-                    {
-                        return 90;
-                    }
-
-                    //Case VII - Course is towards West
-                    if (newPlot.longitude < oldPlot.longitude)
-                    {
-                        return 270;
-                    }
-                }
-                if (newPlot.longitude == oldPlot.longitude)
-                {
-                    //Case VI - Course is towards South
-                    if (newPlot.latitude > oldPlot.latitude)
-                    {
-                        return 180;
-                    }
-
-                    //Case VIII - Course is towards North
-                    if (newPlot.latitude < oldPlot.latitude)
-                    {
-                        return 0;
-                    }
+                    //invert the value
+                    course = Math.Abs(course - 180) + 180;
                 }
             }
+            return course;
 
-            return angle;
         }
     }
 }

@@ -6,6 +6,8 @@ using System.Diagnostics;
 using System.ServiceModel;
 using System.Threading.Tasks;
 using ATMS_Model;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Model
 {
@@ -284,10 +286,27 @@ namespace Model
             Messenger.Default.Send(p, "createPlot");
         }
 
+        public void notifyNewPlots(Plot[] t)
+        {
+            foreach (Plot p in t)
+            {
+                notifyNewPlot(p);
+            }
+        }
+
         public void notifyRemovePlot(Plot p)
         {
             Messenger.Default.Send(p, "removePlot");
         }
+
+        public void notifyRemovePlots(Plot[] p)
+        {
+            foreach (Plot t in p)
+            {
+                notifyRemovePlot(t);
+            }
+        }
+       
 
         public void notifyEditedPlot(Plot p)
         {
@@ -298,10 +317,13 @@ namespace Model
         {
             foreach (Plot item in p)
             {
-                Messenger.Default.Send(item, "createPlot");
+                notifyNewPlot(item);
             }
         }
 
         #endregion
+
+
+        
     }
 }

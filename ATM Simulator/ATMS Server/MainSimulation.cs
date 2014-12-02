@@ -439,6 +439,7 @@ namespace ATMS_Server
                     //Validate the trackToLookInto
                     if (trackToLookInto != null)
                     {
+                        //check if the server is in play mode
                         if (timeThread != null)
                         {
                             //Reference the plot that will be edited
@@ -450,16 +451,23 @@ namespace ATMS_Server
                                 //Edit the plot
                                 plotToBeChanged.edit(p);
 
-                                foreach (Plot item in trackToLookInto.plots)
-                                {
-                                    Plot plotToBeDeleted = trackToLookInto.plots.First(x => x.time > currentServerTime + ATMS_Model.BuisnessLogic.radarInterval);
 
-                                    //Validate the plotToBeDeleted
-                                    if (plotToBeDeleted != null)
-                                    {
-                                        trackToLookInto.plots.Remove(plotToBeDeleted);
-                                    }
+                                //create a list of plots to be removed using linq
+                                List<Plot> plotsToRemove = trackToLookInto.plots.Where(x => x.time > currentServerTime + ATMS_Model.BuisnessLogic.radarInterval).ToList();
+
+                                //notify the clients of the future plots to remove
+                                clients.ForEach(delegate(IClientCallbackInterface callback)
+                                {
+                                    callback.notifyRemovePlots(plotsToRemove);
                                 }
+                                );
+
+                                //remove the plots from the server list
+                                foreach (Plot plotToRemove in plotsToRemove)
+                                {
+                                    trackToLookInto.plots.Remove(plotToRemove);
+                                }
+
                             }
                             //If there is no future plot
                             else
@@ -471,7 +479,8 @@ namespace ATMS_Server
                                 {
                                     //Generate a plot
                                     Plot generatedPlot = ATMS_Model.BuisnessLogic.generateNextLogicPlot(currentPlot);
-                                    generatedPlot.course = p.course;
+                                    //add the information from the editplot command
+                                    generatedPlot.edit(p);
 
                                     //Add it to the list
                                     trackToLookInto.plots.Add(generatedPlot);
