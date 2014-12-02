@@ -30,7 +30,21 @@ namespace ViewModel
         bool newTrackCreated;
 
         #region Properties
-
+        //to store the list of history plots
+        private List<ViewModelPlot> _historyPlots;
+        public List<ViewModelPlot> historyPlots
+        {
+            get { return _historyPlots; }
+            set
+            {
+                if (value != _historyPlots)
+                {
+                    _historyPlots = value;
+                    RaisePropertyChanged("historyPlots");
+                }
+            }
+        }
+        
         //Store the list of mapObjects
         private List<ViewModelMapObject> _MapObjects;
         public List<ViewModelMapObject> MapObjects
@@ -81,6 +95,23 @@ namespace ViewModel
                     foreach (ViewModelTrack track in tracks)
                     {
                         track.currentTime = value;
+                    }
+                    //if the server is playing we are going to add the history plots to the historyplots list
+                    if (serverIsPlaying)
+                    {
+                        //create a temporary list to store the vmplots we are going to find
+                        List<ViewModelPlot> tempHistoryPlot = new List<ViewModelPlot>();
+
+                        //go throught every track we have in our tracks list
+                        foreach (ViewModelTrack vmt in tracks)
+                        {
+                            //generate a temproary list with all plots from this track within the time frame that the 4 histroy plots are to come
+                            List<ViewModelPlot> listtemp = vmt.plots.Where(x => x.time < viewModelCurrentTime).Where(y => y.time >= (viewModelCurrentTime - 4 * BuisnessLogic.radarInterval)).ToList();
+                            //add them to our temproary total list
+                            tempHistoryPlot.AddRange(listtemp);
+                        }
+                        //set our temp total list to our viewmodel list
+                        historyPlots = tempHistoryPlot;
                     }
                     RaisePropertyChanged("viewModelCurrentTime");
                 }

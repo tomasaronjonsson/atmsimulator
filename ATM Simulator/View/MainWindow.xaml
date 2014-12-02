@@ -131,12 +131,22 @@
                                  EnableHighlighting="False" 
                                  Visibility="{Binding IsChecked,ElementName=layerCheckbox,Converter={StaticResource b2v}}"/>
 
-                <!-- layer to show the plots to each track on the map-->
+                <!-- layer to show the plots to each track on the map when the server is not playing-->
                 <dxm:VectorLayer ItemsSource="{Binding selectedTrack.plots }" 
                                  SelectedItem="{Binding selectedPlot, Mode=TwoWay}"
                                  LatitudeDataMember="location.Latitude"
                                  LongitudeDataMember="location.Longitude"
-                                 ItemTemplate="{StaticResource plotTemplate}">
+                                 ItemTemplate="{StaticResource plotTemplate}"
+                                 Visibility="{Binding IsEnabled,ElementName=PlaySimulation,Converter={StaticResource b2v}}">
+                </dxm:VectorLayer>
+
+                <!-- layer to show the history plots to all tracks on the map when the server is playing -->
+                <dxm:VectorLayer ItemsSource="{Binding historyPlots }" 
+                                 SelectedItem="{Binding selectedPlot, Mode=TwoWay}"
+                                 LatitudeDataMember="location.Latitude"
+                                 LongitudeDataMember="location.Longitude"
+                                 ItemTemplate="{StaticResource plotTemplate}"
+                                 Visibility="{Binding serverIsPlaying,Converter={StaticResource b2v}}">
                 </dxm:VectorLayer>
 
                 <!-- layer to show the tracks on the map-->
