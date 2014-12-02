@@ -1,12 +1,11 @@
-﻿
-namespace MapImporter
+﻿namespace MapImporter
 {
-   public enum LineStyle
-   {
-      Solid,
-      Dash,
-      Dot,
-      DashDot,
-      DashDotDot
-   }
+    public enum LineStyle
+    {
+        Solid,
+        Dash,
+        Dot,
+        DashDot,
+        DashDotDot
+    }
 }

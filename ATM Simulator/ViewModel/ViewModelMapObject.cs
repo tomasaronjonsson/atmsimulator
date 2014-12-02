@@ -9,29 +9,28 @@ namespace ViewModel
 {
     public class ViewModelMapObject
     {
-
+        /*
+         * These variables hold the information from the map file.
+         * Each relevant tag in the map file has its own equivalent variable.
+         * */
         public String groupname;
-
         public String name;
-
         public double altitude;
-
         public String active;
-
         public DateTime startDate;
-
         public DateTime endDate;
-
         public List<MapItem> mapitems;
 
+
+        //Default constructor with no arguments for the Linq statements
         public ViewModelMapObject()
         {
+            //Initialize the list of MapItems
             mapitems = new List<MapItem>();
 
+            //Assign default values to variables
             groupname = "n/a";
-
             name = "n/a";
-
             altitude = 0;
             active = "n/a";
             startDate = DateTime.MinValue;
@@ -44,6 +43,7 @@ namespace ViewModel
 
             groupname = obj.groupname;
             name = obj.name;
+
             try
             {
                 altitude = Double.Parse(obj.altitude);
@@ -52,11 +52,12 @@ namespace ViewModel
             {
                 altitude = 0;
             }
+
             active = obj.active;
+
             try
             {
                 startDate = DateTime.Parse(obj.startDate + " " + obj.startTime);
-
             }
             catch (Exception e)
             {
@@ -66,50 +67,41 @@ namespace ViewModel
             try
             {
                 endDate = DateTime.Parse(obj.endDate + " " + obj.endTime);
-
             }
             catch (Exception e)
             {
                 endDate = DateTime.MaxValue;
             }
 
-
-            //prepeare a list of mapitem it's a binding list because we are going to use it for the property
+            //Initialize a list of map items
             List<MapItem> map = new List<MapItem>();
 
-
-            //change from insero's custom shape to a mapitem
+            //Convert from Insero's map objects to our
             foreach (MapImporter.Shape s in obj.shapes)
             {
-
-                //chance their circle to devex mapdot
+                //Convert circle to DevExpress MapDot
                 if (s is MapImporter.Circle)
                 {
-
                     MapImporter.Circle circle = (MapImporter.Circle)s;
 
                     MapDot tempDot = new MapDot();
                     tempDot.Size = circle.Radius;
 
-
                     mapitems.Add(tempDot);
-
                 }
-                //inseros polygon to devex polygon
+
+                //Convert Polygon to DevExpress Polygon
                 else if (s is MapImporter.Polygon)
                 {
                     MapImporter.Polygon polygon = (MapImporter.Polygon)s;
 
                     MapPolygon tempPolygon = new MapPolygon();
 
-
-
                     for (int i = 0; i < polygon.Points.Count; i++)
                     {
                         GeoPoint newGeoPoint = new GeoPoint();
 
                         var split = polygon.Points[i].Split(',');
-
 
                         newGeoPoint.Latitude = Double.Parse(split[0], System.Globalization.CultureInfo.InvariantCulture);
                         newGeoPoint.Longitude = Double.Parse(split[1], System.Globalization.CultureInfo.InvariantCulture);
@@ -118,11 +110,11 @@ namespace ViewModel
                     }
                     mapitems.Add(tempPolygon);
                 }
-                //inseros polyline to devex polyline
+
+                //Convert Polyline to DevExpress Polyline
                 else if (s is MapImporter.Polyline)
                 {
                     MapImporter.Polyline polyline = (MapImporter.Polyline)s;
-
 
                     MapPolyline tempPolyline = new MapPolyline();
 
@@ -132,7 +124,6 @@ namespace ViewModel
 
                         var split = polyline.Points[i].Split(',');
 
-
                         newGeoPoint.Latitude = Double.Parse(split[0], System.Globalization.CultureInfo.InvariantCulture);
                         newGeoPoint.Longitude = Double.Parse(split[1], System.Globalization.CultureInfo.InvariantCulture);
 
@@ -140,13 +131,7 @@ namespace ViewModel
                     }
                     mapitems.Add(tempPolyline);
                 }
-
-
             }
-
-
-
-
         }
     }
 }
