@@ -340,38 +340,7 @@ namespace ViewModel
             }
         }
 
-        private RelayCommand _SaveMap;
-        public RelayCommand SaveMap
-        {
-            get
-            {
-                if (_SaveMap == null)
-                {
-                    _SaveMap = new RelayCommand(
-                       () =>
-                       {
-                           SaveFileDialog fileDialog = new SaveFileDialog();
-
-                           fileDialog.Filter = "Xml files (.xml)|*.xml";
-
-                           bool? userClickedOk = fileDialog.ShowDialog();
-
-                           if (userClickedOk == true)
-                           {
-
-                               saveMap(fileDialog.FileName);
-                           }
-                       },
-                       () =>
-                       {
-                           //we check if the map is null, if it'snull we can't save else if it's not null and the size neesd to be bigger than 0 to haves omething to save
-                           return serverIsAvailable && ((MapObjects == null) ? false : (MapObjects.Count > 0));
-                       });
-                }
-
-                return _SaveMap;
-            }
-        }
+      
 
 
         private RelayCommand _CreateScenario;
@@ -869,48 +838,6 @@ namespace ViewModel
             //Update the map
             map = new ObservableCollection<MapItem>(tempMapItems);
         }
-
-        /*
-         * Save the map
-         * This method saves the map in a file of our own format.
-         */
-        public void saveMap(String path)
-        {
-            using (System.IO.StreamWriter file = new System.IO.StreamWriter(path))
-            {
-                string mapToXML = ToXML(MapObjects);
-
-                file.Write(mapToXML);
-            }
-        }
-
-        /* TODO - Tomas fix this shit 
-         */
-        #region THE SHIT TO BE FIXED
-
-        public string ToXML<T>(T obj)
-        {
-            Type[] types = new Type[] { typeof(DevExpress.Xpf.Map.MapPolyline), typeof(MapItem), typeof(Polyline), typeof(Polygon), typeof(Circle) };
-
-            using (StringWriter stringWriter = new StringWriter(new StringBuilder()))
-            {
-                XmlSerializer xmlSerializer = new XmlSerializer(typeof(T), types);
-                xmlSerializer.Serialize(stringWriter, obj);
-                return stringWriter.ToString();
-            }
-        }
-
-        public static T FromXML<T>(string xml)
-        {
-            Type[] types = new Type[] { typeof(DevExpress.Xpf.Map.MapPolyline), typeof(MapItem), typeof(Polyline), typeof(Polygon), typeof(Circle) };
-
-            using (StringReader stringReader = new StringReader(xml))
-            {
-                XmlSerializer serializer = new XmlSerializer(typeof(T), types);
-                return (T)serializer.Deserialize(stringReader);
-            }
-        }
-        #endregion
 
         #endregion
     }
