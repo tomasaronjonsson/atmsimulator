@@ -220,8 +220,8 @@ namespace ATMS_Server
                     pause = false;
                 }
 
-                //check if the timeThread is already  running
-                if (timeThread == null)
+                //Check if the timeThread is already  running
+                else if (timeThread == null)
                 {
                     //Instantiate the TimeWorker
                     TimeWorker worker = new TimeWorker(this);
@@ -311,9 +311,7 @@ namespace ATMS_Server
             }
         }
 
-        /**
-         * review alex
-         * 
+        /*
          * Edit a track
          * */
         public void editTrack(Track t)
@@ -432,7 +430,7 @@ namespace ATMS_Server
                 //Check the client registration
                 checkIfRegistered();
 
-                //flag if we had to generate a new plot
+                //Flag that indicates if a new plot is missing
                 bool newPlot = false;
 
                 //Validate the input
@@ -448,19 +446,21 @@ namespace ATMS_Server
                         //Reference the plot that will be edited
                         Plot plotToBeChanged = null;
 
-                        //check if the server is playing 
+                        //Check if the server is playing 
                         if (timeThread != null)
                         {
-                            //server is playing
+                            /*
+                             * Server is playing
+                             * 
+                             * */
 
-
-                            //if the server is playing we want to find the next plot
+                            //If the serveris playing - find the next plot
                             plotToBeChanged = trackToLookInto.plots.FirstOrDefault(x => x.time == currentServerTime + ATMS_Model.BuisnessLogic.radarInterval);
 
-                            //if no plot was found we want to generate the next plot and store the changes in that
+                            //If no plot was found - generate the next plot and store the changes in it
                             if (plotToBeChanged == null)
                             {
-                                //find the current plot to use to create the new plot
+                                //Find the current plot to use to create the new plot
                                 Plot currentPlot = trackToLookInto.plots.First(x => x.time == currentServerTime);
 
                                 //Validate the current plot
@@ -472,32 +472,34 @@ namespace ATMS_Server
                                     //Add it to the server list
                                     trackToLookInto.plots.Add(plotToBeChanged);
 
-                                    //flag that we had to generate a new plot 
+                                    //Raise the newPlot flag
                                     newPlot = true;
                                 }
                             }
-
                         }
                         else
                         {
-                            //server is not playing
+                            /*
+                             * Server is not playing
+                             * 
+                             * */
 
-                            //find the plot to be changed in the track plots list
+                            //Find the plot to be changed in the track plots list
                             plotToBeChanged = trackToLookInto.plots.FirstOrDefault(x => x.Equals(p));
                         }
 
 
-                        //edit the plot
+                        //Edit the plot
                         if (plotToBeChanged != null)
                         {
-                            //add the information from the editplot command
+                            //Add the information from the input plot
                             plotToBeChanged.edit(p);
                         }
 
-                        //if the plot is new , we send it to the clients
+                        //If the plot is new, we send it to the clients
                         if (newPlot)
                         {
-                            //send the newly create plot to the clients
+                            //Send the newly create plot to the clients
                             clients.ForEach(delegate(IClientCallbackInterface callback)
                             {
                                 callback.notifyNewPlot(plotToBeChanged);
@@ -506,7 +508,7 @@ namespace ATMS_Server
                         }
                         else
                         {
-                            //else we send to the clients that the plot was just edited
+                            //Else we send to the clients that the plot was just edited
                             clients.ForEach(delegate(IClientCallbackInterface callback)
                             {
                                 callback.notifyEditedPlot(plotToBeChanged);
@@ -515,21 +517,22 @@ namespace ATMS_Server
                         }
 
 
-                        //remove all future plots because the changes made to the plot changed will effect all future plots
+                        /*
+                         * Remove all future plots because the changes made to the plot changed will effect all future plots
+                         * First we need a list of all deleted plots then notify the clients of the removed plots and then remove them from the server list
+                         **/
 
-                        //first we need a list of all deleted plots then notify the clients of the removed plots and then remove them from the server list
-
-                        //create a list of plots to be removed using linq
+                        //Create a list of plots to be removed using linq
                         List<Plot> plotsToRemove = trackToLookInto.plots.Where(x => x.time > plotToBeChanged.time + ATMS_Model.BuisnessLogic.radarInterval).ToList();
 
-                        //notify the clients of the future plots to remove
+                        //Notify the clients of the future plots to remove
                         clients.ForEach(delegate(IClientCallbackInterface callback)
                         {
                             callback.notifyRemovePlots(plotsToRemove);
                         }
                         );
 
-                        //remove the plots from the server list
+                        //Remove the plots from the server list
                         foreach (Plot plotToRemove in plotsToRemove)
                         {
                             trackToLookInto.plots.Remove(plotToRemove);
@@ -675,7 +678,7 @@ namespace ATMS_Server
             {
                 //Catch and report the exception
                 debugMessage("Failed to create the waypoint", e);
-                throw new Exception("ATMS-MainSimulation-0001: Failed to create the waypoint");
+                throw new Exception("ATMS-MainSimulation-0012: Failed to create the waypoint");
             }
         }
 

@@ -68,7 +68,7 @@ namespace Model
 
         #endregion
 
-        
+
         public SimulationModel()
         {
             //indicates if the server is available, set to default value which is not avilable
@@ -306,7 +306,7 @@ namespace Model
                 notifyRemovePlot(t);
             }
         }
-       
+
 
         public void notifyEditedPlot(Plot p)
         {
@@ -322,8 +322,5 @@ namespace Model
         }
 
         #endregion
-
-
-        
     }
 }

@@ -36,7 +36,7 @@ namespace ATMS_Server
          * */
         public void DoWork()
         {
-            while (!stopped) 
+            while (!stopped)
             {
                 //Sleep as much as the radarInterval dictates
                 Thread.Sleep(ATMS_Model.BuisnessLogic.radarInterval * 1000);

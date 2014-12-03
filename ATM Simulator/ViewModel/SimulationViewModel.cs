@@ -30,7 +30,8 @@ namespace ViewModel
         bool newTrackCreated;
 
         #region Properties
-        //to store the list of history plots
+
+        //Stores the list of history plots
         private List<ViewModelPlot> _historyPlots;
         public List<ViewModelPlot> historyPlots
         {
@@ -96,21 +97,21 @@ namespace ViewModel
                     {
                         track.currentTime = value;
                     }
-                    //if the server is playing we are going to add the history plots to the historyplots list
+                    //If the server is playing we are going to add the history plots to the historyplots list
                     if (serverIsPlaying)
                     {
-                        //create a temporary list to store the vmplots we are going to find
+                        //Create a temporary list to store the vmplots we are going to find
                         List<ViewModelPlot> tempHistoryPlot = new List<ViewModelPlot>();
 
-                        //go throught every track we have in our tracks list
+                        //Go throught every track we have in our tracks list
                         foreach (ViewModelTrack vmt in tracks)
                         {
-                            //generate a temproary list with all plots from this track within the time frame that the 4 histroy plots are to come
+                            //Generate a temproary list with all plots from this track within the time frame that the 4 histroy plots are to come
                             List<ViewModelPlot> listtemp = vmt.plots.Where(x => x.time < viewModelCurrentTime).Where(y => y.time >= (viewModelCurrentTime - 4 * BuisnessLogic.radarInterval)).ToList();
-                            //add them to our temproary total list
+                            //Add them to our temproary total list
                             tempHistoryPlot.AddRange(listtemp);
                         }
-                        //set our temp total list to our viewmodel list
+                        //Set our temporary total list to our viewmodel list
                         historyPlots = tempHistoryPlot;
                     }
                     RaisePropertyChanged("viewModelCurrentTime");
@@ -299,6 +300,7 @@ namespace ViewModel
             model.startUp();
         }
 
+
         /*
          * The relay commands are sent towards the Model 
          * 
@@ -339,9 +341,6 @@ namespace ViewModel
                 return _ImportMap;
             }
         }
-
-      
-
 
         private RelayCommand _CreateScenario;
         public RelayCommand CreateScenario
