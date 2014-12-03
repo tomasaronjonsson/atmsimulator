@@ -108,11 +108,6 @@
                 <CheckBox Name="providerCheckbox" Margin="5" IsChecked="true">
                     <TextBlock>Provider</TextBlock>
                 </CheckBox>
-
-                <Label  Content="VM Time:"/>
-                <Label  Content="{Binding viewModelCurrentTime}"/>
-                <Label  Content="Server Time:"/>
-                <Label  Content="{Binding serverCurrentTime}"/>
             </StackPanel>
             
             <dxm:MapControl Name="theMap" Grid.Row="0" Grid.Column="1" Grid.RowSpan="2"   ZoomLevel="8"  CenterPoint="55.85,9.82" 
