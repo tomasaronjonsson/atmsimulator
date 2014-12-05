@@ -16,16 +16,5 @@ namespace ATMS_Model
             //Initialize the list of Tracks
             tracks = new List<Track>();
         }
-
-
-        //This method returns a list of Lots at the given time
-        public List<Plot> getNow(int time)
-        {
-            //Lambda expression to select all the plots from each track where the time is equal to the input time
-            var gettingAllPlots = tracks.SelectMany(x => x.plots.Where(p => (p.time == time)));
-
-            //Convert the above var to a List and return it
-            return gettingAllPlots.ToList();
-        }
     }
 }

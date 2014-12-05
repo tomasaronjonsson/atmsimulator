@@ -340,9 +340,6 @@ namespace ViewModel
             }
         }
 
-      
-
-
         private RelayCommand _CreateScenario;
         public RelayCommand CreateScenario
         {
