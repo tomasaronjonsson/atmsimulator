@@ -734,10 +734,13 @@ namespace ViewModel
                 {
                     ViewModelPlot vmPlot = new ViewModelPlot(p);
                     trackToAddInto.plots.Add(vmPlot);
-                    //check if the plot being created belongs tot he track selected (
-                    if (selectedTrack.trackID == vmPlot.trackID) 
-                    { 
-                        selectedPlot = vmPlot; 
+                    //check if the plot being created belongs tot he track selected
+                    if (selectedTrack != null)
+                    {
+                        if (selectedTrack.trackID == vmPlot.trackID)
+                        {
+                            selectedPlot = vmPlot;
+                        }
                     }
                 }
             }

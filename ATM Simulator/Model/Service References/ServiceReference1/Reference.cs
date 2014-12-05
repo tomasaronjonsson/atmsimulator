@@ -95,7 +95,7 @@ namespace Model.ServiceReference1 {
         void notifyTimeUpdate(int currentServerTime);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="ATMS_Server/IServerInterface/notifyNewScenario")]
-        void notifyNewScenario(ATMS_Model.Scenario data);
+        void notifyNewScenario(ATMS_Model.Scenario s);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="ATMS_Server/IServerInterface/notifyNewTrack")]
         void notifyNewTrack(ATMS_Model.Track t);
@@ -107,16 +107,16 @@ namespace Model.ServiceReference1 {
         void notifyEditedTrack(ATMS_Model.Track t);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="ATMS_Server/IServerInterface/notifyEditedPlot")]
-        void notifyEditedPlot(ATMS_Model.Plot t);
+        void notifyEditedPlot(ATMS_Model.Plot p);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="ATMS_Server/IServerInterface/notifyNewPlot")]
-        void notifyNewPlot(ATMS_Model.Plot t);
+        void notifyNewPlot(ATMS_Model.Plot p);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="ATMS_Server/IServerInterface/notifyNewPlots")]
-        void notifyNewPlots(ATMS_Model.Plot[] t);
+        void notifyNewPlots(ATMS_Model.Plot[] p);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="ATMS_Server/IServerInterface/notifyRemovePlot")]
-        void notifyRemovePlot(ATMS_Model.Plot t);
+        void notifyRemovePlot(ATMS_Model.Plot p);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="ATMS_Server/IServerInterface/notifyRemovePlots")]
         void notifyRemovePlots(ATMS_Model.Plot[] p);
