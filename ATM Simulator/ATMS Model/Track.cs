@@ -47,19 +47,19 @@ namespace ATMS_Model
         public override bool Equals(object obj)
         {
             //Return false if there is a missing parameter
-            if (obj == null) 
+            if (obj == null)
                 return false;
 
             //Cast the object to a Track object
             Track objAsTrack = obj as Track;
 
             //Return false of the casting is not successful
-            if (objAsTrack == null) 
+            if (objAsTrack == null)
                 return false;
 
             //If the casting is successful,
             //check the trackID to make sure the plots are the same.
-            if (objAsTrack.trackID == this.trackID) 
+            if (objAsTrack.trackID == this.trackID)
                 return true;
             return false;
         }

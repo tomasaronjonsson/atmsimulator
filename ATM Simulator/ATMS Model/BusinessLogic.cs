@@ -1,4 +1,5 @@
 ﻿using System;
+
 namespace ATMS_Model
 {
     /*
@@ -128,10 +129,8 @@ namespace ATMS_Model
             return (int)finalTime + oldPlot.time;
         }
 
-        /* review Alex
-         * 
+        /* 
          * This method calculates the course of an old plot depending on the position of the a new plot
-         * 
          * -validate the input
          * -creates the angle
          * 
@@ -139,30 +138,30 @@ namespace ATMS_Model
          * */
         public static double calculateOldPlotCourse(Plot newPlot, Plot oldPlot)
         {
-            //set the standard output for this method expected output should betwen 0 and 360 setting -1 to return "nothing"
+            //Set the standard output for this method expected output should betwen 0 and 360 setting -1 to return "nothing"
             double course = -1;
 
+            //Validate the input
             if (newPlot != null && oldPlot != null)
             {
-                double op = Math.Log(Math.Tan(newPlot.latitude / 2 + Math.PI / 4) / Math.Tan(oldPlot.latitude / 2 + Math.PI / 4));
-                //finding the difference of long, going east or west?
+                double deltaAlpha = Math.Log(Math.Tan(newPlot.latitude / 2 + Math.PI / 4) / Math.Tan(oldPlot.latitude / 2 + Math.PI / 4));
+                //The longitude difference tells which way is the track going, either east or west.
                 double longitudeDifference = oldPlot.longitude - newPlot.longitude;
-                //for the bearing caluclating we need absolute value of the  longitude difference
+                //The absolute value of the longitudeDifference is needed
                 double lon = Math.Abs(longitudeDifference);
-                //calculate the bearings from oldPlot to newPlot
-                double bearing = Math.Atan2(lon, op);
-                //convert radians to degrees
+                //Calculate the bearings from oldPlot to newPlot
+                double bearing = Math.Atan2(lon, deltaAlpha);
+                //Convert radians to degrees
                 course = bearing * 180 / Math.PI;
 
-                //check if the course is in the west or east, if we are going west we need to correct the value (north beeing zero)
+                //Check the direction. East or west (0 is north).
                 if (longitudeDifference > 0)
                 {
-                    //invert the value
+                    //Invert the value
                     course = Math.Abs(course - 180) + 180;
                 }
             }
             return course;
-
         }
     }
 }
