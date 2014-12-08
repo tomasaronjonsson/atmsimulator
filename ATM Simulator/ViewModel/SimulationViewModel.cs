@@ -450,7 +450,7 @@ namespace ViewModel
                        },
                        () =>
                        {
-                           return serverIsAvailable && _tracks.Count != 0 && !serverIsPlaying;
+                           return serverIsAvailable && !serverIsPlaying;
                        });
                 }
                 return _CreateNewTrackOnMap;
