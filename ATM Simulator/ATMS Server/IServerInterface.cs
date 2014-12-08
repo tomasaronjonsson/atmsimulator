@@ -83,7 +83,7 @@ namespace ATMS_Server
         void notifyTimeUpdate(int currentServerTime);
 
         [OperationContract(IsOneWay = true)]
-        void notifyNewScenario(Scenario data);
+        void notifyNewScenario(Scenario s);
 
         [OperationContract(IsOneWay = true)]
         void notifyNewTrack(Track t);
@@ -95,16 +95,16 @@ namespace ATMS_Server
         void notifyEditedTrack(Track t);
 
         [OperationContract(IsOneWay = true)]
-        void notifyEditedPlot(Plot t);
+        void notifyEditedPlot(Plot p);
 
         [OperationContract(IsOneWay = true)]
-        void notifyNewPlot(Plot t);
+        void notifyNewPlot(Plot p);
 
         [OperationContract(IsOneWay = true)]
-        void notifyNewPlots(List<Plot> t);
+        void notifyNewPlots(List<Plot> p);
 
         [OperationContract(IsOneWay = true)]
-        void notifyRemovePlot(Plot t);
+        void notifyRemovePlot(Plot p);
 
         [OperationContract(IsOneWay = true)]
         void notifyRemovePlots(List<Plot> p);

@@ -148,7 +148,7 @@
   <xs:element name="notifyNewScenario">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/ATMS_Model" minOccurs="0" name="data" nillable="true" type="q10:Scenario" />
+        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/ATMS_Model" minOccurs="0" name="s" nillable="true" type="q10:Scenario" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -176,28 +176,28 @@
   <xs:element name="notifyEditedPlot">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q14="http://schemas.datacontract.org/2004/07/ATMS_Model" minOccurs="0" name="t" nillable="true" type="q14:Plot" />
+        <xs:element xmlns:q14="http://schemas.datacontract.org/2004/07/ATMS_Model" minOccurs="0" name="p" nillable="true" type="q14:Plot" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="notifyNewPlot">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q15="http://schemas.datacontract.org/2004/07/ATMS_Model" minOccurs="0" name="t" nillable="true" type="q15:Plot" />
+        <xs:element xmlns:q15="http://schemas.datacontract.org/2004/07/ATMS_Model" minOccurs="0" name="p" nillable="true" type="q15:Plot" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="notifyNewPlots">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q16="http://schemas.datacontract.org/2004/07/ATMS_Model" minOccurs="0" name="t" nillable="true" type="q16:ArrayOfPlot" />
+        <xs:element xmlns:q16="http://schemas.datacontract.org/2004/07/ATMS_Model" minOccurs="0" name="p" nillable="true" type="q16:ArrayOfPlot" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="notifyRemovePlot">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q17="http://schemas.datacontract.org/2004/07/ATMS_Model" minOccurs="0" name="t" nillable="true" type="q17:Plot" />
+        <xs:element xmlns:q17="http://schemas.datacontract.org/2004/07/ATMS_Model" minOccurs="0" name="p" nillable="true" type="q17:Plot" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
