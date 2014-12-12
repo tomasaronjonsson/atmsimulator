@@ -176,13 +176,7 @@ namespace ATMS_Server
 
                 //Create the new scenario
                 mainScenario = new Scenario();
-
-                //Populate the scenario with the Test data
-                if (mainScenario != null)
-                {
-                    mainScenario = Test.populateInitialScenario();
-                }
-
+                               
                 //Update the available ID
                 availableTrackID = mainScenario.tracks.Count;
 

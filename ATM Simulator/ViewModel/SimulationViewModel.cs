@@ -382,7 +382,7 @@ namespace ViewModel
                        },
                        () =>
                        {
-                           return serverIsAvailable && !serverIsPlaying && tracks.Count > 0;
+                           return serverIsAvailable && !serverIsPlaying;
                        });
                 }
                 return _PlaySimulation;
@@ -425,7 +425,7 @@ namespace ViewModel
                        },
                        () =>
                        {
-                           return serverIsAvailable && _tracks.Count != 0 && !serverIsPlaying;
+                           return serverIsAvailable && !serverIsPlaying;
                        });
                 }
                 return _CreateNewTrack;
